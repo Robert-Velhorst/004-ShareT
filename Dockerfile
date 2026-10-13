@@ -1,6 +1,6 @@
 # Multi-stage build for ShareT
 # Stage 1: Build frontend
-FROM node:22-alpine AS frontend-build
+FROM node:26-alpine AS frontend-build
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
@@ -8,7 +8,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Production server
-FROM node:22-alpine AS production
+FROM node:26-alpine AS production
 WORKDIR /app
 
 # Copy backend
