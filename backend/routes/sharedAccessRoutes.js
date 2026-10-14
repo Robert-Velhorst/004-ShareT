@@ -8,6 +8,10 @@ const router = express.Router();
 const sharedAccessController = require('../controllers/sharedAccessController');
 const sharedCommentController = require('../controllers/sharedCommentController');
 const { verificationRateLimit } = require('../utils/rateLimiter');
+const { guest: requireOwnerBalance } = require('../billing/access');
+
+// All guest work is funded by the link owner, never by the freelancer.
+router.use('/:shareId', requireOwnerBalance);
 
 // Public routes - no authentication required
 router.get('/:shareId', sharedAccessController.getSharedCard);

@@ -4,9 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "engines": {
-    "node": ">=22.0.0"
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
   },
   "scripts": {
+    "test:billing-ui": "vitest run src/components/PaymentDialog.test.jsx",
     "dev": "vite",
     "build": "vite build",
     "build:dev": "vite build --mode development",
@@ -72,6 +73,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@testing-library/react": "^16.3.3",
     "@types/react": "^18.2.56",
     "@types/react-dom": "^18.2.19",
     "@vitejs/plugin-react": "^5.1.4",
@@ -80,8 +82,10 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
+    "jsdom": "^30.0.1",
     "postcss": "^8.5.19",
     "tailwindcss": "^3.4.4",
-    "vite": "^6.4.3"
+    "vite": "^6.4.3",
+    "vitest": "^5.0.0"
   }
 }

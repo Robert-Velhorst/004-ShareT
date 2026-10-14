@@ -30,13 +30,14 @@
     "pouchdb-find": "^8.0.1",
     "rate-limiter-flexible": "^4.0.1",
     "sirv": "^2.0.4",
+    "stripe": "^22.6.1",
     "validator": "^13.11.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"
   },
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=22.13.0"
   },
   "author": "ShareT Team",
   "license": "MIT"

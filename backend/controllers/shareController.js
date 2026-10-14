@@ -98,8 +98,10 @@ exports.createShare = async (req, res) => {
     let creditsRemaining;
     let creditWasDeducted = false;
     try {
-      creditsRemaining = await User.deductCredit(userId);
-      creditWasDeducted = creditsRemaining !== null;
+      // The route has already checked the prepaid wallet in resource-billing mode.
+      // Do not additionally consume the old per-share allowance.
+      creditsRemaining = req.resourceBilling ? null : await User.deductCredit(userId);
+      creditWasDeducted = !req.resourceBilling && creditsRemaining !== null;
     } catch (error) {
       if (error.message === 'Insufficient credits') {
         return res.status(402).json({

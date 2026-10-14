@@ -1,0 +1,28 @@
+name: Prepaid billing checks
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            backend/package-lock.json
+      - run: npm ci
+      - run: npm ci --prefix backend
+      - run: npm test --prefix backend
+      - run: npm run test:billing-ui
+      - run: npx eslint backend/billing backend/test/prepaid*.test.js src/components/PaymentDialog.jsx src/components/PaymentDialog.test.jsx src/hooks/useCredits.js src/api.js src/pages/App.jsx
+      - run: npm run build
+        env:
+          VITE_API_URL: /api
+          BILLING_MODE: off

@@ -46,6 +46,8 @@ const notificationRoutes = require('./routes/notificationRoutes');
 const trelloWebhookRoutes = require('./routes/trelloWebhookRoutes');
 const { startReplyNotificationMonitor, stopReplyNotificationMonitor } = require('./services/replyNotificationService');
 const { reconcileActiveTrelloWebhooks } = require('./services/trelloWebhookService');
+const { getBilling, closeBilling } = require('./billing/runtime');
+const { createWebhookHandler } = require('./billing/routes');
 
 // Create Express app
 const app = express();
@@ -124,10 +126,14 @@ app.use(cors({
   credentials: true
 }));
 
+// Stripe must receive the exact raw bytes, before any JSON parser or user auth.
+app.post('/api/billing/webhook', express.raw({ type: 'application/json', limit: '1mb' }), (req, res) =>
+  createWebhookHandler(getBilling())(req, res));
+
 app.use(express.json({
   limit: '10mb',
   verify: (req, res, buffer) => {
-    if (req.originalUrl.startsWith('/api/trello-webhooks/')) {
+    if (req.originalUrl.startsWith('/api/trello-webhooks/') || req.path === '/api/billing/usage') {
       req.rawBody = Buffer.from(buffer);
     }
   }
@@ -308,6 +314,7 @@ const gracefulShutdown = async (signal) => {
   
   clearCache();
   stopReplyNotificationMonitor();
+  closeBilling();
   await closeAll(); // Close PouchDB databases
   
   logger.info('Shutdown complete');
@@ -335,6 +342,7 @@ const startServer = async () => {
   try {
     // Initialize PouchDB databases
     await initDB();
+    getBilling(); // Fail startup on unsafe billing activation, before accepting traffic.
     startReplyNotificationMonitor();
     
     server = app.listen(PORT, '0.0.0.0', () => {

@@ -7,6 +7,7 @@ const express = require('express');
 const router = express.Router();
 const trelloController = require('../controllers/trelloController');
 const { protect } = require('../middleware/auth');
+const { owner: requireResourceBalance } = require('../billing/access');
 
 // OAuth routes
 router.get('/auth-url', protect, trelloController.getAuthUrl);
@@ -20,6 +21,7 @@ router.get('/connections', protect, trelloController.getConnections);
 router.get('/notification-health', protect, trelloController.getNotificationHealth);
 
 // Boards
+router.use(['/boards', '/cards'], protect, requireResourceBalance);
 router.get('/boards', protect, trelloController.getBoards);
 router.get('/boards/:boardId', protect, trelloController.getBoard);
 router.get('/boards/:boardId/cards', protect, trelloController.getBoardCards);

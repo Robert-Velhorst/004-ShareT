@@ -465,8 +465,13 @@ exports.resetPassword = async (req, res) => {
 exports.getCredits = async (req, res) => {
   try {
     const userId = req.user._id || req.user.id;
+    const billing = require('../billing/runtime').getBilling();
+    if (billing.config.enabled) {
+      const wallet = billing.summary(userId);
+      return res.json({ success: true, credits: wallet.canUse ? wallet.credits : 0, creditType: 'resource' });
+    }
     const credits = await User.getCredits(userId);
-    res.json({ success: true, credits });
+    res.json({ success: true, credits, creditType: 'share-allowance' });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Error fetching credits' });
   }

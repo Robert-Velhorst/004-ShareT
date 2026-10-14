@@ -21,7 +21,7 @@ No Trello Power-Up panel is required for the conversation flow.
 
 ## Requirements
 
-- Node.js 22 or newer
+- Current Node.js 22 LTS (22.22.2+) or a supported newer LTS; prepaid backend requires Node 22.13+ for SQLite
 - A Trello API key and secret
 - A stable public HTTPS URL for production OAuth callbacks and Trello webhooks
 - SMTP credentials for freelancer verification and reply email
@@ -153,12 +153,21 @@ Public recipient operations live under `/api/shared-access/:shareId`. Comment-en
 
 ## Credits and payment
 
-Non-admin accounts receive a limited credit balance. Opening a Wise payment page does not grant credits. Credits are added only after payment confirmation through the protected admin workflow, which prevents browser-side credit spoofing.
+ShareT includes an optional prepaid resource wallet, accessible through **Credits & usage** even before connecting Trello. Customers can buy €10, €25, or €50 of resource credits through Stripe Checkout. 100 resource credits represent €1; these are not the old per-share credits.
+
+For each accepted infrastructure receipt, the customer charge is **documented supplier resource cost × 2.5**. The wallet shows purchase history, resource quantities, supplier rates, base costs, and charges. Signed payment notifications and provider verification add credits; a redirect or browser claim cannot do so. Refunds and disputes reconcile the balance. No subscription or automatic recharge is created.
+
+**Disabled by default, not an automatic host meter:** a hosting-specific usage collector, verified supplier rates, Stripe configuration, tax/refund decisions, and operator acceptance are required before activation. This repository provides the signed receipt ingestion and settlement path; it does not currently collect per-customer CPU/RAM/GPU/network counters from your hosting environment. Do not enable paid resource mode without that collector. See [the complete billing setup and limitations](docs/BILLING.md).
+
+When billing is off, existing per-share allowances remain in force. They are preserved without assigning them a cash value. When resource mode is on, creating a share checks the wallet and does not also deduct the old allowance. Guest link activity is funded by the link owner. An empty/held balance pauses share creation and guest access; account, payment and link-management screens remain accessible. Settlement is asynchronous, so this is not a hard real-time spending cap.
+
+Financial state is stored separately in `DATA_DIR/prepaid-test.sqlite` or `prepaid-live.sqlite`, not PouchDB/CouchDB sync. Back up these files consistently with the rest of the data. The old simulated payment and browser-written usage endpoints are retired.
 
 ## Verification
 
 ```bash
 npm run build
+npm run test:billing-ui
 npx eslint src/App.jsx src/pages/App.jsx
 
 cd backend

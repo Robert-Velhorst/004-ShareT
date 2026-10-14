@@ -49,3 +49,8 @@ Thumbs.db
 config.bat
 *.mp4
 *.textClipping
+# Financial state and operator-specific rate cards must never be committed.
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+billing-rates.local.json

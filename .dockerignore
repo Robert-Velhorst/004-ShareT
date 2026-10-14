@@ -6,3 +6,9 @@ backend/data/
 .git/
 .env
 .DS_Store
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.*.example
+**/*.sqlite*
+**/billing-rates.local.json

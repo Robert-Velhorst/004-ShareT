@@ -7,6 +7,13 @@
 // (Cloudflare tunnel, custom domain, localhost) since frontend is served from same origin as backend.
 const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
+export const prepaid = {
+  wallet: () => apiRequest('/billing/wallet'),
+  history: before => apiRequest(`/billing/history${before ? `?before=${encodeURIComponent(before)}` : ''}`),
+  checkout: (amountCents, requestId) => apiRequest('/billing/checkout', { method: 'POST', body: JSON.stringify({ amountCents, requestId }) }),
+  status: sessionId => apiRequest(`/billing/checkout/${encodeURIComponent(sessionId)}`),
+};
+
 /**
  * Helper function to make API requests
  */
