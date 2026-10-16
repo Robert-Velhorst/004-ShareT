@@ -50,6 +50,9 @@ const { reconcileActiveTrelloWebhooks } = require('./services/trelloWebhookServi
 // Create Express app
 const app = express();
 
+// Preserve Express 4's extended query-string parsing during the v5 migration.
+app.set('query parser', 'extended');
+
 // Trust proxy for Cloudflare Tunnel
 app.set('trust proxy', 1);
 
@@ -133,6 +136,12 @@ app.use(express.json({
   }
 }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Express 5 leaves req.body undefined when no parser handles the request.
+app.use((req, res, next) => {
+  if (req.body === undefined) req.body = {};
+  next();
+});
 
 // Session configuration (using memory store for simplicity)
 // For production with cloud sync, consider using a PouchDB-based session store
@@ -275,7 +284,7 @@ if (fs.existsSync(frontendPath)) {
 }
 
 // SPA fallback for routes not handled by sirv (when in production mode)
-app.get('*', (req, res) => {
+app.get('/{*splat}', (req, res) => {
   if (req.path.startsWith('/api/')) {
     return sendFastJSON(res, errorResponseSchema, {
       success: false,
