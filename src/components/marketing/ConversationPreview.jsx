@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowLeft, ArrowUp, Link2, Menu, MessageCircle, MoreHorizontal, Search, SlidersHorizontal, Trello } from 'lucide-react';
+import { ArrowLeft, ArrowUp, Kanban, Link2, Menu, MessageCircle, MoreHorizontal, Search, SlidersHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -41,7 +41,7 @@ function Composer({ kind, onSend }) {
 export function TrelloPreview({ update, reply, onReply, compact = false }) {
   return <div className={cn('preview-window trello-preview', compact && 'preview-phone')}>
     <div className="preview-window-bar" aria-hidden="true">
-      {compact ? <ArrowLeft /> : <Trello className="trello-symbol" />}<span>{compact ? 'Trello' : 'You · Trello'}</span>{compact && <Search />}<MoreHorizontal />
+      {compact ? <ArrowLeft /> : <Kanban className="trello-symbol" />}<span>{compact ? 'Trello' : 'You · Trello'}</span>{compact && <Search />}<MoreHorizontal />
     </div>
     <div className="preview-window-content">
       <h3>Website redesign</h3>
