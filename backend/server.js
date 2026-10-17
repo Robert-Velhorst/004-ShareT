@@ -264,6 +264,13 @@ if (!fs.existsSync(frontendPath)) {
   frontendPath = path.join(__dirname, '..', 'dist');
 }
 
+// Read the SPA entry point once at startup so the catch-all route does not
+// perform filesystem access for every page request.
+const frontendIndexPath = path.join(frontendPath, 'index.html');
+const frontendIndexHtml = fs.existsSync(frontendIndexPath)
+  ? fs.readFileSync(frontendIndexPath, 'utf8')
+  : null;
+
 // Only setup sirv if the directory actually exists (e.g. after a build)
 if (fs.existsSync(frontendPath)) {
   const sirvHandler = sirv(frontendPath, {
@@ -293,11 +300,11 @@ app.get('/{*splat}', (req, res) => {
   }
   
   // Return early if no frontend build exists
-  if (!fs.existsSync(frontendPath) || !fs.existsSync(path.join(frontendPath, 'index.html'))) {
+  if (frontendIndexHtml === null) {
     return res.status(200).send('ShareT Backend Running. Please start frontend dev server or run build.');
   }
-  
-  res.sendFile(path.join(frontendPath, 'index.html'));
+
+  res.type('html').send(frontendIndexHtml);
 });
 
 // Error handling middleware with fast-json-stringify
