@@ -16,15 +16,11 @@ if not exist ".env.docker" if exist ".env.docker.txt" (
     ren ".env.docker.txt" ".env.docker"
 )
 
-:: Read PUBLIC_URL and NGROK_AUTHTOKEN from .env.docker
+:: Read PUBLIC_URL from .env.docker
 set "PUBLIC_URL="
-set "NGROK_AUTHTOKEN="
 if exist .env.docker (
     for /f "tokens=1,* delims==" %%A in ('findstr /B "PUBLIC_URL=" .env.docker') do (
         set "PUBLIC_URL=%%B"
-    )
-    for /f "tokens=1,* delims==" %%A in ('findstr /B "NGROK_AUTHTOKEN=" .env.docker') do (
-        set "NGROK_AUTHTOKEN=%%B"
     )
 )
 
@@ -84,43 +80,17 @@ exit /b
 echo  [OK] Docker is running.
 
 :: ════════════════════════════════════════════════
-:: STEP 2  CHECK NGROK AUTH TOKEN FOR DOCKER
+:: STEP 2  CONFIRM LOCAL CONFIGURATION
 :: ════════════════════════════════════════════════
 echo.
-echo  [2/3] Checking ngrok configuration in .env.docker...
-
-if defined NGROK_AUTHTOKEN (
-    echo  [OK] ngrok auth token found in .env.docker.
-    goto token_done
-)
-
-echo.
-echo  [!] No ngrok auth token set in .env.docker.
-echo      ngrok runs safely inside Docker in the background.
-echo.
-echo      1. Go to: https://dashboard.ngrok.com/get-started/your-authtoken
-echo      2. Copy your authtoken
-echo.
-set "TOK="
-set /p TOK="Paste your ngrok authtoken here (or press Enter to skip): "
-if not defined TOK (
-    echo  [!] Skipped. The public URL will NOT work until NGROK_AUTHTOKEN is set in .env.docker.
-    goto token_done
-)
->>.env.docker echo NGROK_AUTHTOKEN=!TOK!
-echo  [OK] Saved ngrok auth token to .env.docker.
-
-:token_done
-
-:: Kill any stray host ngrok processes so they don't fight the Docker container session
-taskkill /F /IM ngrok.exe /T >nul 2>&1
+echo  [2/3] Local Docker setup does not start a public tunnel.
 
 :: ════════════════════════════════════════════════
-:: STEP 3  START DOCKER STACK (App + Ngrok + Autoheal)
+:: STEP 3  START DOCKER STACK (App + Autoheal)
 :: ════════════════════════════════════════════════
 echo.
 echo  [3/3] Building and starting ShareT stack in Docker...
-echo        (App + Background ngrok tunnel + Autoheal)
+echo        (App + Autoheal; no public tunnel)
 echo.
 
 docker-compose up -d --build
@@ -147,14 +117,6 @@ echo  [WARN] Health check timed out - ShareT may still be starting.
 :health_ok
 echo  [OK] ShareT is running.
 
-:: Check if ngrok container is running
-docker ps --filter "name=sharet-ngrok" --filter "status=running" --format "{{.Names}}" | findstr "sharet-ngrok" >nul 2>&1
-if !errorlevel! equ 0 (
-    echo  [OK] Background ngrok tunnel is active in Docker.
-) else (
-    echo  [WARN] ngrok container is starting or needs NGROK_AUTHTOKEN in .env.docker.
-)
-
 :: Open browser
 start "" http://localhost:%PORT%
 
@@ -170,7 +132,7 @@ echo.
 echo    Local URL:   http://localhost:%PORT%
 if defined PUBLIC_URL (
     echo    Public URL:  !PUBLIC_URL!
-    echo                 (Managed automatically in background by Docker)
+    echo                 (Configure DNS and HTTPS on the production host)
 ) else (
     echo    Public URL:  Check your .env.docker PUBLIC_URL setting
 )
@@ -178,7 +140,6 @@ echo.
 echo  ============================================================
 echo    Useful Docker Commands:
 echo      View App Logs:    docker logs -f sharet-app
-echo      View Ngrok Logs:  docker logs -f sharet-ngrok
 echo      Stop ShareT:      docker-compose down
 echo      Restart:          redeploy.bat
 echo  ============================================================
