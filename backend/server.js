@@ -66,10 +66,10 @@ app.use(helmet({
       defaultSrc: ["'self'"],
       scriptSrc: [
         "'self'",
-        "'sha256-3XW3sKtN3SwUh9iUGZXmnBPwpDR5+trIiKnA3MUevAE='",
-        "'sha256-pe3/7lhLOV80xKrlmSwUp7+3IuiJFqo3YvIsb+Ij9a8='",
-        "'sha256-XQ+zyr7xk2iiIXhX9MvgW+OhOqsg7ih7FNqSCNEJyXY='",
-        "'sha256-CQBVqbZcOBhfSAAxfT7zB4IRugjBYoUUBiwvfA2hUCs='",
+        "'sha256-WTqNyK3SZ6c6bKtGl+bwxBijshHsU4zKGSYWLiIcthA='",
+        "'sha256-9Za5c1sW7p6sXsulcjBPWNUI48HCiBmkpa0Bsuw8wpI='",
+        "'sha256-lRMwsFqWjkGrJCUn5vdXRNdS/eeEFxtOdxfFHh9y1Og='",
+        "'sha256-QBFyZ2W03ev5CIpijmqBJxdRyS7DHm02uL92/gGQfWI='",
         'https://p.trellocdn.com'
       ],
       styleSrc: ["'self'", "'unsafe-inline'", 'https://p.trellocdn.com'],
