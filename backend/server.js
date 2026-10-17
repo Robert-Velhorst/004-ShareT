@@ -50,6 +50,9 @@ const { reconcileActiveTrelloWebhooks } = require('./services/trelloWebhookServi
 // Create Express app
 const app = express();
 
+// Preserve Express 4's extended query-string parsing during the v5 migration.
+app.set('query parser', 'extended');
+
 // Trust proxy for Cloudflare Tunnel
 app.set('trust proxy', 1);
 
@@ -58,7 +61,27 @@ app.use(httpLogger);
 
 // Security middleware
 app.use(helmet({
-  contentSecurityPolicy: false,
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: [
+        "'self'",
+        "'sha256-WTqNyK3SZ6c6bKtGl+bwxBijshHsU4zKGSYWLiIcthA='",
+        "'sha256-9Za5c1sW7p6sXsulcjBPWNUI48HCiBmkpa0Bsuw8wpI='",
+        "'sha256-lRMwsFqWjkGrJCUn5vdXRNdS/eeEFxtOdxfFHh9y1Og='",
+        "'sha256-QBFyZ2W03ev5CIpijmqBJxdRyS7DHm02uL92/gGQfWI='",
+        "'sha256-ISq1wChr6NFNbt1HaRtJVoGH6VhsnTSOM/hMZ2loU3k='",
+        'https://p.trellocdn.com'
+      ],
+      styleSrc: ["'self'", "'unsafe-inline'", 'https://p.trellocdn.com'],
+      imgSrc: ["'self'", "data:", "blob:", "https:"],
+      fontSrc: ["'self'", "data:"],
+      connectSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      baseUri: ["'self'"],
+      frameAncestors: ['https://trello.com', 'https://*.trello.com']
+    }
+  },
   crossOriginEmbedderPolicy: false
 }));
 
@@ -133,6 +156,12 @@ app.use(express.json({
   }
 }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Express 5 leaves req.body undefined when no parser handles the request.
+app.use((req, res, next) => {
+  if (req.body === undefined) req.body = {};
+  next();
+});
 
 // Session configuration (using memory store for simplicity)
 // For production with cloud sync, consider using a PouchDB-based session store
@@ -255,6 +284,13 @@ if (!fs.existsSync(frontendPath)) {
   frontendPath = path.join(__dirname, '..', 'dist');
 }
 
+// Read the SPA entry point once at startup so the catch-all route does not
+// perform filesystem access for every page request.
+const frontendIndexPath = path.join(frontendPath, 'index.html');
+const frontendIndexHtml = fs.existsSync(frontendIndexPath)
+  ? fs.readFileSync(frontendIndexPath, 'utf8')
+  : null;
+
 // Only setup sirv if the directory actually exists (e.g. after a build)
 if (fs.existsSync(frontendPath)) {
   const sirvHandler = sirv(frontendPath, {
@@ -275,7 +311,7 @@ if (fs.existsSync(frontendPath)) {
 }
 
 // SPA fallback for routes not handled by sirv (when in production mode)
-app.get('*', (req, res) => {
+app.get('/{*splat}', (req, res) => {
   if (req.path.startsWith('/api/')) {
     return sendFastJSON(res, errorResponseSchema, {
       success: false,
@@ -284,11 +320,11 @@ app.get('*', (req, res) => {
   }
   
   // Return early if no frontend build exists
-  if (!fs.existsSync(frontendPath) || !fs.existsSync(path.join(frontendPath, 'index.html'))) {
+  if (frontendIndexHtml === null) {
     return res.status(200).send('ShareT Backend Running. Please start frontend dev server or run build.');
   }
-  
-  res.sendFile(path.join(frontendPath, 'index.html'));
+
+  res.type('html').send(frontendIndexHtml);
 });
 
 // Error handling middleware with fast-json-stringify

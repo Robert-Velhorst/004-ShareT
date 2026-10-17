@@ -62,7 +62,7 @@
     "react-hook-form": "^7.52.0",
     "react-markdown": "^10.1.0",
     "react-resizable-panels": "^2.0.19",
-    "react-router-dom": "^7.18.4",
+    "react-router": "^7.18.4",
     "recharts": "^2.12.7",
     "remark-breaks": "^4.0.0",
     "remark-gfm": "^4.0.1",
@@ -73,10 +73,10 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/react": "^18.2.56",
     "@types/react-dom": "^18.2.19",
     "@vitejs/plugin-react": "^5.1.4",
-    "autoprefixer": "^10.4.19",
     "eslint": "^8.56.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
