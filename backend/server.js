@@ -61,7 +61,26 @@ app.use(httpLogger);
 
 // Security middleware
 app.use(helmet({
-  contentSecurityPolicy: false,
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: [
+        "'self'",
+        "'sha256-3XW3sKtN3SwUh9iUGZXmnBPwpDR5+trIiKnA3MUevAE='",
+        "'sha256-pe3/7lhLOV80xKrlmSwUp7+3IuiJFqo3YvIsb+Ij9a8='",
+        "'sha256-XQ+zyr7xk2iiIXhX9MvgW+OhOqsg7ih7FNqSCNEJyXY='",
+        "'sha256-CQBVqbZcOBhfSAAxfT7zB4IRugjBYoUUBiwvfA2hUCs='",
+        'https://p.trellocdn.com'
+      ],
+      styleSrc: ["'self'", "'unsafe-inline'", 'https://p.trellocdn.com'],
+      imgSrc: ["'self'", "data:", "blob:", "https:"],
+      fontSrc: ["'self'", "data:"],
+      connectSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      baseUri: ["'self'"],
+      frameAncestors: ['https://trello.com', 'https://*.trello.com']
+    }
+  },
   crossOriginEmbedderPolicy: false
 }));
 
