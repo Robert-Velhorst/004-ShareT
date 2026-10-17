@@ -70,6 +70,7 @@ app.use(helmet({
         "'sha256-9Za5c1sW7p6sXsulcjBPWNUI48HCiBmkpa0Bsuw8wpI='",
         "'sha256-lRMwsFqWjkGrJCUn5vdXRNdS/eeEFxtOdxfFHh9y1Og='",
         "'sha256-QBFyZ2W03ev5CIpijmqBJxdRyS7DHm02uL92/gGQfWI='",
+        "'sha256-ISq1wChr6NFNbt1HaRtJVoGH6VhsnTSOM/hMZ2loU3k='",
         'https://p.trellocdn.com'
       ],
       styleSrc: ["'self'", "'unsafe-inline'", 'https://p.trellocdn.com'],
