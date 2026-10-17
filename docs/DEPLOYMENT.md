@@ -2,13 +2,17 @@
 
 ShareT does not need Vercel. It is a Node/Express backend that serves the API and, after a frontend build, the frontend files as well.
 
-The reliable deployment requirement is a stable public HTTPS URL, not a specific hosting provider.
+Production must run on Hetzner behind a stable public HTTPS URL. Local development can use localhost.
 
 ## Recommended options
 
-### 1. Local machine + Cloudflare Tunnel
+### Hetzner production host
 
-Good for a personal installation that runs from your own computer or small server.
+Use the repository's Hetzner deployment workflow in [`deploy/README.md`](../deploy/README.md). Run the backend as a long-running Node process behind HTTPS, for example with Caddy or Nginx. Configure DNS, TLS, secrets, persistent data, monitoring, backups, and rollback before cutover.
+
+### Local development
+
+Run the app on localhost without exposing it through a public tunnel:
 
 ```bash
 npm install
@@ -17,28 +21,6 @@ cd backend
 npm install
 npm start
 ```
-
-In another terminal:
-
-```bash
-cloudflared tunnel --url http://localhost:5005
-```
-
-For production use, configure a named Cloudflare Tunnel and a permanent hostname.
-
-### 2. Local machine + ngrok
-
-Good for testing and acceptable for production only when you use a static ngrok domain.
-
-```bash
-ngrok http 5005
-```
-
-Set `PUBLIC_URL`, `FRONTEND_URL`, and `CORS_ORIGIN` to the stable ngrok HTTPS URL.
-
-### 3. VPS / always-on server
-
-Best for production. Run the backend as a long-running Node process behind HTTPS, for example with Caddy, Nginx, or a platform-provided proxy.
 
 ## Required environment values
 

@@ -93,9 +93,8 @@ See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for webhook behavior, freelancer re
 ShareT is a Node/Express application, not a static-only frontend. It needs an always-running backend and a stable public HTTPS URL. Supported approaches include:
 
 - Docker Compose using `docker-compose.yml`
-- A local or always-on Windows machine behind a named Cloudflare Tunnel
-- A static ngrok domain
-- A VPS or Node hosting platform behind HTTPS
+- Localhost for development
+- A Hetzner production domain
 
 For Docker:
 
