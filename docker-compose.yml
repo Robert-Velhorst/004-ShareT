@@ -38,35 +38,6 @@ services:
         max-size: "10m"
         max-file: "3"
 
-  # ── ngrok tunnel, supervised by Docker ───────────────────────────────
-  # Replaces the old unsupervised `cmd /k ngrok ...` window. The public tunnel
-  # now restarts automatically just like the app does, and reaches the app via
-  # the compose network at host "sharet" (the service name).
-  #
-  # Free ngrok allows only ONE agent session at a time, so redeploy.bat / the
-  # watchdog must NOT also launch ngrok in a window — this service owns it.
-  ngrok:
-    image: ngrok/ngrok:latest
-    container_name: sharet-ngrok
-    restart: always
-    depends_on:
-      - sharet
-    # NGROK_AUTHTOKEN comes from .env.docker via env_file — the ngrok image
-    # reads it from its environment. (Don't add an `environment:` override here:
-    # it would win over env_file and blank the token.)
-    env_file:
-      - .env.docker
-    # Static free domain — keep in sync with PUBLIC_URL in .env.docker.
-    command:
-      - "http"
-      - "sharet:5005"
-      - "--domain=nonhyperbolic-antony-unresentful.ngrok-free.dev"
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
-
   # ── autoheal: restarts any container labeled autoheal=true when it goes
   #    "unhealthy". This catches a hung/OOM'd app that restart:always alone
   #    would leave sitting in an unhealthy state instead of restarting.
