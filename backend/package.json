@@ -22,7 +22,7 @@
     "jsonwebtoken": "^9.0.2",
     "lru-cache": "^10.0.0",
     "multer": "^2.4.0",
-    "nodemailer": "^10.1.0",
+    "nodemailer": "^10.1.1",
     "pino": "^8.16.0",
     "pino-http": "^11.0.0",
     "pino-pretty": "^10.2.3",
