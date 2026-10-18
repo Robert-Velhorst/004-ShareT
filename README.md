@@ -1,3 +1,9 @@
+> Consolidation status (2026-10-19): source verification and current-head CI
+> are recorded in the active PR. Earlier live Windows/ngrok/provider observations
+> below are historical, not proof of current deployment. Production targets
+> Hetzner; existing services must be migrated and verified before retirement.
+> The optional docker-compose.local-tunnel.yml file never runs by default.
+
 # ShareT
 
 ShareT gives people controlled access to Trello work without requiring them to have a Trello account.

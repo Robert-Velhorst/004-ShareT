@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Learn how the ShareT project connects external collaborators with selected Trello work. Read about its workflow, access controls, requirements, and source code."
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>ShareT — Project information and documentation</title>
+    <link rel="icon" type="image/png" href="assets/sharet-mark.png" />
+    <link rel="stylesheet" href="site.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main-content">Skip to content</a>
+    <header class="container header">
+      <a class="brand" href="#main-content" aria-label="ShareT project home"
+        ><img src="assets/sharet-mark.png" alt="" width="44" height="44" /><span
+          >ShareT</span
+        ></a
+      >
+      <nav aria-label="Main navigation">
+        <a href="#how-it-works">How it works</a
+        ><a href="#project-notes">Project notes</a
+        ><a href="#documentation">Documentation</a>
+      </nav>
+      <a class="button" href="https://github.com/Robert-Velhorst/004-ShareT"
+        >View source</a
+      >
+    </header>
+    <main id="main-content" tabindex="-1">
+      <section class="container hero" aria-labelledby="hero-heading">
+        <div class="hero-copy">
+          <h1 id="hero-heading">
+            Trello work.<br /><span>Shared access.</span>
+          </h1>
+          <p>
+            ShareT is a software project for sharing selected Trello cards and
+            lists with people who do not have a Trello account.
+          </p>
+          <p>
+            Collaborators use a shared page. The project owner keeps the
+            conversation in Trello.
+          </p>
+          <a class="text-link" href="#how-it-works"
+            >Understand the workflow <span aria-hidden="true">→</span></a
+          >
+        </div>
+        <figure class="conversation" aria-labelledby="conversation-caption">
+          <div class="window external-window">
+            <div class="window-bar">
+              <span class="symbol" aria-hidden="true">↗</span> Collaborator ·
+              ShareT
+            </div>
+            <div class="window-body">
+              <h2>Website redesign</h2>
+              <div class="person">
+                <span class="avatar" aria-hidden="true">AM</span
+                ><strong>Alex Morgan</strong>
+              </div>
+              <p class="update">The first draft is ready for your feedback.</p>
+              <div class="example-label">Example collaborator update</div>
+            </div>
+          </div>
+          <div class="connector" aria-hidden="true"></div>
+          <div class="window trello-window">
+            <div class="window-bar">
+              <span class="symbol" aria-hidden="true">↙</span> Project owner ·
+              Trello
+            </div>
+            <div class="window-body">
+              <h2>Website redesign</h2>
+              <div class="comment">
+                <span class="avatar bot" aria-hidden="true">S</span>
+                <div>
+                  <strong>ShareT</strong>
+                  <p>
+                    <b>Alex Morgan:</b> The first draft is ready for your
+                    feedback.
+                  </p>
+                </div>
+              </div>
+              <div class="comment">
+                <span class="avatar" aria-hidden="true">JL</span>
+                <div>
+                  <strong>Jamie Lee</strong>
+                  <p>Looks great. Let’s refine the homepage.</p>
+                </div>
+              </div>
+              <div class="example-label">Example reply inside Trello</div>
+            </div>
+          </div>
+          <figcaption id="conversation-caption">
+            Illustrative conversation with fictional people. This website does
+            not connect to Trello or send messages.
+          </figcaption>
+        </figure>
+      </section>
+      <section
+        id="how-it-works"
+        class="workflow"
+        aria-labelledby="workflow-heading"
+      >
+        <div class="container">
+          <h2 id="workflow-heading">How the pieces fit together.</h2>
+          <ol class="steps">
+            <li>
+              <span class="number" aria-hidden="true">01</span>
+              <h3>Select the work</h3>
+              <p>
+                The Trello owner chooses a card or list and creates a shared
+                link in a running ShareT installation.
+              </p>
+            </li>
+            <li>
+              <span class="number" aria-hidden="true">02</span>
+              <h3>Contribute through ShareT</h3>
+              <p>
+                The collaborator opens the link. Posting updates requires a name
+                and email verification, but no Trello account.
+              </p>
+            </li>
+            <li>
+              <span class="number" aria-hidden="true">03</span>
+              <h3>Reply inside Trello</h3>
+              <p>
+                A configured relay member posts the update with the
+                collaborator’s name. The owner replies on the Trello card.
+              </p>
+            </li>
+          </ol>
+        </div>
+      </section>
+      <section class="conversation-band" aria-labelledby="reply-heading">
+        <div class="container band-grid">
+          <div>
+            <h2 id="reply-heading">Two sides.<br />One conversation.</h2>
+            <p>
+              The project is designed to keep updates with the work, even when
+              collaborators cannot use Trello directly.
+            </p>
+            <p>
+              With the required services configured, ShareT can email a Trello
+              reply to the verified participant. A Trello Power-Up panel is not
+              required.
+            </p>
+          </div>
+          <figure class="email-example">
+            <div class="mail-icon" aria-hidden="true">✉</div>
+            <h3>Reply on Website redesign</h3>
+            <p class="muted">Jamie replied:</p>
+            <blockquote>Looks great. Let’s refine the homepage.</blockquote>
+            <p class="email-destination">
+              The email links back to the shared page.
+            </p>
+            <figcaption>
+              Illustrative email, not a delivery confirmation.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+      <section
+        id="project-notes"
+        class="container notes"
+        aria-labelledby="notes-heading"
+      >
+        <div>
+          <h2 id="notes-heading">Access controls.<br />Clear boundaries.</h2>
+          <ul class="feature-list">
+            <li>
+              <h3>Selected cards or lists</h3>
+              <p>
+                Links expose the selected work according to their settings, not
+                a separate Trello account for each collaborator.
+              </p>
+            </li>
+            <li>
+              <h3>Password and expiry options</h3>
+              <p>
+                Owners can limit access to a shared link. Treat the link itself
+                as sensitive when sharing private work.
+              </p>
+            </li>
+            <li>
+              <h3>Verified participation</h3>
+              <p>
+                Names and verified email addresses connect comments with
+                participants in the running application.
+              </p>
+            </li>
+          </ul>
+        </div>
+        <aside class="requirements" aria-labelledby="requirements-heading">
+          <h3 id="requirements-heading">What a running installation needs</h3>
+          <ul>
+            <li>A Node.js server and stable HTTPS address.</li>
+            <li>Trello API credentials and access to the relevant boards.</li>
+            <li>A separate relay member for owner notifications.</li>
+            <li>An email service for verification and reply emails.</li>
+            <li>Operational care for secrets, stored data, and backups.</li>
+          </ul>
+          <p>
+            GitHub Pages hosts this information only. It does not run the ShareT
+            application, process payments, or deliver notifications.
+          </p>
+        </aside>
+      </section>
+      <section class="faq" aria-labelledby="faq-heading">
+        <div class="container">
+          <h2 id="faq-heading">Questions about the project.</h2>
+          <div class="questions">
+            <details open>
+              <summary>Is this the ShareT application?</summary>
+              <p>
+                No. This is an informational project website. It explains the
+                software and links to its source and documentation. There is no
+                account registration, payment processing, or live collaboration
+                on this site.
+              </p>
+            </details>
+            <details>
+              <summary>Do collaborators need a Trello account?</summary>
+              <p>
+                No. In a configured ShareT installation, they participate
+                through a shared link. The owner and relay member still need
+                their own Trello access.
+              </p>
+            </details>
+            <details>
+              <summary>Can the owner reply from a phone?</summary>
+              <p>
+                Yes, the workflow supports normal comments from the Trello
+                mobile app. When several participants are waiting, use the
+                intended person’s full name, or start with their unique first
+                name. Email delivery depends on the installation’s
+                configuration.
+              </p>
+            </details>
+            <details>
+              <summary>Are notifications guaranteed?</summary>
+              <p>
+                No. Delivery depends on Trello permissions, the relay identity,
+                subscription and notification settings, email configuration, and
+                provider availability. The documentation explains setup and
+                known limitations; the examples here are not evidence of live
+                delivery.
+              </p>
+            </details>
+            <details>
+              <summary>Does this website collect my information?</summary>
+              <p>
+                This page has no forms, analytics, cookies, or application
+                storage. GitHub, as the hosting provider, may process visitor
+                information such as IP addresses for security. The separate
+                ShareT application processes information needed for its
+                collaboration features.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+      <section
+        id="documentation"
+        class="container documentation"
+        aria-labelledby="docs-heading"
+      >
+        <h2 id="docs-heading">Explore the project.</h2>
+        <p>
+          Read the implementation, setup requirements, and operational guidance.
+        </p>
+        <div class="doc-links">
+          <a
+            class="button"
+            href="https://github.com/Robert-Velhorst/004-ShareT#readme"
+            >Read the README</a
+          ><a
+            class="text-link"
+            href="https://github.com/Robert-Velhorst/004-ShareT/blob/main/docs/DEPLOYMENT.md"
+            >Deployment documentation <span aria-hidden="true">→</span></a
+          >
+        </div>
+      </section>
+    </main>
+    <footer class="container footer">
+      <a class="brand" href="#main-content"
+        ><img src="assets/sharet-mark.png" alt="" width="36" height="36" /><span
+          >ShareT</span
+        ></a
+      >
+      <p>Independent project. Not affiliated with Atlassian.</p>
+      <a href="https://github.com/Robert-Velhorst/004-ShareT"
+        >Source repository</a
+      >
+    </footer>
+  </body>
+</html>

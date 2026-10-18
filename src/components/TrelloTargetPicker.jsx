@@ -161,8 +161,19 @@ const TrelloTargetPicker = ({
         <LayoutDashboard className="size-3.5" />
         {targetCount} {targetCount === 1
           ? (isListMode ? 'list' : 'card')
-          : (isListMode ? 'lists' : 'cards')} available. Search by name, board, list, or workspace.
+          : (isListMode ? 'lists' : 'cards')} available across {boards.length} board{boards.length !== 1 ? 's' : ''}. Search by name, board, list, or workspace.
       </p>
+      {targetCount === 0 && boards.length > 0 && (
+        <p className="flex items-start gap-1.5 rounded-md border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-xs text-amber-700 dark:text-amber-400">
+          <span className="mt-0.5 shrink-0">⚠️</span>
+          <span>
+            {boards.length} board{boards.length !== 1 ? 's were' : ' was'} found but no cards could be loaded.
+            This usually means your Trello account is invited to these boards but doesn't have card-read access yet,
+            or the board is private. Make sure the <strong>noodzakelijkonline</strong> account is an active member
+            on every board you want to share cards from.
+          </span>
+        </p>
+      )}
     </div>
   );
 };

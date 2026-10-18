@@ -2,7 +2,7 @@
 import { useState, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import TrelloConnect from '../components/TrelloConnect';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { LogOut, BookOpen } from "lucide-react";
@@ -19,6 +19,7 @@ import { useAuth } from '../contexts/AuthContext';
 import ApiDocumentation from '../components/ApiDocumentation';
 import { PaymentDialog } from '../components/PaymentDialog';
 import { ThemeToggle } from '../components/ThemeToggle';
+import { NotificationCenter } from '../components/NotificationCenter';
 import { trello } from '../api';
 
 const App = () => {
@@ -87,7 +88,8 @@ const App = () => {
           <CardHeader>
             <div className="flex justify-between items-center">
               <CardTitle>External Share</CardTitle>
-              <div className="flex space-x-2">
+              <div className="flex items-center space-x-2">
+                <NotificationCenter />
                 <Button 
                   variant="outline" 
                   size="sm" 

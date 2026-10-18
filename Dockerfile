@@ -1,18 +1,18 @@
 # Multi-stage build for ShareT
 # Stage 1: Build frontend
-FROM node:22-alpine AS frontend-build
+FROM node:26.12.0-alpine@sha256:6f08a523443ddedf52941874c203475b0ad503e859ad70cb26ab8be9a517dbd5 AS frontend-build
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 # Keep frontend and backend cache boundaries independent. Server-only changes
 # must not force Vite to rebuild all frontend modules.
-COPY index.html vite.config.js postcss.config.js tailwind.config.js ./
+COPY index.html vite.config.js postcss.config.js tailwind.config.cjs ./
 COPY public/ ./public/
 COPY src/ ./src/
 RUN npm run build
 
 # Stage 2: Production server
-FROM node:22-alpine AS production
+FROM node:26.12.0-alpine@sha256:6f08a523443ddedf52941874c203475b0ad503e859ad70cb26ab8be9a517dbd5 AS production
 WORKDIR /app
 
 # Copy backend

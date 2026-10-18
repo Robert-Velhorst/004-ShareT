@@ -264,19 +264,58 @@ exports.getBoards = async (req, res) => {
     const boards = await fetchJSON(boardListUrl);
     const openBoards = boards.filter(b => !b.closed);
 
-    // Step 2: For each board, fetch lists+cards in parallel (/boards/:id supports cards=open)
+    // Step 2: For each board, fetch lists+cards in parallel.
+    // We first try the combined board endpoint (?cards=open). For boards where
+    // the user is a guest member, Trello sometimes returns cards:[] even though
+    // cards exist. In that case we fall back to a dedicated /boards/:id/cards
+    // call, and finally to per-list card fetches as a last resort.
     const openBoardsWithData = await Promise.all(openBoards.map(async board => {
       try {
+        // --- Primary: combined board fetch ---
         const boardDataUrl = `${TRELLO_API_BASE}/boards/${board.id}?key=${key}&token=${token}&lists=open&cards=open&card_fields=name,desc,url,due,dueComplete,idBoard,idList`;
         const boardData = await fetchJSON(boardDataUrl);
 
-        const cardsByList = {};
-        (boardData.cards || []).forEach(card => {
+        let inlineCards = boardData.cards || [];
+        const lists = boardData.lists || [];
+
+        // --- Fallback A: dedicated cards endpoint ---
+        // Triggered when the board has lists but no inline cards (common for
+        // boards where the authenticated user is a guest/observer member).
+        if (lists.length > 0 && inlineCards.length === 0) {
+          try {
+            const cardsUrl = `${TRELLO_API_BASE}/boards/${board.id}/cards?filter=open&key=${key}&token=${token}&fields=name,desc,url,due,dueComplete,idBoard,idList`;
+            inlineCards = await fetchJSON(cardsUrl);
+          } catch {
+            // Fallback A failed — proceed to Fallback B
+          }
+        }
+
+        // Build cardsByList map from whatever we have so far
+        let cardsByList = {};
+        inlineCards.forEach(card => {
           if (!cardsByList[card.idList]) cardsByList[card.idList] = [];
           cardsByList[card.idList].push(card);
         });
 
-        const listsWithCards = (boardData.lists || []).map(list => ({
+        // --- Fallback B: per-list card fetch ---
+        // If we still have lists with no cards at all, try fetching each list
+        // individually. This covers boards with strict visibility settings.
+        const listsStillEmpty = lists.filter(l => !(cardsByList[l.id] || []).length);
+        if (listsStillEmpty.length > 0 && inlineCards.length === 0) {
+          await Promise.all(listsStillEmpty.map(async list => {
+            try {
+              const listCardsUrl = `${TRELLO_API_BASE}/lists/${list.id}/cards?key=${key}&token=${token}&fields=name,desc,url,due,dueComplete,idBoard,idList`;
+              const listCards = await fetchJSON(listCardsUrl);
+              if (listCards.length) {
+                cardsByList[list.id] = listCards;
+              }
+            } catch {
+              // Ignore per-list failure — leave that list empty
+            }
+          }));
+        }
+
+        const listsWithCards = lists.map(list => ({
           ...list,
           cards: cardsByList[list.id] || []
         }));

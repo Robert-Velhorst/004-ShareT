@@ -38,6 +38,7 @@ const trelloRoutes = require('./routes/trelloRoutes');
 const sharedLinkRoutes = require('./routes/sharedLinkRoutes');
 const sharedAccessRoutes = require('./routes/sharedAccessRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const notificationRoutes = require('./routes/notificationRoutes');
 const trelloWebhookRoutes = require('./routes/trelloWebhookRoutes');
 const connectorRoutes = require('./routes/connectorRoutes');
 const { startReplyNotificationMonitor, stopReplyNotificationMonitor } = require('./services/replyNotificationService');
@@ -46,6 +47,9 @@ const { inspectRuntimeEnvironment, validateRuntimeEnvironment } = require('./con
 
 // Create Express app
 const app = express();
+
+// Preserve Express 4's extended query-string parsing during the v5 migration.
+app.set('query parser', 'extended');
 
 // Trust proxy for Cloudflare Tunnel
 app.set('trust proxy', 1);
@@ -152,6 +156,12 @@ app.use(express.json({
 }));
 app.use(express.urlencoded({ extended: true, limit: '1mb' }));
 
+// Express 5 leaves unparsed request bodies undefined.
+app.use((req, res, next) => {
+  if (req.body === undefined) req.body = {};
+  next();
+});
+
 // Emergency controls are explicit and fail closed without stopping read-only diagnostics.
 app.use('/api', (req, res, next) => {
   const readOnly = req.method === 'GET' || req.method === 'HEAD' || req.method === 'OPTIONS';
@@ -230,6 +240,7 @@ app.use('/api/shared-access', (req, res, next) => {
   next();
 }, sharedLinkRateLimit, sharedAccessRoutes);
 app.use('/api/admin', apiRateLimit, adminRoutes);
+app.use('/api/notifications', apiRateLimit, notificationRoutes);
 app.use('/api/trello-webhooks', trelloWebhookRoutes);
 app.use('/api/connector', apiRateLimit, connectorRoutes);
 
@@ -278,6 +289,13 @@ if (!fs.existsSync(frontendPath)) {
   frontendPath = path.join(__dirname, '..', 'dist');
 }
 
+// Read the SPA entry point once at startup so the catch-all route does not
+// perform filesystem access for every page request.
+const frontendIndexPath = path.join(frontendPath, 'index.html');
+const frontendIndexHtml = fs.existsSync(frontendIndexPath)
+  ? fs.readFileSync(frontendIndexPath, 'utf8')
+  : null;
+
 // Only setup sirv if the directory actually exists (e.g. after a build)
 if (fs.existsSync(frontendPath)) {
   const sirvHandler = sirv(frontendPath, {
@@ -305,7 +323,7 @@ if (fs.existsSync(frontendPath)) {
 }
 
 // SPA fallback for routes not handled by sirv (when in production mode)
-app.get('*', (req, res) => {
+app.get('/{*splat}', (req, res) => {
   if (req.path.startsWith('/api/')) {
     return sendFastJSON(res, errorResponseSchema, {
       success: false,
@@ -314,11 +332,11 @@ app.get('*', (req, res) => {
   }
   
   // Return early if no frontend build exists
-  if (!fs.existsSync(frontendPath) || !fs.existsSync(path.join(frontendPath, 'index.html'))) {
+  if (frontendIndexHtml === null) {
     return res.status(200).send('ShareT Backend Running. Please start frontend dev server or run build.');
   }
-  
-  res.sendFile(path.join(frontendPath, 'index.html'));
+
+  res.type('html').send(frontendIndexHtml);
 });
 
 // Error handling middleware with fast-json-stringify

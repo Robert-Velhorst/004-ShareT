@@ -26,7 +26,8 @@ const {
   authorizeShareRequest,
   signPasswordGrant
 } = require('../utils/shareAccess');
-const { safeFileName, trustedTrelloAttachmentUrl } = require('../utils/attachmentSecurity');
+const { safeFileName } = require('../utils/attachmentSecurity');
+const { getSafeTrelloAttachmentUrl } = require('../utils/trelloAttachmentUrl');
 
 const TRELLO_API_BASE = 'https://api.trello.com/1';
 
@@ -362,6 +363,14 @@ exports.downloadAttachment = async (req, res) => {
     const metaUrl = `${TRELLO_API_BASE}/cards/${share.cardId}/attachments/${req.params.attachmentId}?key=${process.env.TRELLO_API_KEY}&token=${connection.trelloToken}`;
     const attachment = await fetchJSON(metaUrl);
 
+    const attachmentUrl = getSafeTrelloAttachmentUrl(attachment, String(share.cardId), String(req.params.attachmentId));
+    if (!attachmentUrl) {
+      return res.status(400).json({
+        success: false,
+        message: 'Only uploaded Trello attachments can be downloaded'
+      });
+    }
+
     // Log download
     await AccessLog.create({
       shareId: req.params.shareId,
@@ -371,9 +380,7 @@ exports.downloadAttachment = async (req, res) => {
     });
 
     // Fetch the actual file from Trello using the owner's token as auth header
-    const fileResponse = await fetch(trustedTrelloAttachmentUrl(attachment.url), {
-      // Never forward the owner credential through a redirect. Trello file
-      // downloads are expected to resolve on the trusted Trello origin.
+    const fileResponse = await fetch(attachmentUrl, {
       redirect: 'error',
       headers: {
         'Authorization': `OAuth oauth_consumer_key="${process.env.TRELLO_API_KEY}", oauth_token="${connection.trelloToken}"`

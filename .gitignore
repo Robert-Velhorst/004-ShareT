@@ -49,3 +49,5 @@ logs/
 .DS_Store
 Thumbs.db
 config.bat
+*.mp4
+*.textClipping
