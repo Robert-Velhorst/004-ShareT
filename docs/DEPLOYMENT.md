@@ -1,6 +1,6 @@
 # ShareT Deployment
 
-ShareT does not need Vercel. It is a Node/Express backend that serves the API and, after a frontend build, the frontend files as well.
+ShareT is a Node/Express backend that serves the API and, after a frontend build, the frontend files as well.
 
 Production must run on Hetzner behind a stable public HTTPS URL. Local development can use localhost.
 
