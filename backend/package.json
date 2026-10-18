@@ -29,7 +29,7 @@
     "pouchdb": "^8.0.1",
     "pouchdb-find": "^8.0.1",
     "rate-limiter-flexible": "^4.0.1",
-    "sirv": "^2.0.4",
+    "sirv": "^3.0.2",
     "validator": "^13.15.35"
   },
   "overrides": {
