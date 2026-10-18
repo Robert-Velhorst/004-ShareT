@@ -17,7 +17,7 @@ Adds a **"Share via ShareT"** button to every Trello card, letting you generate 
    ```
    https://YOUR_SHARET_URL/power-up/index.html
    ```
-   Replace `YOUR_SHARET_URL` with your ShareT URL (e.g. `https://nonhyperbolic-antony-unresentful.ngrok-free.dev`)
+   Replace `YOUR_SHARET_URL` with the HTTPS domain configured for your ShareT deployment.
 
 4. Enable capabilities: **card-buttons**, **card-badges**, **card-detail-badges**
 5. Save
@@ -41,4 +41,4 @@ That's it — the **Share via ShareT** button now appears on every card's back.
 ## Notes
 - The Power-Up is served from ShareT's own backend at `/power-up/`
 - No separate hosting needed
-- Works with localhost, ngrok tunnel, or custom domain
+- Works with localhost during development or the configured HTTPS domain in production

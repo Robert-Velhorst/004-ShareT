@@ -1,7 +1,7 @@
-
 import { fileURLToPath, URL } from "url";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 import { resolve } from "path";
 
 const projectRoot = fileURLToPath(new URL(".", import.meta.url));
@@ -12,7 +12,7 @@ export default defineConfig(() => ({
     host: "::",
     port: "8080",
   },
-  plugins: [react()],
+  plugins: [react(), tailwindcss()],
   resolve: {
     alias: [
       {
