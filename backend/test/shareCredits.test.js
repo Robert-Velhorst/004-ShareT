@@ -44,16 +44,16 @@ test('share creation charges on the server while duplicate reuse stays free', as
     });
 
     for (let index = 1; index <= 3; index += 1) {
-      const response = await createShare(user, `card-${index}`);
+      const response = await createShare(user, `00000000000000000000000${index}`);
       assert.equal(response.statusCode, 201);
       assert.equal(response.payload.creditsRemaining, 3 - index);
     }
 
-    const exhausted = await createShare(user, 'card-4');
+    const exhausted = await createShare(user, '000000000000000000000004');
     assert.equal(exhausted.statusCode, 402);
     assert.equal(exhausted.payload.message, 'Insufficient credits');
 
-    const duplicate = await createShare(user, 'card-1');
+    const duplicate = await createShare(user, '000000000000000000000001');
     assert.equal(duplicate.statusCode, 200);
     assert.equal(duplicate.payload.duplicate, true);
     assert.equal(duplicate.payload.creditsRemaining, 0);

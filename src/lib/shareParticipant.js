@@ -1,4 +1,5 @@
 const PARTICIPANT_SCHEMA_VERSION = 1;
+const passwordGrants = new Map();
 
 export function participantStorageKey(shareId) {
   return `shareT_participant_${shareId}`;
@@ -48,17 +49,18 @@ export function clearShareParticipant(shareId) {
 }
 
 export function readSharePasswordGrant(shareId) {
-  return sessionStorage.getItem(passwordGrantStorageKey(shareId)) || '';
+  return passwordGrants.get(passwordGrantStorageKey(shareId)) || '';
 }
 
 export function writeSharePasswordGrant(shareId, token) {
-  if (token) sessionStorage.setItem(passwordGrantStorageKey(shareId), token);
-  else sessionStorage.removeItem(passwordGrantStorageKey(shareId));
+  const key = passwordGrantStorageKey(shareId);
+  if (token) passwordGrants.set(key, token);
+  else passwordGrants.delete(key);
   return token || '';
 }
 
 export function clearSharePasswordGrant(shareId) {
-  sessionStorage.removeItem(passwordGrantStorageKey(shareId));
+  passwordGrants.delete(passwordGrantStorageKey(shareId));
 }
 
 export function readShareAccess(shareId) {

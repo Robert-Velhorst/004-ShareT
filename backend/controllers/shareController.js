@@ -10,6 +10,7 @@ const { normalizePagination } = require('../utils/pagination');
 const { presentSharedLink } = require('../utils/sharePresentation');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
+const { encodeTrelloPathSegment } = require('../utils/trelloPath');
 
 const TRELLO_API_BASE = 'https://api.trello.com/1';
 const PERMISSION_KEYS = ['canView', 'canComment', 'canUpload', 'canDownload', 'canSetDueDate'];
@@ -18,7 +19,7 @@ function normalizeShareInput(input, { partial = false } = {}) {
   const normalized = {};
   if (!partial || input.cardId !== undefined) {
     normalized.cardId = String(input.cardId || '').trim();
-    if (!normalized.cardId || normalized.cardId.length > 128) throw new Error('A valid Trello card is required');
+    if (!encodeTrelloPathSegment(normalized.cardId)) throw new Error('A valid Trello card is required');
   }
   for (const field of ['cardName', 'boardId', 'boardName']) {
     if (input[field] !== undefined) normalized[field] = String(input[field] || '').trim().slice(0, 500);
@@ -64,10 +65,12 @@ function normalizeShareInput(input, { partial = false } = {}) {
 // one link via the card picker and another via a pasted URL.
 async function resolveTrelloCard(userId, cardIdOrShortLink) {
   try {
+    const encodedCardId = encodeTrelloPathSegment(cardIdOrShortLink);
+    if (!encodedCardId) return null;
     const connection = await TrelloConnection.findByUserId(userId);
     if (!connection?.trelloToken) return null;
-    const url = `${TRELLO_API_BASE}/cards/${cardIdOrShortLink}?key=${process.env.TRELLO_API_KEY}&token=${connection.trelloToken}&fields=id,shortLink,name,idBoard`;
-    const response = await fetch(url);
+    const url = `${TRELLO_API_BASE}/cards/${encodedCardId}?key=${process.env.TRELLO_API_KEY}&token=${connection.trelloToken}&fields=id,shortLink,name,idBoard`;
+    const response = await fetch(url, { redirect: 'error' });
     if (!response.ok) return null;
     return await response.json();
   } catch {

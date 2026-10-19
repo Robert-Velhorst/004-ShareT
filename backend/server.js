@@ -29,7 +29,7 @@ const { initDatabases, setupSync, closeAll, getStats, getMigrationState, pruneEx
 // Import optimized utilities (GitHub Gems)
 const { logger, httpLogger, loggers } = require('./utils/logger');
 const { getStats: getCacheStats, clearAll: clearCache } = require('./utils/cache');
-const { apiRateLimit, sharedLinkRateLimit } = require('./utils/rateLimiter');
+const { apiRateLimit } = require('./utils/rateLimiter');
 const { errorResponseSchema, sendFastJSON } = require('./utils/jsonSerializer');
 
 // Import routes
@@ -226,7 +226,7 @@ app.get('/ready', async (req, res) => {
 });
 
 // API Routes with rate limiting
-app.use('/api/auth', apiRateLimit, authRoutes);
+app.use('/api/auth', authRoutes);
 app.use('/api/trello', apiRateLimit, trelloRoutes);
 app.use('/api/shared-links', apiRateLimit, sharedLinkRoutes);
 app.use('/api/shared-access', (req, res, next) => {
@@ -238,7 +238,7 @@ app.use('/api/shared-access', (req, res, next) => {
     });
   }
   next();
-}, sharedLinkRateLimit, sharedAccessRoutes);
+}, sharedAccessRoutes);
 app.use('/api/admin', apiRateLimit, adminRoutes);
 app.use('/api/notifications', apiRateLimit, notificationRoutes);
 app.use('/api/trello-webhooks', trelloWebhookRoutes);

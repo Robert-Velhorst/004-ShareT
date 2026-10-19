@@ -7,35 +7,35 @@ const express = require('express');
 const router = express.Router();
 const sharedAccessController = require('../controllers/sharedAccessController');
 const sharedCommentController = require('../controllers/sharedCommentController');
-const { verificationRateLimit } = require('../utils/rateLimiter');
+const { sharedLinkRateLimit, verificationRateLimit } = require('../utils/rateLimiter');
 
 // Public routes - no authentication required
-router.get('/:shareId', sharedAccessController.getSharedCard);
-router.post('/:shareId/verify-email', verificationRateLimit, sharedAccessController.requestVerification);
-router.post('/:shareId/confirm-verification', sharedAccessController.confirmVerification);
-router.post('/:shareId/participant-status', sharedAccessController.getParticipantStatus);
-router.post('/:shareId/verify-password', sharedAccessController.verifyPassword);
+router.get('/:shareId', sharedLinkRateLimit, sharedAccessController.getSharedCard);
+router.post('/:shareId/verify-email', sharedLinkRateLimit, verificationRateLimit, sharedAccessController.requestVerification);
+router.post('/:shareId/confirm-verification', sharedLinkRateLimit, sharedAccessController.confirmVerification);
+router.post('/:shareId/participant-status', sharedLinkRateLimit, sharedAccessController.getParticipantStatus);
+router.post('/:shareId/verify-password', sharedLinkRateLimit, sharedAccessController.verifyPassword);
 
 // Attachments
-router.get('/:shareId/attachments', sharedAccessController.getAttachments);
-router.get('/:shareId/attachments/:attachmentId/download', sharedAccessController.downloadAttachment);
-router.post('/:shareId/attachments', sharedAccessController.uploadAttachment);
+router.get('/:shareId/attachments', sharedLinkRateLimit, sharedAccessController.getAttachments);
+router.get('/:shareId/attachments/:attachmentId/download', sharedLinkRateLimit, sharedAccessController.downloadAttachment);
+router.post('/:shareId/attachments', sharedLinkRateLimit, sharedAccessController.uploadAttachment);
 
 // Comments & Actions — Fix #12, #13
-router.get('/:shareId/comments', sharedAccessController.getSharedComments);
-router.get('/:shareId/actions', sharedAccessController.getSharedActions);
-router.post('/:shareId/comments', sharedCommentController.addComment);
+router.get('/:shareId/comments', sharedLinkRateLimit, sharedAccessController.getSharedComments);
+router.get('/:shareId/actions', sharedLinkRateLimit, sharedAccessController.getSharedActions);
+router.post('/:shareId/comments', sharedLinkRateLimit, sharedCommentController.addComment);
 
 // Checklists — Fix #7
-router.get('/:shareId/checklists', sharedAccessController.getSharedChecklists);
+router.get('/:shareId/checklists', sharedLinkRateLimit, sharedAccessController.getSharedChecklists);
 
 // Members — Fix #10
-router.get('/:shareId/members', sharedAccessController.getSharedMembers);
+router.get('/:shareId/members', sharedLinkRateLimit, sharedAccessController.getSharedMembers);
 
 // Links — Fix #14
-router.get('/:shareId/links', sharedAccessController.getSharedLinks);
+router.get('/:shareId/links', sharedLinkRateLimit, sharedAccessController.getSharedLinks);
 
 // Due date
-router.put('/:shareId/due-date', sharedAccessController.setDueDate);
+router.put('/:shareId/due-date', sharedLinkRateLimit, sharedAccessController.setDueDate);
 
 module.exports = router;

@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2, Mail, CheckCircle, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
+import { useNavigate } from 'react-router';
 import { sharedAccess } from '../api';
 import {
   clearShareParticipant,
@@ -16,6 +17,7 @@ import {
 } from '../lib/shareParticipant';
 
 const SharedLinkAccess = ({ linkToken }) => {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [linkInfo, setLinkInfo] = useState(null);
   const [storedParticipant] = useState(() => readShareParticipant(linkToken));
@@ -70,7 +72,7 @@ const SharedLinkAccess = ({ linkToken }) => {
         }
 
         if (response.accessGranted && hasVerifiedIdentity && (!info.requiresPassword || secretPassed)) {
-          window.location.href = cardUrl;
+          navigate(cardUrl, { replace: true });
         }
       } else {
         throw new Error('Invalid link or link information not found');
@@ -81,7 +83,7 @@ const SharedLinkAccess = ({ linkToken }) => {
     } finally {
       setIsLoading(false);
     }
-  }, [cardUrl, linkToken, passwordToken, secretPassed]);
+  }, [cardUrl, linkToken, navigate, passwordToken, secretPassed]);
 
   useEffect(() => {
     fetchLinkInfo();
@@ -132,7 +134,7 @@ const SharedLinkAccess = ({ linkToken }) => {
         
         // Redirect to card view
         setTimeout(() => {
-          window.location.href = cardUrl;
+          navigate(cardUrl, { replace: true });
         }, 1000);
       } else {
         throw new Error(response.error || 'Invalid verification code');
@@ -183,7 +185,7 @@ const SharedLinkAccess = ({ linkToken }) => {
         writeSharePasswordGrant(linkToken, response.passwordToken);
         setPasswordToken(response.passwordToken || '');
         if ((!linkInfo.requiresParticipantIdentity && !linkInfo.requiresEmail) || identityVerified) {
-          window.location.href = cardUrl;
+          navigate(cardUrl, { replace: true });
         }
       }
     } catch (err) {
