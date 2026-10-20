@@ -17,7 +17,11 @@ function getBilling() {
     writerLock = acquireWriterLock(path.join(directory, `prepaid-${config.mode}-writer.sqlite`));
     try {
       ledger = new Ledger(path.join(directory, `prepaid-${config.mode}.sqlite`));
-      stripe = new Stripe(config.secretKey, { maxNetworkRetries: 2, timeout: 15000 });
+      stripe = new Stripe(config.secretKey, {
+        maxNetworkRetries: 2,
+        timeout: 15000,
+        apiVersion: '2026-09-30.endive',
+      });
     } catch (error) { ledger?.close(); writerLock.close(); writerLock = undefined; throw error; }
   }
   service = new BillingService({ config, ledger, stripe });
