@@ -83,15 +83,7 @@ echo  [OK] Docker is running.
 :: STEP 2  CONFIRM LOCAL CONFIGURATION
 :: ════════════════════════════════════════════════
 echo.
-echo  [2/3] Local Docker setup does not start a public tunnel.
-
-:: Pass only Compose's two tunnel settings through the current process. The
-:: application consumes .env.docker in raw mode so credentials stay literal.
-set "NGROK_AUTHTOKEN="
-set "NGROK_DOMAIN="
-if exist .env.docker (
-    for /f "tokens=1,* delims==" %%A in ('findstr /B "NGROK_AUTHTOKEN= NGROK_DOMAIN=" .env.docker') do set "%%A=%%B"
-)
+echo  [2/3] Confirming the local Docker configuration.
 
 :: ════════════════════════════════════════════════
 :: STEP 3  START DOCKER STACK (App + Autoheal)

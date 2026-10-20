@@ -22,7 +22,7 @@ Updated: 2026-08-09
 | Maintenance/public kill switch | Mutations or all public links fail closed with explicit 503. | Code present; runtime smoke pending. |
 | Static deployment update | HTML revalidates; hashed assets cache immutably; reload does not request obsolete chunks. | Response-header and rebuild/restart browser smoke passed. |
 | Windows standalone | Clean install, doctor, start, health, backup, restart. | Clean installs, doctor, start/readiness, restart, and isolated backup/restore passed on Windows 11; independent-machine acceptance pending. |
-| Docker/ngrok | Compose substitutes static domain and public `/ready` works. | Live Windows Compose stack is healthy; local and static-ngrok `/ready` return 200. Ngrok receives only its own credential. |
+| Public deployment | No public tunnel is bundled or supported. | Validate the production HTTPS origin and reverse-proxy routing on the Hetzner host as a separate operator acceptance step. |
 | CouchDB sync | All active databases replicate and reconnect. | Code present; live CouchDB conflict/recovery pass pending. |
 
 ## Automated commands

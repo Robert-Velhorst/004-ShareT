@@ -1,6 +1,6 @@
 # Hetzner billing handoff — manual migration only
 
-Robert has reserved the ngrok-to-Hetzner migration for ShareT's existing software developer. This document describes the billing integration boundary, not authorization or an automated migration script. Do not provision servers, change DNS, change ngrok, move databases, switch callback URLs or enable live payments through this PR.
+Robert has reserved the Hetzner migration for ShareT's existing software developer. This document describes the billing integration boundary, not authorization or an automated migration script. Repository Ngrok support is retired; this PR does not provision servers, change DNS, stop a separately running tunnel, move databases, switch callback URLs or enable live payments.
 
 ## Preserve first
 

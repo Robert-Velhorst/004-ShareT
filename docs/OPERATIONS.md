@@ -1,4 +1,4 @@
-# Windows, tunnel, and operator runbook
+# Windows and operator runbook
 
 ## Windows 11 standalone
 
@@ -11,15 +11,15 @@
 
 Do not rebuild files while the server is serving them. Run `npm run build:serve`, then restart ShareT. HTML is revalidated and content-hashed assets are cached, preventing stale-manifest failures.
 
-## Docker plus static ngrok domain
+## Docker on the local host
 
 1. Copy `.env.docker.example` to `.env.docker` and fill every required value.
-2. Set `NGROK_DOMAIN` to the hostname without `https://`; set `PUBLIC_URL`, `FRONTEND_URL`, and `CORS_ORIGIN` to its HTTPS URL.
-3. Run `docker compose --env-file .env.docker config` and inspect the ngrok command without sharing the secret output.
+2. Keep `PUBLIC_URL`, `FRONTEND_URL`, and `CORS_ORIGIN` set to the approved stable HTTPS origin.
+3. Run `docker compose --env-file .env.docker config --quiet`.
 4. Run `docker compose --env-file .env.docker up -d --build`.
-5. Check `docker compose ps`, local `/ready`, public `/ready`, Trello OAuth, and webhook creation.
+5. Check `docker compose ps` and local `/ready`.
 
-`redeploy.bat` automates the same Compose invocation. A changing temporary ngrok hostname is unsuitable because Trello callbacks, webhooks, existing links, and HAI's OpenAPI server URL depend on a stable origin.
+ShareT does not bundle or support a public tunnel. Production exposure belongs on the Hetzner host behind its approved reverse proxy; do not publish the local Docker port directly.
 
 The scheduled `watchdog.bat` must run from the same installed checkout and uses `docker compose --env-file .env.docker up -d`. It checks IPv4 `/ready`; do not point it at another checkout or an older Compose file, because Compose will reconcile the live container back to that stale configuration.
 
@@ -47,6 +47,6 @@ HAI's native ShareT adapter is intentionally read-only. If a different reviewed 
 1. Preserve `backend/data` and take a backup.
 2. Run doctor and inspect `/ready`.
 3. Check disk space and write access.
-4. Check Trello/SMTP/tunnel credentials without printing values.
+4. Check Trello and SMTP credentials without printing values.
 5. If only public access is unsafe, enable the public-access kill switch while owner diagnostics remain available.
 6. Restore only after identifying corruption and keeping the previous data directory.

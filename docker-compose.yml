@@ -9,7 +9,7 @@ services:
         # app literally instead of treating them as Compose substitutions.
         format: raw
     ports:
-      - "5005:5005"
+      - "127.0.0.1:5005:5005"
     volumes:
       # Persist PouchDB data across container restarts
       - sharet-data:/app/backend/data

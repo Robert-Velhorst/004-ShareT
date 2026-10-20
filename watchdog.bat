@@ -47,13 +47,8 @@ goto end
 
 :docker_ok
 
-:: ── 2) Make sure the stack is up (idempotent) ───────────────
+:: ── 2) Make sure the app and autoheal stack is up (idempotent) ─
 ::    Starts only what is stopped; no rebuild, no-op if all healthy.
-set "NGROK_AUTHTOKEN="
-set "NGROK_DOMAIN="
-if exist .env.docker (
-    for /f "tokens=1,* delims==" %%A in ('findstr /B "NGROK_AUTHTOKEN= NGROK_DOMAIN=" .env.docker') do set "%%A=%%B"
-)
 docker compose up -d >>"%LOG%" 2>&1
 
 :: ── 3) Is the app actually answering? ───────────────────────

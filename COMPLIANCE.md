@@ -17,7 +17,7 @@ This is a risk register, not a certification claim.
 | Power-Up | Not applicable | Removed. The owner replies normally in Trello web or mobile. |
 | HAI | Implemented | Scoped, revocable connector tokens and an OpenAPI 3.1 endpoint. Live HAI import remains an operator acceptance step. |
 | Windows 11 | Implemented in scripts; clean-machine acceptance pending | `install.bat`, `start-sharet.bat`, doctor, backup, restore, and support-bundle commands are present. |
-| ngrok | Implemented in configuration; live tunnel acceptance pending | Docker Compose uses a static domain and explicit `.env.docker` interpolation. |
+| Public access | Hetzner is the production target; no bundled public tunnel is supported | Put the service behind the approved Hetzner reverse proxy and keep the app port private. |
 | Resource pricing | Not exposed | Prototype client-declared metering/payment endpoints were removed because they were not trustworthy billing evidence. |
 | Accessibility | Partial | Semantic controls and labels are present; a complete keyboard/screen-reader audit is still required. |
 | Browser matrix | Partial | Current Chromium browser flow is tested locally; Firefox, Safari, and mobile-device acceptance remain. |
