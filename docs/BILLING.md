@@ -12,7 +12,7 @@ The share owner pays for guest activity. Freelancers remain Trello-account-free 
 
 Balance holds also pause owner card/board resource requests, background reply polling/email delivery and webhook registration. Reply delivery keeps its existing retryable event so it can resume after funding. Already received inbound webhooks, storage and minimal management/authentication operations still consume overhead; no prepaid check is a provider-level hard cap.
 
-The planned Hetzner move is a **manual developer operation**, as requested by Robert. This PR must not migrate, provision, change DNS, change ngrok, or cut over production. See [the developer handoff](HETZNER_BILLING_HANDOFF.md).
+The planned Hetzner move is a **manual developer operation**, as requested by Robert. This PR does not provision a host, change DNS, migrate production data, or cut over a live service. Ngrok support is retired in the repository; any separately running tunnel still requires operator-side inventory and shutdown. See [the developer handoff](HETZNER_BILLING_HANDOFF.md).
 
 Implemented: hosted Checkout; server-controlled bundles; signed webhook verification; re-fetching authoritative payment/refund/dispute state; atomic prepaid ledger; decimal resource pricing; signed infrastructure receipt ingestion; owner-funded access checks; separate test/live ledgers; itemized, paginated history; disabled, pending, cancelled, low-balance and payment-hold UI states.
 

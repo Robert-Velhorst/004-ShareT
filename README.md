@@ -1,8 +1,7 @@
 > Consolidation status (2026-10-19): source verification and current-head CI
-> are recorded in the active PR. Earlier live Windows/ngrok/provider observations
+> are recorded in the active PR. Earlier live provider observations
 > below are historical, not proof of current deployment. Production targets
 > Hetzner; existing services must be migrated and verified before retirement.
-> The optional docker-compose.local-tunnel.yml file never runs by default.
 
 # ShareT
 
@@ -11,7 +10,7 @@ ShareT gives people controlled access to Trello work without requiring them to h
 A Trello owner creates a link for a card—or creates one link per card in a list—and sends it to a freelancer, contractor, client, volunteer, or other external participant. The recipient opens a normal web page where they can see the permitted card information, verify their email, upload or download attachments, and post progress updates. ShareT relays those updates into Trello so the owner can continue working from Trello web, desktop, or mobile.
 
 > [!IMPORTANT]
-> ShareT is a production-oriented **owner-acceptance candidate**, not a provider-independent promise. The local application, PouchDB storage, Windows and Docker deployment, static-ngrok path, security controls, backups, tests, and ShareT-side HAI connector are implemented. Reliable Trello bell notifications, real email delivery, and HAI ingestion still require operator-owned accounts, credentials, configuration, and live acceptance testing.
+> ShareT is a production-oriented **owner-acceptance candidate**, not a provider-independent promise. The local application, PouchDB storage, Windows and Docker deployment, security controls, backups, tests, and ShareT-side HAI connector are implemented. Public tunnel support is retired; production exposure must use the Hetzner deployment target. Reliable Trello bell notifications, real email delivery, and HAI ingestion still require operator-owned accounts, credentials, configuration, and live acceptance testing.
 
 ## Contents
 
@@ -21,7 +20,7 @@ A Trello owner creates a link for a card—or creates one link per card in a lis
 - [What appears in Trello](#what-appears-in-trello)
 - [Requirements](#requirements)
 - [Install on Windows 11](#install-on-windows-11)
-- [Run with Docker and a static ngrok domain](#run-with-docker-and-a-static-ngrok-domain)
+- [Run with Docker locally](#run-with-docker-locally)
 - [Manual installation on macOS or Linux](#manual-installation-on-macos-or-linux)
 - [First-use guide](#first-use-guide)
 - [Configuration reference](#configuration-reference)
@@ -190,7 +189,7 @@ Before the first relayed comment on a card, ShareT checks whether the relay is a
 ### To run the bundled Docker deployment
 
 - Docker Desktop or Docker Engine with Compose v2.
-- An ngrok account, authtoken, and static ngrok domain if using the bundled public tunnel.
+- A Hetzner host and approved reverse proxy for production exposure.
 
 Freelancers do **not** need Node.js, Docker, Trello, ShareT credentials, or an installed app. They only need the share URL, a browser, and—when commenting is enabled—access to the email address they verify.
 
@@ -218,7 +217,7 @@ This is the simplest native, non-Docker installation. It runs ShareT in a termin
 7. Run `start-sharet.bat`.
 8. Open [http://localhost:5005](http://localhost:5005).
 
-`start-sharet.bat` is the native Node launcher. It does not start Docker or ngrok. Keep its terminal window open while ShareT is running.
+`start-sharet.bat` is the native Node launcher. It does not start Docker or a public tunnel. Keep its terminal window open while ShareT is running.
 
 ### Native Windows updates
 
@@ -235,13 +234,9 @@ npm.cmd run build:serve
 npm.cmd run doctor
 ```
 
-## Run with Docker and a static ngrok domain
+## Run with Docker locally
 
-The Docker Compose stack contains three services:
-
-- `sharet`: the Node/Express application and built React frontend.
-- `ngrok`: the public HTTPS tunnel. It receives only the ngrok credential.
-- `autoheal`: restarts the application if Docker marks it unhealthy.
+The Docker Compose stack contains the ShareT application and an autoheal service. It does not publish a public tunnel. Production exposure belongs on Hetzner behind the approved reverse proxy.
 
 PouchDB data lives in the named `sharet-data` volume. The ShareT container is limited to 1 GB of memory and 1.5 CPUs; container logs rotate at 10 MB with three files.
 
@@ -251,13 +246,7 @@ PouchDB data lives in the named `sharet-data` volume. The ShareT container is li
    Copy-Item .env.docker.example .env.docker
    ```
 
-2. Fill in `.env.docker`. In particular:
-
-   - Set `NGROK_AUTHTOKEN`.
-   - Set `NGROK_DOMAIN` to the hostname only, without `https://`.
-   - Set `PUBLIC_URL` and `FRONTEND_URL` to `https://<NGROK_DOMAIN>`.
-   - Add that HTTPS address to `CORS_ORIGIN`.
-   - Configure unique security secrets, Trello, the relay, and email.
+2. Fill in `.env.docker`. Set `PUBLIC_URL`, `FRONTEND_URL`, and `CORS_ORIGIN` to the approved stable HTTPS origin, then configure unique security secrets, Trello, the relay, and email.
 
 3. Validate the Compose model without printing or sharing its output:
 
@@ -272,16 +261,15 @@ PouchDB data lives in the named `sharet-data` volume. The ShareT container is li
    docker compose --env-file .env.docker ps
    ```
 
-5. Check local and public readiness:
+5. Check local readiness:
 
    ```powershell
    Invoke-RestMethod http://127.0.0.1:5005/ready
-   Invoke-RestMethod https://your-static-domain.example/ready
    ```
 
-6. Use `redeploy.bat` for subsequent Docker rebuilds. It preserves the `.env.docker` file, starts Docker Desktop when needed, waits for `/ready`, checks the ngrok container, and can install the scheduled watchdog.
+6. Use `redeploy.bat` for subsequent Docker rebuilds. It preserves `.env.docker`, starts Docker Desktop when needed, waits for `/ready`, and can install the scheduled watchdog.
 
-Do not run a second host-level ngrok agent with the same free ngrok account. The Compose `ngrok` service owns that session.
+Do not expose the local app port directly to the internet. Follow the repository's Hetzner deployment and reverse-proxy procedure for production.
 
 ## Manual installation on macOS or Linux
 
@@ -359,7 +347,7 @@ Use `backend/.env.example` for native Node deployment or `.env.docker.example` f
 | `ENCRYPTION_KEY` | Yes | Encrypts stored Trello and relay credentials; changing it without migration makes existing credentials unreadable. |
 | `JWT_EXPIRES_IN` | No | Access-token lifetime; defaults to `7d`. Refresh tokens are currently fixed at 30 days. |
 
-Generate independent secrets with a password manager, `openssl rand -hex 32`, or PowerShell's cryptographic APIs. Never reuse a Trello, SMTP, or ngrok credential as a ShareT application secret.
+Generate independent secrets with a password manager, `openssl rand -hex 32`, or PowerShell's cryptographic APIs. Never reuse a Trello or SMTP credential as a ShareT application secret.
 
 ### Trello and relay
 
@@ -409,14 +397,9 @@ Without working email transport, production cannot verify new participant addres
 
 All active ShareT databases replicate when CouchDB is enabled. Live conflict and disaster-recovery acceptance remains an operator responsibility.
 
-### Docker tunnel settings
+### Docker public-origin settings
 
-| Variable | Meaning |
-| --- | --- |
-| `NGROK_AUTHTOKEN` | ngrok account authtoken; passed only to the ngrok container. |
-| `NGROK_DOMAIN` | Static ngrok hostname without the URL scheme. |
-
-The application consumes `.env.docker` in raw mode so credentials containing dollar signs are not accidentally interpolated. Compose still uses the two ngrok variables to construct the tunnel service, which is why commands should include `--env-file .env.docker`.
+The Docker environment uses `PUBLIC_URL`, `FRONTEND_URL`, and `CORS_ORIGIN` for the approved stable origin. The app is not bundled with a public tunnel. Keep the local Docker port private and route production traffic through the Hetzner reverse proxy.
 
 ### Legacy template entries
 
@@ -424,13 +407,12 @@ The Docker template still contains several compatibility or legacy entries that 
 
 ## Deployment and operations
 
-ShareT requires one always-running backend and a stable public HTTPS origin. A changing tunnel address breaks existing links, Trello callback validation, webhooks, and HAI configuration.
+ShareT requires one always-running backend and a stable public HTTPS origin. Production DNS, TLS, and reverse-proxy routing belong to the Hetzner host.
 
 Supported deployment shapes are:
 
 - Native Node on an always-on Windows, macOS, or Linux host.
-- Docker Compose with the bundled static-ngrok service.
-- A long-running Node or Docker service behind a stable reverse proxy, named Cloudflare Tunnel, Caddy, Nginx, or platform-managed HTTPS.
+- A long-running Node or Docker service on Hetzner behind its approved Caddy or Nginx reverse proxy.
 
 Vite preview or static frontend hosting alone is insufficient because authentication, policies, encrypted credentials, PouchDB, Trello calls, webhooks, and email all run in Express.
 
@@ -454,7 +436,7 @@ Remove it with `uninstall-watchdog.bat`.
 
 - Development logs are human-readable; production logs are structured JSON.
 - Authorization headers, cookies, tokens, keys, and secrets are redacted by the logger.
-- Docker application and tunnel logs rotate automatically.
+- Docker application logs rotate automatically.
 - Run `npm run support-bundle` to create a diagnostic JSON report under `support/`. It includes runtime capability states and health, not environment values or database contents.
 
 ## Data, migrations, backups, and recovery
@@ -495,7 +477,7 @@ Restore verifies every manifest hash before changing the destination. When exist
 
 ## Security and privacy
 
-ShareT crosses several trust boundaries: the owner browser, public participant browser, Express API, local or remote database, Trello, SMTP, tunnel provider, and HAI. The frontend is never treated as authorization evidence.
+ShareT crosses several trust boundaries: the owner browser, public participant browser, Express API, local or remote database, Trello, SMTP, the Hetzner reverse proxy, and HAI. The frontend is never treated as authorization evidence.
 
 Implemented controls include:
 
@@ -640,9 +622,9 @@ For connector clients, use the live OpenAPI document rather than copying endpoin
 | `backend/services/` | Account cascade/export, Trello webhook/reply routing, and email notification logic. |
 | `backend/utils/` | Cryptography, access grants, presentation redaction, attachment trust, logging, caches, pagination, and limits. |
 | `backend/test/` | Backend regression and HTTP integration tests. |
-| `scripts/` | Build copy, doctor, backup, restore, support bundle, and Windows/tunnel helpers. |
+| `scripts/` | Build copy, doctor, backup, restore, support bundle, and Windows helpers. |
 | `docs/` | Architecture, deployment, operations, security, acceptance, verification, debt, and worklog evidence. |
-| `docker-compose.yml` | Application, static-ngrok tunnel, autoheal, health, resource, volume, and log policy. |
+| `docker-compose.yml` | Application, autoheal, health, resource, volume, and log policy. |
 | `Dockerfile` | Cached frontend build plus production-only backend image. |
 
 The `extension/` directory contains an older browser-extension artifact. It is not required for the main ShareT web workflow and is not part of the documented owner/participant acceptance path.
@@ -707,10 +689,9 @@ The current backend suite covers connector credentials, attachment security, aut
 
 ### ShareT opens locally but the public link fails
 
-- Confirm the ngrok or reverse-proxy process is running.
-- Confirm `PUBLIC_URL`, `FRONTEND_URL`, `CORS_ORIGIN`, and `NGROK_DOMAIN` describe the same stable origin.
-- Use `docker compose --env-file .env.docker ps` and inspect the `sharet-ngrok` container.
-- Do not run two ngrok agents on an account that permits one session.
+- Confirm the Hetzner reverse-proxy process is running.
+- Confirm `PUBLIC_URL`, `FRONTEND_URL`, and `CORS_ORIGIN` describe the same stable origin.
+- Use `docker compose --env-file .env.docker ps` and inspect the ShareT and autoheal containers.
 - Request `/ready` through the public origin; do not treat `/health` alone as deployment readiness.
 
 ### Trello connects but the bell does not turn red
@@ -760,7 +741,7 @@ The repository intentionally distinguishes implemented code from externally prov
 | --- | --- |
 | Local React/Express/PouchDB application | Implemented and verified on Windows 11. |
 | Complete link pagination and structured Trello search | Implemented and covered by build/tests; production-size board performance remains operator-specific. |
-| Static-ngrok Docker deployment | Implemented and exercised; operators must supply their own static domain and credentials. |
+| Public tunnel deployment | Retired. Production exposure is planned for Hetzner behind an approved reverse proxy. |
 | Trello relay assignment, owner watch, mention, webhook, routing, retry, and idempotency | Implemented and regression-tested. A real unread bell still requires a distinct live relay account and board membership. |
 | Participant email verification and reply delivery | Implemented. End-to-end acceptance requires working SMTP and an approved real recipient. |
 | ShareT HAI connector | Implemented with scoped, hashed, expiring credentials and OpenAPI. Native HAI ingestion must also be merged/configured in the HAI repository. |
@@ -790,7 +771,7 @@ The exact acceptance matrix is maintained in [docs/ACCEPTANCE_TESTS.md](docs/ACC
 | --- | --- |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Product contract, critical path, components, invariants, performance decisions, and exclusions. |
 | [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) | Public hosting choices, Trello relay identities, reply tracking, and email configuration. |
-| [docs/OPERATIONS.md](docs/OPERATIONS.md) | Windows, static ngrok, HAI activation, backup/restore, emergency controls, and recovery order. |
+| [docs/OPERATIONS.md](docs/OPERATIONS.md) | Windows, local Docker, HAI activation, backup/restore, emergency controls, and recovery order. |
 | [docs/SECURITY.md](docs/SECURITY.md) | Trust boundaries, threats, controls, data lifecycle, and remaining security gates. |
 | [docs/ACCEPTANCE_TESTS.md](docs/ACCEPTANCE_TESTS.md) | Automated and live-provider acceptance scenarios. |
 | [docs/FINAL_VERIFICATION.md](docs/FINAL_VERIFICATION.md) | Measured release evidence and the honest release decision. |

@@ -98,7 +98,7 @@ echo.
 echo Local URL:  http://localhost:5005
 echo.
 echo Next steps:
-echo 1. Configure Cloudflare Tunnel for public access
+echo 1. Prepare the production HTTPS origin on the Hetzner host
 echo 2. Update .env files with your settings
 echo 3. Check status: pm2 status
 echo 4. View logs: pm2 logs sharet
