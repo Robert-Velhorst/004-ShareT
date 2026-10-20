@@ -278,7 +278,7 @@ export default function AdminTab() {
       <Card>
         <CardHeader className="pb-2 pt-4">
           <CardTitle className="text-sm flex items-center gap-2">
-            <CreditCard className="h-4 w-4" /> Add Credits to User
+            <CreditCard className="h-4 w-4" /> Add Legacy Share Allowance
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -301,7 +301,7 @@ export default function AdminTab() {
               Add
             </Button>
           </div>
-          <p className="text-[11px] text-muted-foreground mt-1.5">Copy the User ID from the users table above.</p>
+          <p className="text-[11px] text-muted-foreground mt-1.5">This adjusts the old share-count allowance only, not prepaid money. Resource wallet credits require verified Stripe payment. Copy the User ID from the users table above.</p>
         </CardContent>
       </Card>
 

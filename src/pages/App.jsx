@@ -26,7 +26,7 @@ const App = () => {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
   const isAdmin = currentUser?.role === 'admin';
-  const { credits, loading: creditsLoading, error: creditsError, refetch: refetchCredits } = useCredits();
+  const { credits, creditType, loading: creditsLoading, error: creditsError, refetch: refetchCredits } = useCredits();
   const [shareType, setShareType] = useState("card");
   const [trelloData, setTrelloData] = useState(null);
   const [showQRCode, setShowQRCode] = useState(false);
@@ -120,6 +120,10 @@ const App = () => {
             </div>
           </CardHeader>
           <CardContent>
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+              <span className="text-sm text-muted-foreground">{creditsLoading ? 'Loading allowance…' : creditsError ? 'Allowance unavailable' : creditType === 'resource' ? 'Pay for measured resource usage' : credits === Infinity ? 'Unlimited share allowance' : `${credits} shares remaining in your existing allowance`}</span>
+              <PaymentDialog />
+            </div>
             {trelloData ? (
               <Tabs defaultValue="newShare">
                 <div className="flex items-center justify-between mb-2">
@@ -129,12 +133,6 @@ const App = () => {
                     {isAdmin && <TabsTrigger value="admin">⚙ Admin</TabsTrigger>}
                   </TabsList>
                 </div>
-                {!isAdmin && credits !== Infinity && (
-                  <div className="flex items-center justify-between text-xs text-muted-foreground mb-2 px-1">
-                    <span>{creditsLoading ? 'Loading credits…' : (creditsError ? 'Credits unavailable' : `${credits} credits remaining`)}</span>
-                    <PaymentDialog />
-                  </div>
-                )}
                 <TabsContent value="newShare">
                   <NewShareForm
                     shareType={shareType}

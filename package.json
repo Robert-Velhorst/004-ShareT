@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "engines": {
-    "node": ">=22.13.0"
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
   },
   "scripts": {
     "dev": "node ./node_modules/vite/bin/vite.js",
@@ -17,7 +17,8 @@
     "preview": "node ./node_modules/vite/bin/vite.js preview",
     "restore": "node scripts/restore.cjs",
     "support-bundle": "node scripts/support-bundle.cjs",
-    "test:homepage": "node --test test/homepage.test.mjs"
+    "test:homepage": "node --test test/homepage.test.mjs",
+    "test:billing-ui": "vitest run src/components/PaymentDialog.test.jsx"
   },
   "dependencies": {
     "@daypicker/react": "^10.0.2",
@@ -91,7 +92,10 @@
     "globals": "^17.13.0",
     "postcss": "^8.5.19",
     "tailwindcss": "^4.3.3",
-    "vite": "^8.3.4"
+    "vite": "^8.3.4",
+    "@testing-library/react": "^16.3.3",
+    "jsdom": "^30.0.1",
+    "vitest": "^5.0.0"
   },
   "optionalDependencies": {
     "@emnapi/core": "^1.11.3",

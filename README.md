@@ -815,3 +815,8 @@ Before opening a change:
 ## License
 
 The backend package metadata declares the project as MIT. This repository currently does not include a standalone root `LICENSE` file; add one before relying on the repository alone as the complete legal grant for redistribution.
+
+
+## Prepaid billing (disabled by default)
+
+The prepaid wallet source is included with `BILLING_MODE=off` by default. Share allowances remain separate from money. No collector, supplier invoice reconciliation, live Stripe acceptance or production migration is claimed. Read [the billing contract](docs/BILLING.md) and [the developer handoff](docs/HETZNER_BILLING_HANDOFF.md) before any activation. Live mode additionally requires explicit operator approval.

@@ -9,6 +9,10 @@ const sharedAccessController = require('../controllers/sharedAccessController');
 const sharedCommentController = require('../controllers/sharedCommentController');
 const { sharedLinkRateLimit, verificationRateLimit } = require('../utils/rateLimiter');
 
+const { guest: requireOwnerBalance } = require('../billing/access');
+// All guest work is funded by the link owner, never by the freelancer.
+router.use('/:shareId', requireOwnerBalance);
+
 // Public routes - no authentication required
 router.get('/:shareId', sharedLinkRateLimit, sharedAccessController.getSharedCard);
 router.post('/:shareId/verify-email', sharedLinkRateLimit, verificationRateLimit, sharedAccessController.requestVerification);

@@ -5,6 +5,7 @@ const {
   TrelloConnection
 } = require('../db/pouchdb');
 const { sendFreelancerReplyNotification } = require('../utils/notificationService');
+const { canUseResources } = require('../billing/access');
 
 const TRELLO_API_BASE = 'https://api.trello.com/1';
 let monitorTimer = null;
@@ -147,6 +148,8 @@ async function deliverMatchedReply(event, group, reason) {
   if (!latest?.share || !latest?.connection) throw new Error('Reply target is missing ShareT context');
 
   if (!event.deliverySentAt) {
+    // Throw into the existing retry path; never discard an unpaid owner's reply.
+    if (!canUseResources(latest.share.userId)) throw new Error('Reply delivery paused for resource balance');
     const delivery = await sendFreelancerReplyNotification({
       thread: latest,
       threads: group.threads,
@@ -312,6 +315,7 @@ async function processPendingReplyNotifications() {
       try {
         const share = await SharedLink.findByShareId(thread.shareId);
         if (!share?.isActive) continue;
+        if (!canUseResources(share.userId)) continue;
         const connection = await TrelloConnection.findByUserId(share.userId);
         if (!connection?.trelloToken) continue;
         const comments = await fetchTrelloComments(share, connection);

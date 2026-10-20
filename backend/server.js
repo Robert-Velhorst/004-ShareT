@@ -41,8 +41,11 @@ const adminRoutes = require('./routes/adminRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
 const trelloWebhookRoutes = require('./routes/trelloWebhookRoutes');
 const connectorRoutes = require('./routes/connectorRoutes');
+const billingRoutes = require('./routes/billingRoutes');
 const { startReplyNotificationMonitor, stopReplyNotificationMonitor } = require('./services/replyNotificationService');
 const { reconcileActiveTrelloWebhooks } = require('./services/trelloWebhookService');
+const { getBilling, closeBilling } = require('./billing/runtime');
+const { createWebhookHandler } = require('./billing/routes');
 const { inspectRuntimeEnvironment, validateRuntimeEnvironment } = require('./config/runtime');
 
 // Create Express app
@@ -146,10 +149,14 @@ app.use(cors({
   credentials: true
 }));
 
+// Stripe must receive the exact raw bytes, before any JSON parser or user auth.
+app.post('/api/billing/webhook', express.raw({ type: 'application/json', limit: '1mb' }), (req, res) =>
+  createWebhookHandler(getBilling())(req, res));
+
 app.use(express.json({
   limit: '1mb',
   verify: (req, res, buffer) => {
-    if (req.originalUrl.startsWith('/api/trello-webhooks/')) {
+    if (req.originalUrl.startsWith('/api/trello-webhooks/') || req.path === '/api/billing/usage') {
       req.rawBody = Buffer.from(buffer);
     }
   }
@@ -226,6 +233,7 @@ app.get('/ready', async (req, res) => {
 });
 
 // API Routes with rate limiting
+app.use('/api/billing', apiRateLimit, billingRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/trello', apiRateLimit, trelloRoutes);
 app.use('/api/shared-links', apiRateLimit, sharedLinkRoutes);
@@ -356,6 +364,7 @@ const gracefulShutdown = async (signal) => {
   
   clearCache();
   stopReplyNotificationMonitor();
+  closeBilling();
   await closeAll(); // Close PouchDB databases
   
   logger.info('Shutdown complete');
@@ -385,6 +394,7 @@ const startServer = async () => {
     runtime.warnings.forEach(message => logger.warn({ capability: 'runtime' }, message));
     // Initialize PouchDB databases
     await initDB();
+    getBilling(); // Fail startup on unsafe billing activation, before accepting traffic.
     startReplyNotificationMonitor();
     
     server = app.listen(PORT, '0.0.0.0', () => {

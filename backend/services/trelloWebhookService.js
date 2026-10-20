@@ -85,6 +85,9 @@ async function ensureTrelloWebhook({ share, connection }) {
 }
 
 async function ensureWebhookForShare(share) {
+  if (share?.userId && !require('../billing/access').canUseResources(share.userId)) {
+    return { enabled: false, reason: 'resource-balance-required' };
+  }
   if (!share?.isActive || !share.permissions?.canComment) {
     return { enabled: false, reason: 'commenting-disabled' };
   }
