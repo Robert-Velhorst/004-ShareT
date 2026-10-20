@@ -1,39 +1,48 @@
 import { useState, useEffect, useCallback } from 'react';
 import { auth as authAPI } from '../api';
-
-const ADMIN_EMAIL = 'noodzakelijkonline@gmail.com';
+import { useAuth } from '../contexts/AuthContext';
 
 export const useCredits = () => {
-  const [credits, setCredits] = useState(Infinity);
+  const { currentUser } = useAuth();
+  const [credits, setCredits] = useState(null);
+  const [creditType, setCreditType] = useState('share-allowance');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   const fetchCredits = useCallback(async () => {
     try {
-      const token = localStorage.getItem('token');
-      if (!token) { setLoading(false); return; }
-      const user = JSON.parse(localStorage.getItem('sharetUser') || '{}');
-      if (user?.email === ADMIN_EMAIL || user?.role === 'admin') {
-        setCredits(Infinity);
-        setLoading(false);
-        return;
-      }
+      setLoading(true);
+      setError('');
+      if (!currentUser) { setCredits(0); return; }
       const res = await authAPI.getCredits();
       if (res.success) {
         setCredits(res.credits === null ? Infinity : res.credits);
+        setCreditType(res.creditType || 'share-allowance');
       }
-    } catch {
-      // fall back to Infinity if not logged in / endpoint unavailable
+    } catch (requestError) {
+      setCredits(null);
+      setError(requestError.message || 'Credits are unavailable');
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [currentUser]);
 
-  useEffect(() => { fetchCredits(); }, [fetchCredits]);
+  useEffect(() => {
+    fetchCredits();
+    window.addEventListener('sharet-credits-changed', fetchCredits);
+    window.addEventListener('focus', fetchCredits);
+    return () => {
+      window.removeEventListener('sharet-credits-changed', fetchCredits);
+      window.removeEventListener('focus', fetchCredits);
+    };
+  }, [fetchCredits]);
 
   return {
     credits,
+    creditType,
     freeSharesLeft: credits === Infinity ? Infinity : credits,
     loading,
+    error,
     refetch: fetchCredits
   };
 };

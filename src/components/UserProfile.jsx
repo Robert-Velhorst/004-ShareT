@@ -7,6 +7,10 @@ import { useAuth } from '../contexts/AuthContext';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Download, Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
+import { auth as authAPI } from '../api';
+import HAIConnectorSettings from './HAIConnectorSettings';
 
 const formatAccountDate = (value) => {
   if (!value) return 'Not available';
@@ -19,6 +23,9 @@ const UserProfile = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [fullName, setFullName] = useState(currentUser?.fullName || currentUser?.name || '');
   const [isSaving, setIsSaving] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [deletePassword, setDeletePassword] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
   const displayName = currentUser?.fullName || currentUser?.name || currentUser?.email || 'ShareT user';
   
   // Get initials for avatar
@@ -47,6 +54,35 @@ const UserProfile = () => {
     }
   };
 
+  const handleExport = async () => {
+    try {
+      const { blob } = await authAPI.exportAccount();
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = `sharet-account-${new Date().toISOString().slice(0, 10)}.json`;
+      anchor.click();
+      URL.revokeObjectURL(url);
+      toast.success('Account export downloaded');
+    } catch (error) {
+      toast.error(error.message || 'Unable to export account data');
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    setIsDeleting(true);
+    try {
+      await authAPI.deleteAccount(deletePassword);
+      setIsDeleteOpen(false);
+      setDeletePassword('');
+      await signOut();
+    } catch (error) {
+      toast.error(error.message || 'Unable to delete account');
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   return (
     <Card className="mb-6">
       <CardHeader>
@@ -66,7 +102,7 @@ const UserProfile = () => {
           <p>Account created: {formatAccountDate(currentUser?.createdAt)}</p>
         </div>
       </CardContent>
-      <CardFooter className="flex justify-between">
+      <CardFooter className="flex flex-wrap justify-between gap-3">
         <Dialog open={isDialogOpen} onOpenChange={handleDialogChange}>
           <DialogTrigger asChild>
             <Button variant="outline">Edit Profile</Button>
@@ -100,7 +136,48 @@ const UserProfile = () => {
             </DialogFooter>
           </DialogContent>
         </Dialog>
-        <Button variant="destructive" onClick={signOut}>Sign Out</Button>
+        <div className="flex flex-wrap gap-2">
+          <HAIConnectorSettings />
+          <Button variant="outline" onClick={handleExport}>
+            <Download className="mr-2 size-4" /> Export data
+          </Button>
+          <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
+            <DialogTrigger asChild>
+              <Button variant="outline" className="text-destructive">
+                <Trash2 className="mr-2 size-4" /> Delete account
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Delete your ShareT account?</DialogTitle>
+                <DialogDescription>
+                  This permanently deletes your account, links, access records, and connected-service data. Export first if you need a copy.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-2 py-2">
+                <Label htmlFor="delete-password">Confirm with your password</Label>
+                <Input
+                  id="delete-password"
+                  type="password"
+                  autoComplete="current-password"
+                  value={deletePassword}
+                  onChange={(event) => setDeletePassword(event.target.value)}
+                />
+              </div>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setIsDeleteOpen(false)}>Cancel</Button>
+                <Button
+                  variant="destructive"
+                  disabled={!deletePassword || isDeleting}
+                  onClick={handleDeleteAccount}
+                >
+                  {isDeleting ? 'Deleting…' : 'Delete permanently'}
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+          <Button variant="destructive" onClick={signOut}>Sign Out</Button>
+        </div>
       </CardFooter>
     </Card>
   );

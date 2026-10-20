@@ -197,7 +197,8 @@ test('a failed subscription is reported but never throws, so the comment still p
 
     assert.equal(result.subscribed, false);
     assert.equal(result.reason, 'subscription-failed');
-    assert.match(result.error, /invalid token/);
+    assert.equal(result.reason, 'subscription-failed');
+    assert.equal('error' in result, false);
   });
 });
 

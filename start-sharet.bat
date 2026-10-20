@@ -9,8 +9,16 @@ if not exist "backend\node_modules" (
   exit /b 1
 )
 
-if not exist "dist\index.html" (
+if not exist "backend\frontend\dist\index.html" (
   echo Frontend build is missing. Run install.bat first.
+  pause
+  exit /b 1
+)
+
+call npm run doctor
+if errorlevel 1 (
+  echo.
+  echo ShareT configuration is not ready. Fix the items above, then try again.
   pause
   exit /b 1
 )

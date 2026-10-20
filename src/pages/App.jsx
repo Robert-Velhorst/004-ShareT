@@ -2,7 +2,7 @@
 import { useState, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import TrelloConnect from '../components/TrelloConnect';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { LogOut, BookOpen } from "lucide-react";
@@ -22,13 +22,11 @@ import { ThemeToggle } from '../components/ThemeToggle';
 import { NotificationCenter } from '../components/NotificationCenter';
 import { trello } from '../api';
 
-const ADMIN_EMAIL = 'noodzakelijkonline@gmail.com';
-
 const App = () => {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
-  const isAdmin = currentUser?.email === ADMIN_EMAIL;
-  const { credits, refetch: refetchCredits } = useCredits();
+  const isAdmin = currentUser?.role === 'admin';
+  const { credits, creditType, loading: creditsLoading, error: creditsError, refetch: refetchCredits } = useCredits();
   const [shareType, setShareType] = useState("card");
   const [trelloData, setTrelloData] = useState(null);
   const [showQRCode, setShowQRCode] = useState(false);
@@ -122,6 +120,10 @@ const App = () => {
             </div>
           </CardHeader>
           <CardContent>
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+              <span className="text-sm text-muted-foreground">{creditsLoading ? 'Loading allowance…' : creditsError ? 'Allowance unavailable' : creditType === 'resource' ? 'Pay for measured resource usage' : credits === Infinity ? 'Unlimited share allowance' : `${credits} shares remaining in your existing allowance`}</span>
+              <PaymentDialog />
+            </div>
             {trelloData ? (
               <Tabs defaultValue="newShare">
                 <div className="flex items-center justify-between mb-2">
@@ -131,12 +133,6 @@ const App = () => {
                     {isAdmin && <TabsTrigger value="admin">⚙ Admin</TabsTrigger>}
                   </TabsList>
                 </div>
-                {!isAdmin && credits !== Infinity && (
-                  <div className="flex items-center justify-between text-xs text-muted-foreground mb-2 px-1">
-                    <span>{credits} credits remaining</span>
-                    <PaymentDialog />
-                  </div>
-                )}
                 <TabsContent value="newShare">
                   <NewShareForm
                     shareType={shareType}

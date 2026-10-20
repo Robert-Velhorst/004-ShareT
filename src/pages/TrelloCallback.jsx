@@ -20,9 +20,7 @@ export default function TrelloCallback() {
     axios.post(`${API_URL}/trello/connect`, {
       trelloToken
     }, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
+      withCredentials: true
     }).then(() => {
       console.log('Trello connected');
       window.close();

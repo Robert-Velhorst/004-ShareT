@@ -1,0 +1,30 @@
+# Optional local testing only. Explicitly add this file to opt in.
+services:
+  # ── ngrok tunnel, supervised by Docker ───────────────────────────────
+  # Replaces the old unsupervised `cmd /k ngrok ...` window. The public tunnel
+  # now restarts automatically just like the app does, and reaches the app via
+  # the compose network at host "sharet" (the service name).
+  #
+  # Free ngrok allows only ONE agent session at a time, so redeploy.bat / the
+  # watchdog must NOT also launch ngrok in a window — this service owns it.
+  ngrok:
+    image: ngrok/ngrok:latest
+    container_name: sharet-ngrok
+    restart: always
+    depends_on:
+      - sharet
+    # Pass only the ngrok credential to the tunnel container. Do not expose the
+    # application's JWT, Trello, SMTP, Stripe, or database credentials here.
+    environment:
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN:?Set NGROK_AUTHTOKEN in .env.docker}
+    # Static free domain — keep in sync with PUBLIC_URL in .env.docker.
+    command:
+      - "http"
+      - "sharet:5005"
+      - "--url=https://${NGROK_DOMAIN}"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+

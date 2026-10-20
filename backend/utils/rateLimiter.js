@@ -5,6 +5,13 @@
  */
 
 const { RateLimiterMemory } = require('rate-limiter-flexible');
+const { rateLimit } = require('express-rate-limit');
+
+// Conventional transport limits complement the existing atomic/domain budgets.
+// Keep both: route-scoped IP budgets also bound requests before user lookup.
+const standardApiRateLimit = rateLimit({ windowMs: 60_000, limit: 100, standardHeaders: 'draft-8', legacyHeaders: false });
+const standardSharedRateLimit = rateLimit({ windowMs: 60_000, limit: 30, standardHeaders: 'draft-8', legacyHeaders: false });
+
 
 // General API rate limiter - 100 requests per minute
 const apiLimiter = new RateLimiterMemory({
@@ -113,6 +120,8 @@ function createRateLimiterMiddleware(limiter, keyPrefix = '') {
 
 // Export middleware instances
 module.exports = {
+  standardApiRateLimit,
+  standardSharedRateLimit,
   // Middleware
   apiRateLimit: createRateLimiterMiddleware(apiLimiter, 'api_'),
   authRateLimit: createRateLimiterMiddleware(authLimiter, 'auth_'),

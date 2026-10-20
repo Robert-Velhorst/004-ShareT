@@ -2,15 +2,23 @@ import assert from 'node:assert/strict';
 import { before, after, test } from 'node:test';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { StaticRouter } from 'react-router';
+import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
 
 let server;
+let StaticRouter;
 let Index;
 let AuthProvider;
 let HomePage;
 before(async () => {
-  server = await createServer({ server: { middlewareMode: true }, optimizeDeps: { noDiscovery: true, include: [] }, appType: 'custom' });
+  server = await createServer({
+    server: { middlewareMode: true, hmr: false },
+    optimizeDeps: { noDiscovery: true, include: [] },
+    resolve: { alias: [{ find: 'react-router', replacement: fileURLToPath(import.meta.resolve('react-router')) }] },
+    ssr: { noExternal: ['react-router'] },
+    appType: 'custom',
+  });
+  ({ StaticRouter } = await server.ssrLoadModule('react-router'));
   ({ default: Index } = await server.ssrLoadModule('/src/pages/Index.jsx'));
   ({ AuthProvider } = await server.ssrLoadModule('/src/contexts/AuthContext.jsx'));
   ({ default: HomePage } = await server.ssrLoadModule('/src/components/marketing/HomePage.jsx'));

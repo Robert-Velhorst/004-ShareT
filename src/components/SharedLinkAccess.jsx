@@ -5,10 +5,19 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2, Mail, CheckCircle, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
+import { useNavigate } from 'react-router';
 import { sharedAccess } from '../api';
-import { clearShareParticipant, readShareParticipant, writeShareParticipant } from '../lib/shareParticipant';
+import {
+  clearShareParticipant,
+  clearSharePasswordGrant,
+  readShareParticipant,
+  readSharePasswordGrant,
+  writeShareParticipant,
+  writeSharePasswordGrant,
+} from '../lib/shareParticipant';
 
 const SharedLinkAccess = ({ linkToken }) => {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [linkInfo, setLinkInfo] = useState(null);
   const [storedParticipant] = useState(() => readShareParticipant(linkToken));
@@ -24,7 +33,8 @@ const SharedLinkAccess = ({ linkToken }) => {
   const [secretInput, setSecretInput] = useState('');
   const [secretError, setSecretError] = useState('');
   const [checkingSecret, setCheckingSecret] = useState(false);
-  const [secretPassed, setSecretPassed] = useState(() => sessionStorage.getItem(`shareT_pw_${linkToken}`) === '1');
+  const [passwordToken, setPasswordToken] = useState(() => readSharePasswordGrant(linkToken));
+  const secretPassed = Boolean(passwordToken);
   
   const cardUrl = `/shared/${linkToken}/card`;
 
@@ -32,13 +42,21 @@ const SharedLinkAccess = ({ linkToken }) => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await sharedAccess.getCard(linkToken);
+      const savedParticipant = readShareParticipant(linkToken);
+      const response = await sharedAccess.getCard(linkToken, {
+        participantToken: savedParticipant?.participantToken || '',
+        passwordToken,
+      });
       if (response.linkInfo) {
         const info = response.linkInfo;
         setLinkInfo(info);
+        if (response.accessRequired === 'PASSWORD_REQUIRED' && passwordToken) {
+          clearSharePasswordGrant(linkToken);
+          setPasswordToken('');
+          return;
+        }
         const identityRequired = info.requiresParticipantIdentity || info.requiresEmail;
         let hasVerifiedIdentity = !identityRequired;
-        const savedParticipant = readShareParticipant(linkToken);
 
         if (identityRequired && savedParticipant?.participantToken) {
           try {
@@ -53,8 +71,8 @@ const SharedLinkAccess = ({ linkToken }) => {
           }
         }
 
-        if (hasVerifiedIdentity && (!info.requiresPassword || secretPassed)) {
-          window.location.href = cardUrl;
+        if (response.accessGranted && hasVerifiedIdentity && (!info.requiresPassword || secretPassed)) {
+          navigate(cardUrl, { replace: true });
         }
       } else {
         throw new Error('Invalid link or link information not found');
@@ -65,7 +83,7 @@ const SharedLinkAccess = ({ linkToken }) => {
     } finally {
       setIsLoading(false);
     }
-  }, [cardUrl, linkToken, secretPassed]);
+  }, [cardUrl, linkToken, navigate, passwordToken, secretPassed]);
 
   useEffect(() => {
     fetchLinkInfo();
@@ -116,7 +134,7 @@ const SharedLinkAccess = ({ linkToken }) => {
         
         // Redirect to card view
         setTimeout(() => {
-          window.location.href = cardUrl;
+          navigate(cardUrl, { replace: true });
         }, 1000);
       } else {
         throw new Error(response.error || 'Invalid verification code');
@@ -164,10 +182,10 @@ const SharedLinkAccess = ({ linkToken }) => {
     try {
       const response = await sharedAccess.verifyPassword(linkToken, secretInput);
       if (response.success) {
-        sessionStorage.setItem(`shareT_pw_${linkToken}`, '1');
-        setSecretPassed(true);
+        writeSharePasswordGrant(linkToken, response.passwordToken);
+        setPasswordToken(response.passwordToken || '');
         if ((!linkInfo.requiresParticipantIdentity && !linkInfo.requiresEmail) || identityVerified) {
-          window.location.href = cardUrl;
+          navigate(cardUrl, { replace: true });
         }
       }
     } catch (err) {
@@ -203,25 +221,34 @@ const SharedLinkAccess = ({ linkToken }) => {
             This link is protected. Please enter the secret to continue.
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent>
+          <form
+            className="space-y-4"
+            onSubmit={event => {
+              event.preventDefault();
+              handleVerifySecret();
+            }}
+          >
           <div>
             <Label htmlFor="secret">Secret</Label>
             <Input
               id="secret"
+              name="secret"
               type="password"
               value={secretInput}
               onChange={e => { setSecretInput(e.target.value); setSecretError(''); }}
-              onKeyDown={e => e.key === 'Enter' && handleVerifySecret()}
               placeholder="Enter secret…"
               className="mt-1"
               disabled={checkingSecret}
+              autoComplete="off"
               autoFocus
             />
             {secretError && <p className="text-sm text-destructive mt-1">{secretError}</p>}
           </div>
-          <Button onClick={handleVerifySecret} disabled={!secretInput || checkingSecret} className="w-full">
+          <Button type="submit" disabled={!secretInput || checkingSecret} className="w-full">
             {checkingSecret ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Checking…</> : 'Continue'}
           </Button>
+          </form>
         </CardContent>
       </Card>
     );
@@ -232,7 +259,8 @@ const SharedLinkAccess = ({ linkToken }) => {
       <CardHeader>
         <CardTitle>Join this ShareT conversation</CardTitle>
         <CardDescription>
-          Verify your email once to comment on {linkInfo.trelloCardName} and receive replies.
+          Verify your email once to comment on {linkInfo.trelloCardName}
+          {linkInfo.emailNotificationsAvailable ? ' and receive replies.' : '.'}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -266,9 +294,15 @@ const SharedLinkAccess = ({ linkToken }) => {
                   autoComplete="email"
                 />
               </div>
-              <p className="text-xs text-muted-foreground mt-1">
-                ShareT emails you when the card owner replies after your comment.
-              </p>
+              {linkInfo.emailNotificationsAvailable ? (
+                <p className="text-xs text-muted-foreground mt-1">
+                  ShareT emails you when the card owner replies after your comment.
+                </p>
+              ) : (
+                <p className="text-xs text-amber-600 mt-1">
+                  Reply emails are unavailable until the ShareT operator configures email delivery.
+                </p>
+              )}
               {linkInfo.requiresEmail && (
                 <p className="text-xs text-muted-foreground mt-1">
                   This link is restricted to specific email addresses
@@ -278,7 +312,7 @@ const SharedLinkAccess = ({ linkToken }) => {
             
             <Button 
               onClick={handleSendVerification} 
-              disabled={!name.trim() || !email.trim() || isVerifying}
+              disabled={!name.trim() || !email.trim() || isVerifying || !linkInfo.verificationAvailable}
               className="w-full"
             >
               {isVerifying ? (

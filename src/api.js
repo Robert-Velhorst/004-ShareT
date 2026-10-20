@@ -7,24 +7,26 @@
 // (Cloudflare tunnel, custom domain, localhost) since frontend is served from same origin as backend.
 const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
+export const prepaid = {
+  wallet: () => apiRequest('/billing/wallet'),
+  history: before => apiRequest(`/billing/history${before ? `?before=${encodeURIComponent(before)}` : ''}`),
+  checkout: (amountCents, requestId) => apiRequest('/billing/checkout', { method: 'POST', body: JSON.stringify({ amountCents, requestId }) }),
+  status: sessionId => apiRequest(`/billing/checkout/${encodeURIComponent(sessionId)}`),
+};
+
 /**
  * Helper function to make API requests
  */
 async function apiRequest(endpoint, options = {}) {
-  const token = localStorage.getItem('token');
-  
   const headers = {
     'Content-Type': 'application/json',
     ...options.headers,
   };
 
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
-
   const config = {
     ...options,
     headers,
+    credentials: 'include',
   };
 
   try {
@@ -32,7 +34,10 @@ async function apiRequest(endpoint, options = {}) {
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(data.message || data.error || `Request failed with status ${response.status}`);
+      const error = new Error(data.message || data.error || `Request failed with status ${response.status}`);
+      error.status = response.status;
+      error.data = data;
+      throw error;
     }
 
     return data;
@@ -42,21 +47,40 @@ async function apiRequest(endpoint, options = {}) {
   }
 }
 
+function shareAccessHeaders(access = {}) {
+  return {
+    ...(access.participantToken && { 'X-ShareT-Participant-Token': access.participantToken }),
+    ...(access.passwordToken && { 'X-ShareT-Password-Token': access.passwordToken })
+  };
+}
+
+async function apiDownload(endpoint, access = {}) {
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    headers: shareAccessHeaders(access),
+    credentials: 'include'
+  });
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    throw new Error(data.message || `Download failed with status ${response.status}`);
+  }
+  return {
+    blob: await response.blob(),
+    disposition: response.headers.get('content-disposition') || ''
+  };
+}
+
 /**
  * Helper for multipart form data requests (file uploads)
  */
-async function apiUpload(endpoint, formData) {
-  const token = localStorage.getItem('token');
-  const headers = {};
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
+async function apiUpload(endpoint, formData, extraHeaders = {}) {
+  const headers = { ...extraHeaders };
 
   try {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
       method: 'POST',
       headers,
       body: formData,
+      credentials: 'include',
     });
     const data = await response.json();
     if (!response.ok) {
@@ -85,7 +109,7 @@ export const auth = {
     method: 'POST',
   }),
 
-  getCurrentUser: () => apiRequest('/auth/me'),
+  getCurrentUser: () => apiRequest('/auth/session'),
 
   updateProfile: (profileData) => apiRequest('/auth/profile', {
     method: 'PUT',
@@ -108,6 +132,24 @@ export const auth = {
   }),
 
   getCredits: () => apiRequest('/auth/credits'),
+
+  listApiTokens: () => apiRequest('/auth/api-tokens'),
+
+  createApiToken: (tokenData) => apiRequest('/auth/api-tokens', {
+    method: 'POST',
+    body: JSON.stringify(tokenData),
+  }),
+
+  revokeApiToken: (tokenId) => apiRequest(`/auth/api-tokens/${encodeURIComponent(tokenId)}`, {
+    method: 'DELETE',
+  }),
+
+  exportAccount: () => apiDownload('/auth/export'),
+
+  deleteAccount: (password) => apiRequest('/auth/account', {
+    method: 'DELETE',
+    body: JSON.stringify({ password }),
+  }),
 };
 
 // Trello API
@@ -139,8 +181,6 @@ export const trello = {
   
   getCardLinks: (cardId) => apiRequest(`/trello/cards/${cardId}/links`),
   
-  getCardPluginData: (cardId) => apiRequest(`/trello/cards/${cardId}/plugin-data`),
-
   // Can a freelancer comment actually raise the owner's Trello bell?
   getNotificationHealth: () => apiRequest('/trello/notification-health'),
 };
@@ -206,7 +246,9 @@ export const sharedAccess = {
     body: JSON.stringify({ participantToken }),
   }),
 
-  getCard: (shareId) => apiRequest(`/shared-access/${shareId}`),
+  getCard: (shareId, access) => apiRequest(`/shared-access/${shareId}`, {
+    headers: shareAccessHeaders(access),
+  }),
 
   verifyPassword: (shareId, password) => apiRequest(`/shared-access/${shareId}/verify-password`, {
     method: 'POST',
@@ -214,117 +256,55 @@ export const sharedAccess = {
   }),
 
   // Fix #12/#13: Get comments with ISO timestamps, full history
-  getComments: (shareId) => apiRequest(`/shared-access/${shareId}/comments`),
+  getComments: (shareId, access) => apiRequest(`/shared-access/${shareId}/comments`, {
+    headers: shareAccessHeaders(access),
+  }),
 
   // Fix #13: Get full action history
-  getActions: (shareId) => apiRequest(`/shared-access/${shareId}/actions`),
+  getActions: (shareId, access) => apiRequest(`/shared-access/${shareId}/actions`, {
+    headers: shareAccessHeaders(access),
+  }),
 
   // Fix #7: Get all checklists
-  getChecklists: (shareId) => apiRequest(`/shared-access/${shareId}/checklists`),
+  getChecklists: (shareId, access) => apiRequest(`/shared-access/${shareId}/checklists`, {
+    headers: shareAccessHeaders(access),
+  }),
 
   // Fix #10: Get card members
-  getMembers: (shareId) => apiRequest(`/shared-access/${shareId}/members`),
+  getMembers: (shareId, access) => apiRequest(`/shared-access/${shareId}/members`, {
+    headers: shareAccessHeaders(access),
+  }),
 
   // Fix #14: Get card-level links
-  getLinks: (shareId) => apiRequest(`/shared-access/${shareId}/links`),
+  getLinks: (shareId, access) => apiRequest(`/shared-access/${shareId}/links`, {
+    headers: shareAccessHeaders(access),
+  }),
 
-  addComment: (shareId, commentData) => apiRequest(`/shared-access/${shareId}/comments`, {
+  addComment: (shareId, commentData, access) => apiRequest(`/shared-access/${shareId}/comments`, {
     method: 'POST',
+    headers: shareAccessHeaders(access),
     body: JSON.stringify(commentData),
   }),
 
   // Fix #11: Real file upload
-  uploadAttachment: (shareId, file) => {
+  uploadAttachment: (shareId, file, access) => {
     const formData = new FormData();
     formData.append('file', file);
-    return apiUpload(`/shared-access/${shareId}/attachments`, formData);
+    return apiUpload(`/shared-access/${shareId}/attachments`, formData, shareAccessHeaders(access));
   },
 
-  getAttachments: (shareId) => apiRequest(`/shared-access/${shareId}/attachments`),
+  getAttachments: (shareId, access) => apiRequest(`/shared-access/${shareId}/attachments`, {
+    headers: shareAccessHeaders(access),
+  }),
 
-  downloadAttachment: (shareId, attachmentId) => 
-    `${API_BASE_URL}/shared-access/${shareId}/attachments/${attachmentId}/download`,
+  downloadAttachment: (shareId, attachmentId, access) =>
+    apiDownload(`/shared-access/${shareId}/attachments/${attachmentId}/download`, access),
 
-  updateDueDate: (shareId, dueDate) => apiRequest(`/shared-access/${shareId}/due-date`, {
+  updateDueDate: (shareId, dueDate, access) => apiRequest(`/shared-access/${shareId}/due-date`, {
     method: 'PUT',
+    headers: shareAccessHeaders(access),
     body: JSON.stringify({ due: dueDate }),
   }),
-};
-
-// Resource Usage API
-export const resources = {
-  track: (resourceData) => apiRequest('/resources/track', {
-    method: 'POST',
-    body: JSON.stringify(resourceData),
-  }),
-
-  getUsage: (params) => {
-    const queryString = new URLSearchParams(params).toString();
-    return apiRequest(`/resources/usage?${queryString}`);
-  },
-
-  getBreakdown: (period) => {
-    const queryString = period ? `?period=${period}` : '';
-    return apiRequest(`/resources/breakdown${queryString}`);
-  },
-
-  getByPeriod: (period) => apiRequest(`/resources/period/${period}`),
-
-  getByLink: (startDate, endDate) => {
-    const params = new URLSearchParams();
-    if (startDate) params.append('startDate', startDate);
-    if (endDate) params.append('endDate', endDate);
-    return apiRequest(`/resources/by-link?${params.toString()}`);
-  },
-
-  getCurrentPeriod: () => apiRequest('/resources/current-period'),
-
-  exportReport: (period, format = 'json') => {
-    const params = new URLSearchParams({ format });
-    if (period) params.append('period', period);
-    return apiRequest(`/resources/export?${params.toString()}`);
-  },
-};
-
-// Billing API
-export const billing = {
-  getAll: (params) => {
-    const queryString = new URLSearchParams(params).toString();
-    return apiRequest(`/billing?${queryString}`);
-  },
-
-  getByPeriod: (period) => apiRequest(`/billing/period/${period}`),
-
-  getCurrent: () => apiRequest('/billing/current'),
-
-  getSummary: () => apiRequest('/billing/summary'),
-
-  create: (period) => apiRequest('/billing/create', {
-    method: 'POST',
-    body: JSON.stringify({ period }),
-  }),
-
-  updateStatus: (billingId, status) => apiRequest(`/billing/${billingId}/status`, {
-    method: 'PUT',
-    body: JSON.stringify({ status }),
-  }),
-
-  generateInvoice: (billingId) => apiRequest(`/billing/${billingId}/invoice`, {
-    method: 'POST',
-  }),
-
-  downloadInvoice: (billingId) => `${API_BASE_URL}/billing/${billingId}/invoice/download`,
-
-  processPayment: (billingId, paymentData) => apiRequest(`/billing/${billingId}/pay`, {
-    method: 'POST',
-    body: JSON.stringify(paymentData),
-  }),
-
-  requestRefund: (billingId, reason) => apiRequest(`/billing/${billingId}/refund`, {
-    method: 'POST',
-    body: JSON.stringify({ reason }),
-  }),
-
 };
 
 // In-App Notifications API
@@ -340,8 +320,6 @@ export default {
   trello,
   sharedLinks,
   sharedAccess,
-  resources,
-  billing,
   notifications,
 };
 

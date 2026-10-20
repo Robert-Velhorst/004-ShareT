@@ -8,6 +8,7 @@ const { getNotificationStatus } = require('../controllers/sharedCommentControlle
 const { hasEmailTransport } = require('../utils/notificationService');
 const { getWebhookReadiness } = require('../services/trelloWebhookService');
 const { resolveAmbiguousReply } = require('../services/replyNotificationService');
+const { presentSharedLink } = require('../utils/sharePresentation');
 
 router.use(protect);
 router.use(adminOnly);
@@ -140,7 +141,7 @@ router.get('/shares', async (req, res) => {
         total: links.length,
         active: active.length,
         inactive: links.length - active.length,
-        links: links.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 50)
+        links: links.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 50).map(presentSharedLink)
       }
     });
   } catch (err) {

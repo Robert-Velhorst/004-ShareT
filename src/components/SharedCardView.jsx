@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -10,7 +10,12 @@ import remarkBreaks from 'remark-breaks';
 import { format } from 'date-fns';
 import { sharedAccess } from '../api';
 import { ThemeToggle } from './ThemeToggle';
-import { clearShareParticipant, readShareParticipant, writeShareParticipant } from '../lib/shareParticipant';
+import {
+  clearShareParticipant,
+  readShareParticipant,
+  readSharePasswordGrant,
+  writeShareParticipant,
+} from '../lib/shareParticipant';
 
 const AUTO_REFRESH_INTERVAL = 30 * 60 * 1000; // 30 minutes
 const COMMENT_REFRESH_INTERVAL = 30 * 1000;
@@ -75,6 +80,8 @@ const SharedCardView = ({ linkToken }) => {
   const [participantSession, setParticipantSession] = useState(() => readShareParticipant(linkToken));
   const participant = participantSession?.participant || null;
   const participantToken = participantSession?.participantToken || '';
+  const passwordToken = useMemo(() => readSharePasswordGrant(linkToken), [linkToken]);
+  const shareAccess = useMemo(() => ({ participantToken, passwordToken }), [participantToken, passwordToken]);
   
   const refreshTimerRef = useRef(null);
   const commentRefreshRef = useRef(null);
@@ -83,7 +90,7 @@ const SharedCardView = ({ linkToken }) => {
   // Keep the open conversation current without replacing in-progress input.
   const fetchComments = useCallback(async () => {
     try {
-      const response = await sharedAccess.getComments(linkToken);
+      const response = await sharedAccess.getComments(linkToken, shareAccess);
       if (response.data) {
         setComments(response.data);
         setLastRefreshed(new Date());
@@ -91,71 +98,68 @@ const SharedCardView = ({ linkToken }) => {
     } catch (error) {
       console.error('Error fetching comments:', error);
     }
-  }, [linkToken]);
+  }, [linkToken, shareAccess]);
   
   const fetchAttachments = useCallback(async () => {
     try {
-      const response = await sharedAccess.getAttachments(linkToken);
+      const response = await sharedAccess.getAttachments(linkToken, shareAccess);
       if (response.data) {
         setAttachments(response.data);
       }
     } catch (error) {
       console.error('Error fetching attachments:', error);
     }
-  }, [linkToken]);
+  }, [linkToken, shareAccess]);
 
   // Fix #13: Fetch full action history
   const fetchActions = useCallback(async () => {
     try {
-      const response = await sharedAccess.getActions(linkToken);
+      const response = await sharedAccess.getActions(linkToken, shareAccess);
       if (response.data) {
         setActions(response.data);
       }
     } catch (error) {
       console.error('Error fetching actions:', error);
     }
-  }, [linkToken]);
+  }, [linkToken, shareAccess]);
 
   // Fix #7: Fetch all checklists  
   const fetchChecklists = useCallback(async () => {
     try {
-      const response = await sharedAccess.getChecklists(linkToken);
+      const response = await sharedAccess.getChecklists(linkToken, shareAccess);
       if (response.data) {
         setChecklists(response.data);
       }
     } catch (error) {
       console.error('Error fetching checklists:', error);
     }
-  }, [linkToken]);
+  }, [linkToken, shareAccess]);
 
   // Fix #10: Fetch card members
   const fetchMembers = useCallback(async () => {
     try {
-      const response = await sharedAccess.getMembers(linkToken);
+      const response = await sharedAccess.getMembers(linkToken, shareAccess);
       if (response.data) {
         setMembers(response.data);
       }
     } catch (error) {
       console.error('Error fetching members:', error);
     }
-  }, [linkToken]);
+  }, [linkToken, shareAccess]);
 
   const fetchCardData = useCallback(async () => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const response = await sharedAccess.getCard(linkToken);
+      const response = await sharedAccess.getCard(linkToken, shareAccess);
 
-      if (response.linkInfo?.requiresPassword) {
-        const verified = sessionStorage.getItem(`shareT_pw_${linkToken}`);
-        if (!verified) {
-          window.location.href = `/shared/${linkToken}`;
-          return;
-        }
+      if (!response.accessGranted) {
+        window.location.href = `/shared/${linkToken}`;
+        return;
       }
 
-      if (response.linkInfo?.requiresParticipantIdentity) {
+      if (response.linkInfo?.requiresParticipantIdentity || response.linkInfo?.requiresEmail) {
         if (!participantToken) {
           window.location.href = `/shared/${linkToken}`;
           return;
@@ -192,7 +196,7 @@ const SharedCardView = ({ linkToken }) => {
       setIsLoading(false);
       setLastRefreshed(new Date());
     }
-  }, [fetchActions, fetchAttachments, fetchChecklists, fetchComments, fetchMembers, linkToken, participantToken]);
+  }, [fetchActions, fetchAttachments, fetchChecklists, fetchComments, fetchMembers, linkToken, participantToken, shareAccess]);
 
   
   useEffect(() => {
@@ -250,7 +254,7 @@ const SharedCardView = ({ linkToken }) => {
       const response = await sharedAccess.addComment(linkToken, {
         text: comment,
         participantToken
-      });
+      }, shareAccess);
       
       if (response.success) {
         toast.success("Comment added");
@@ -271,7 +275,7 @@ const SharedCardView = ({ linkToken }) => {
     setIsSubmitting(true);
     
     try {
-      const response = await sharedAccess.updateDueDate(linkToken, newDueDate);
+      const response = await sharedAccess.updateDueDate(linkToken, newDueDate, shareAccess);
       
       if (response.success) {
         toast.success("Due date updated");
@@ -293,7 +297,7 @@ const SharedCardView = ({ linkToken }) => {
     setIsSubmitting(true);
     
     try {
-      const response = await sharedAccess.uploadAttachment(linkToken, file);
+      const response = await sharedAccess.uploadAttachment(linkToken, file, shareAccess);
       
       if (response.success) {
         toast.success("Attachment uploaded");
@@ -305,6 +309,23 @@ const SharedCardView = ({ linkToken }) => {
     } finally {
       setIsSubmitting(false);
       e.target.value = ''; // Reset file input
+    }
+  };
+
+  const handleDownloadAttachment = async (attachment) => {
+    try {
+      const { blob } = await sharedAccess.downloadAttachment(linkToken, attachment.id, shareAccess);
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = attachment.name || 'attachment';
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error downloading attachment:', error);
+      toast.error(error.message || 'Failed to download attachment');
     }
   };
 
@@ -548,10 +569,8 @@ const SharedCardView = ({ linkToken }) => {
                           <p className="text-sm font-medium text-gray-700 dark:text-zinc-200 truncate">{att.name}</p>
                           <p className="text-xs text-gray-400 dark:text-zinc-500">{att.bytes ? `${Math.round(att.bytes / 1024)} KB · ` : ''}{formatExactDate(att.date)}</p>
                         </div>
-                        <Button variant="outline" size="sm" asChild>
-                          <a href={sharedAccess.downloadAttachment(linkToken, att.id)} target="_blank" rel="noopener noreferrer">
-                            Download
-                          </a>
+                        <Button variant="outline" size="sm" onClick={() => handleDownloadAttachment(att)}>
+                          Download
                         </Button>
                       </div>
                     ))}

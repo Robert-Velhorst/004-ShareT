@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
+const PouchDB = require('pouchdb');
 
 const { initDatabases, databases, Notification } = require('../db/pouchdb');
 
@@ -10,7 +11,14 @@ test('Notification Model: CRUD operations and unread counting', async () => {
   const dataDirectory = fs.mkdtempSync(path.join(os.tmpdir(), 'sharet-notif-test-'));
 
   try {
+    // Cached schema 1 predates the notification database; upgrade its indexes.
+    const existingUsers = new PouchDB(path.join(dataDirectory, 'users'));
+    await existingUsers.put({ _id: '_local/sharet-index-schema', version: 1 });
+    await existingUsers.close();
     await initDatabases(dataDirectory);
+    const { indexes } = await databases.notifications.getIndexes();
+    assert.ok(indexes.some(index => JSON.stringify(index.def.fields) === JSON.stringify([{ userId: 'asc' }, { createdAt: 'asc' }])));
+    assert.ok(indexes.some(index => JSON.stringify(index.def.fields) === JSON.stringify([{ userId: 'asc' }, { isRead: 'asc' }])));
 
     const userId = 'user_test_notif_123';
 

@@ -45,7 +45,7 @@ const NewShareForm = ({ shareType, setShareType, credits, onCreditsChanged, onCr
   // Fix #9: Green checkmark indicator instead of obstructive popup
   const [showSuccess, setShowSuccess] = useState(false);
 
-  // Fix #2: Create share link via API (persistent storage), not mock URLs
+  // Create and persist share links through the server.
   const handleCreateShare = async () => {
     // Validate expiry date
     if (expiryDate && new Date(expiryDate) <= new Date()) {
@@ -53,6 +53,24 @@ const NewShareForm = ({ shareType, setShareType, credits, onCreditsChanged, onCr
         title: "Invalid expiry date",
         description: "Please select a future date for expiry.",
         variant: "destructive",
+      });
+      return;
+    }
+
+    if (credits === null) {
+      uiToast({
+        title: 'Credits unavailable',
+        description: 'ShareT could not verify your balance. Reload or try again before creating a link.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    if (shareType === 'list' && credits !== Infinity && (selectedList?.cards || []).length > credits) {
+      uiToast({
+        title: 'Not enough credits',
+        description: `This list needs ${(selectedList?.cards || []).length} credits, but ${credits} are available.`,
+        variant: 'destructive',
       });
       return;
     }

@@ -1,71 +1,43 @@
 const http = require('http');
 
-const PORT = process.env.PORT || 5000;
-const HOST = 'localhost';
+const port = Number(process.env.PORT || 5005);
+const host = process.env.HOST || '127.0.0.1';
 
-console.log(`🏥 Checking health of ShareT server on ${HOST}:${PORT}...`);
-
-const options = {
-  hostname: HOST,
-  port: PORT,
-  path: '/health',
+const request = http.request({
+  hostname: host,
+  port,
+  path: '/ready',
   method: 'GET',
   timeout: 5000
-};
-
-const req = http.request(options, (res) => {
-  let data = '';
-
-  res.on('data', (chunk) => {
-    data += chunk;
-  });
-
-  res.on('end', () => {
+}, response => {
+  let body = '';
+  response.on('data', chunk => { body += chunk; });
+  response.on('end', () => {
     try {
-      const health = JSON.parse(data);
-      
-      console.log('');
-      console.log('📊 Health Check Results:');
-      console.log('========================');
-      console.log(`Status: ${health.status === 'healthy' ? '✅ Healthy' : '❌ Unhealthy'}`);
-      console.log(`MongoDB: ${health.mongodb === 'connected' ? '✅ Connected' : '❌ Disconnected'}`);
-      console.log(`Uptime: ${Math.floor(health.uptime / 60)} minutes`);
-      console.log(`Timestamp: ${health.timestamp}`);
-      console.log('');
-
-      if (health.status === 'healthy' && health.mongodb === 'connected') {
-        console.log('✅ Server is healthy and ready!');
-        process.exit(0);
-      } else {
-        console.log('⚠️  Server is running but not fully healthy');
-        process.exit(1);
-      }
-    } catch (error) {
-      console.error('❌ Invalid health check response:', data);
+      const readiness = JSON.parse(body);
+      const database = readiness.database?.status || 'unknown';
+      console.log(`ShareT readiness: ${readiness.status}`);
+      console.log(`Database: ${database}`);
+      console.log(`Public HTTPS: ${readiness.runtime?.capabilities?.publicHttps ? 'configured' : 'not configured'}`);
+      for (const warning of readiness.runtime?.warnings || []) console.warn(`Warning: ${warning}`);
+      if (response.statusCode === 200 && readiness.status === 'ready') process.exit(0);
+      process.exit(1);
+    } catch {
+      console.error(`Invalid readiness response from http://${host}:${port}/ready`);
       process.exit(1);
     }
   });
 });
 
-req.on('error', (error) => {
-  console.error('');
-  console.error('❌ Health check failed!');
-  console.error(`Error: ${error.message}`);
-  console.error('');
-  console.error('Possible reasons:');
-  console.error('  - Server is not running');
-  console.error('  - Server is starting up');
-  console.error('  - Port is blocked');
-  console.error('');
-  console.error('Try: npm run pm2:logs');
-  console.error('');
+request.on('error', error => {
+  console.error(`ShareT readiness check failed: ${error.message}`);
   process.exit(1);
 });
 
-req.on('timeout', () => {
-  console.error('❌ Health check timed out!');
-  req.destroy();
+request.on('timeout', () => {
+  console.error('ShareT readiness check timed out');
+  request.destroy();
   process.exit(1);
 });
 
-req.end();
+request.end();

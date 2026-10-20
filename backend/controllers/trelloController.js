@@ -21,7 +21,13 @@ async function fetchJSON(url, options = {}) {
 // Get Trello auth URL
 exports.getAuthUrl = async (req, res) => {
   try {
-    const appOrigin = req.query.origin || process.env.PUBLIC_URL || process.env.FRONTEND_URL || `http://localhost:${process.env.PORT || 5005}`;
+    const configuredOrigins = [process.env.PUBLIC_URL, process.env.FRONTEND_URL, ...(process.env.CORS_ORIGIN || '').split(',')]
+      .filter(Boolean)
+      .map(value => String(value).trim().replace(/\/$/, ''));
+    const fallbackOrigin = process.env.PUBLIC_URL || process.env.FRONTEND_URL || `http://localhost:${process.env.PORT || 5005}`;
+    const requestedOrigin = String(req.query.origin || '').replace(/\/$/, '');
+    const developmentOrigin = process.env.NODE_ENV !== 'production' && /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(requestedOrigin);
+    const appOrigin = configuredOrigins.includes(requestedOrigin) || developmentOrigin ? requestedOrigin : fallbackOrigin;
     const callbackUrl = `${appOrigin.replace(/\/$/, '')}/api/trello/callback`;
     const authUrl = `https://trello.com/1/authorize?expiration=never&name=ShareT&scope=read,write,account&response_type=token&key=${process.env.TRELLO_API_KEY}&return_url=${encodeURIComponent(callbackUrl)}&callback_method=fragment`;
     
@@ -45,36 +51,41 @@ exports.handleCallback = async (req, res) => {
 <html>
 <head><title>Connecting Trello...</title></head>
 <body><p>Connecting to Trello, please wait...</p>
-<script>
+<script src="/api/trello/callback.js" defer></script>
+</body></html>`);
+};
+
+exports.handleCallbackScript = (req, res) => {
+  res.type('application/javascript').send(`
 (async function() {
-  const hash = window.location.hash.substring(1);
-  const params = new URLSearchParams(hash);
+  const showError = function(message) {
+    const paragraph = document.createElement('p');
+    paragraph.textContent = 'Error: ' + message + '. Close this window and try again.';
+    document.body.replaceChildren(paragraph);
+  };
+  const params = new URLSearchParams(window.location.hash.substring(1));
   const trelloToken = params.get('token');
-  if (!trelloToken) {
-    document.body.innerHTML = '<p>Error: No token from Trello. Close this window and try again.</p>';
-    return;
-  }
+  if (!trelloToken) return showError('No token from Trello');
   try {
-    const jwt = localStorage.getItem('token');
-    const res = await fetch('/api/trello/connect', {
+    const response = await fetch('/api/trello/connect', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + jwt },
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ trelloToken })
     });
-    if (res.ok) {
-      const data = await res.json();
-      if (window.opener) window.opener.postMessage(JSON.stringify({ type: 'trello-connected', member: data.member }), window.location.origin);
-      window.close();
-    } else {
-      const d = await res.json();
-      document.body.innerHTML = '<p>Error: ' + (d.message || 'Failed to connect') + '. Close this window and try again.</p>';
+    if (!response.ok) {
+      const data = await response.json();
+      return showError(data.message || 'Failed to connect');
     }
-  } catch(err) {
-    document.body.innerHTML = '<p>Error: ' + err.message + '. Close this window and try again.</p>';
+    const data = await response.json();
+    if (window.opener) {
+      window.opener.postMessage(JSON.stringify({ type: 'trello-connected', member: data.member }), window.location.origin);
+    }
+    window.close();
+  } catch (error) {
+    showError(error.message);
   }
-})();
-${'</scr' + 'ipt>'}
-</body></html>`);
+})();`);
 };
 
 // Connect Trello with token
@@ -655,37 +666,6 @@ exports.getCardLinks = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Error fetching card links'
-    });
-  }
-};
-
-// Fix #5: Get Power-Up plugin data for a card
-exports.getCardPluginData = async (req, res) => {
-  try {
-    const userId = req.user._id || req.user.id;
-    const connection = await TrelloConnection.findByUserId(userId);
-    const { cardId } = req.params;
-
-    if (!connection) {
-      return res.status(401).json({
-        success: false,
-        message: 'Trello not connected'
-      });
-    }
-
-    const url = `${TRELLO_API_BASE}/cards/${cardId}/pluginData?key=${process.env.TRELLO_API_KEY}&token=${connection.trelloToken}`;
-    const pluginData = await fetchJSON(url);
-
-    res.json({
-      success: true,
-      data: pluginData,
-      pluginData
-    });
-  } catch (error) {
-    console.error('Get card plugin data error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Error fetching plugin data'
     });
   }
 };

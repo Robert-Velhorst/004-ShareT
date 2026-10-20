@@ -38,6 +38,8 @@ backend/.env.production
 # Build output
 dist/
 backend/frontend/dist/
+backups/
+support/
 
 # Logs
 *.log
@@ -49,3 +51,8 @@ Thumbs.db
 config.bat
 *.mp4
 *.textClipping
+# Financial state and operator-specific rate cards must never be committed.
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+billing-rates.local.json

@@ -16,10 +16,10 @@ const TrelloConnect = ({ onConnect }) => {
   const onConnectRef = useRef(onConnect);
   onConnectRef.current = onConnect;
 
-  const loadNotificationHealth = async (token) => {
+  const loadNotificationHealth = async () => {
     try {
       const res = await axios.get(`${API_URL}/trello/notification-health`, {
-        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
       });
       setNotifyHealth(res.data?.health || null);
     } catch {
@@ -27,10 +27,10 @@ const TrelloConnect = ({ onConnect }) => {
     }
   };
 
-  const fetchBoards = async (token) => {
+  const fetchBoards = async () => {
     try {
       const res = await axios.get(`${API_URL}/trello/boards`, {
-        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
       });
       return { boards: res.data?.boards || [], organizations: res.data?.organizations || [] };
     } catch {
@@ -40,16 +40,15 @@ const TrelloConnect = ({ onConnect }) => {
 
   const loadConnections = async () => {
     try {
-      const token = localStorage.getItem("token");
       const response = await axios.get(`${API_URL}/trello/connections`, {
-        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
       });
       const connections = response.data?.connections || [];
       setTrelloConnections(connections);
       if (connections.length > 0) {
-        const { boards, organizations } = await fetchBoards(token);
+        const { boards, organizations } = await fetchBoards();
         onConnectRef.current({ ...connections[0], boards, organizations });
-        loadNotificationHealth(token);
+        loadNotificationHealth();
       }
     } catch (err) {
       console.error("Trello connections fetch error:", err?.response?.status, err?.message);
@@ -66,9 +65,8 @@ const TrelloConnect = ({ onConnect }) => {
     setError(null);
 
     try {
-      const token = localStorage.getItem("token");
       const response = await axios.get(`${API_URL}/trello/auth-url`, {
-        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
         params: { origin: window.location.origin },
       });
 
@@ -94,8 +92,7 @@ const TrelloConnect = ({ onConnect }) => {
 
         if (msg.member) {
           onConnectRef.current({ member: msg.member, boards: [], organizations: [] });
-          const t = localStorage.getItem("token");
-          const { boards, organizations } = await fetchBoards(t);
+          const { boards, organizations } = await fetchBoards();
           onConnectRef.current({ member: msg.member, boards, organizations });
         }
         toast.success("Trello connected successfully!");
@@ -182,8 +179,7 @@ const TrelloConnect = ({ onConnect }) => {
                 size="sm"
                 variant="outline"
                 onClick={async () => {
-                  const t = localStorage.getItem('token');
-                  const { boards, organizations } = await fetchBoards(t);
+                  const { boards, organizations } = await fetchBoards();
                   onConnect({ ...connection, boards, organizations });
                 }}
               >

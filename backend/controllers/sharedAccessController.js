@@ -22,6 +22,11 @@ const bcrypt = require('bcryptjs');
 const multer = require('multer');
 const FormData = require('form-data');
 const validator = require('validator');
+const {
+  authorizeShareRequest,
+  signPasswordGrant
+} = require('../utils/shareAccess');
+const { safeFileName } = require('../utils/attachmentSecurity');
 const { getSafeTrelloAttachmentUrl } = require('../utils/trelloAttachmentUrl');
 
 const TRELLO_API_BASE = 'https://api.trello.com/1';
@@ -42,45 +47,68 @@ async function fetchJSON(url, options = {}) {
 }
 
 // Helper: validate share and get Trello connection
-async function getShareAndConnection(shareId) {
-  const share = await SharedLink.findByShareId(shareId);
+function publicLinkInfo(share) {
+  return {
+    trelloCardName: share.cardName,
+    trelloBoardName: share.boardName,
+    requiresEmail: Boolean(share.allowedEmails?.length),
+    requiresParticipantIdentity: Boolean(share.permissions?.canComment),
+    emailNotificationsAvailable: hasEmailTransport(),
+    verificationAvailable: hasEmailTransport() || process.env.NODE_ENV === 'development',
+    verificationMode: hasEmailTransport() ? 'email' : (process.env.NODE_ENV === 'development' ? 'development-code' : 'unavailable'),
+    requiresPassword: Boolean(share.password),
+    expiresAt: share.expiresAt || null,
+    permissions: share.permissions
+  };
+}
+
+async function getShareAndConnection(req, options = {}) {
+  const share = await SharedLink.findByShareId(req.params.shareId);
   if (!share) return { error: 'Share not found', status: 404 };
   if (!share.isActive) return { error: 'This share link is no longer active', status: 403 };
   if (share.expiresAt && new Date(share.expiresAt) < new Date()) {
     return { error: 'This share link has expired', status: 403 };
   }
 
+  if (options.permission && !share.permissions?.[options.permission]) {
+    return { error: 'This action is not allowed by the share policy', status: 403 };
+  }
+
+  const access = await authorizeShareRequest(req, share, options);
+  if (!access.allowed) {
+    return {
+      error: access.message,
+      code: access.code,
+      status: access.status,
+      share,
+      linkInfo: publicLinkInfo(share)
+    };
+  }
+
   const connection = await TrelloConnection.findByUserId(share.userId);
   if (!connection) return { error: 'Owner not connected to Trello', status: 500 };
 
-  return { share, connection };
+  return { share, connection, participant: access.participant };
 }
 
 // Get shared card (public access)
 exports.getSharedCard = async (req, res) => {
   try {
-    const share = await SharedLink.findByShareId(req.params.shareId);
-
-    if (!share) {
-      return res.status(404).json({
-        success: false,
-        message: 'Share not found'
-      });
+    const result = await getShareAndConnection(req, { permission: 'canView' });
+    if (result.error) {
+      if (result.code === 'PASSWORD_REQUIRED' || result.code === 'EMAIL_VERIFICATION_REQUIRED') {
+        return res.json({
+          success: true,
+          accessGranted: false,
+          accessRequired: result.code,
+          linkInfo: result.linkInfo,
+          data: null
+        });
+      }
+      return res.status(result.status).json({ success: false, message: result.error });
     }
 
-    if (!share.isActive) {
-      return res.status(403).json({
-        success: false,
-        message: 'This share link is no longer active'
-      });
-    }
-
-    if (share.expiresAt && new Date(share.expiresAt) < new Date()) {
-      return res.status(403).json({
-        success: false,
-        message: 'This share link has expired'
-      });
-    }
+    const { share, connection } = result;
 
     // Update access count
     await SharedLink.incrementAccessCount(req.params.shareId);
@@ -93,30 +121,14 @@ exports.getSharedCard = async (req, res) => {
       action: 'view'
     });
 
-    // Get Trello connection for the share owner
-    const connection = await TrelloConnection.findByUserId(share.userId);
-    if (!connection) {
-      return res.status(500).json({
-        success: false,
-        message: 'Unable to fetch card data - owner not connected to Trello'
-      });
-    }
-
     // Fix #10: Include members with avatars; Fix #7: Include checklists; Fix #5: Include pluginData
     const url = `${TRELLO_API_BASE}/cards/${share.cardId}?key=${process.env.TRELLO_API_KEY}&token=${connection.trelloToken}&attachments=true&members=true&member_fields=fullName,username,avatarUrl&checklists=all&pluginData=true`;
     const card = await fetchJSON(url);
 
     res.json({
       success: true,
-      linkInfo: {
-        trelloCardName: share.cardName,
-        trelloBoardName: share.boardName,
-        requiresEmail: share.allowedEmails && share.allowedEmails.length > 0,
-        requiresParticipantIdentity: Boolean(share.permissions?.canComment),
-        emailNotificationsAvailable: hasEmailTransport() || process.env.NODE_ENV === 'development',
-        requiresPassword: !!share.password,
-        permissions: share.permissions
-      },
+      accessGranted: true,
+      linkInfo: publicLinkInfo(share),
       data: {
         card,
         permissions: share.permissions,
@@ -144,6 +156,10 @@ exports.verifyEmail = async (req, res) => {
         success: false,
         message: 'Share not found'
       });
+    }
+
+    if (!share.isActive || (share.expiresAt && new Date(share.expiresAt) <= new Date())) {
+      return res.status(403).json({ success: false, message: 'This share is no longer available' });
     }
 
     // If no email restrictions, allow access
@@ -194,6 +210,10 @@ exports.requestVerification = async (req, res) => {
         success: false,
         message: 'Share not found'
       });
+    }
+
+    if (!share.isActive || (share.expiresAt && new Date(share.expiresAt) <= new Date())) {
+      return res.status(403).json({ success: false, message: 'This share is no longer available' });
     }
 
     // Check if email is in allowed list
@@ -250,6 +270,14 @@ exports.confirmVerification = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Name and a valid email are required' });
     }
 
+    const share = await SharedLink.findByShareId(shareId);
+    if (!share || !share.isActive || (share.expiresAt && new Date(share.expiresAt) <= new Date())) {
+      return res.status(403).json({ success: false, message: 'This share is no longer available' });
+    }
+    if (share.allowedEmails?.length && !share.allowedEmails.map(value => value.toLowerCase()).includes(email)) {
+      return res.status(403).json({ success: false, message: 'Email not authorized' });
+    }
+
     const verification = await EmailVerification.verify(shareId, email, code);
 
     if (!verification) {
@@ -296,22 +324,11 @@ exports.getParticipantStatus = async (req, res) => {
 // Get attachments — Fix #15: Chronological order
 exports.getAttachments = async (req, res) => {
   try {
-    const share = await SharedLink.findByShareId(req.params.shareId);
-
-    if (!share || !share.permissions.canDownload) {
-      return res.status(403).json({
-        success: false,
-        message: 'Access denied'
-      });
+    const result = await getShareAndConnection(req, { permission: 'canDownload' });
+    if (result.error) {
+      return res.status(result.status).json({ success: false, code: result.code, message: result.error });
     }
-
-    const connection = await TrelloConnection.findByUserId(share.userId);
-    if (!connection) {
-      return res.status(500).json({
-        success: false,
-        message: 'Owner not connected to Trello'
-      });
-    }
+    const { share, connection } = result;
 
     const url = `${TRELLO_API_BASE}/cards/${share.cardId}/attachments?key=${process.env.TRELLO_API_KEY}&token=${connection.trelloToken}`;
     const attachments = await fetchJSON(url);
@@ -336,22 +353,11 @@ exports.getAttachments = async (req, res) => {
 // Download attachment — proxy file through backend so non-Trello users can download
 exports.downloadAttachment = async (req, res) => {
   try {
-    const share = await SharedLink.findByShareId(req.params.shareId);
-
-    if (!share || !share.permissions.canDownload) {
-      return res.status(403).json({
-        success: false,
-        message: 'Download not allowed'
-      });
+    const result = await getShareAndConnection(req, { permission: 'canDownload' });
+    if (result.error) {
+      return res.status(result.status).json({ success: false, code: result.code, message: result.error });
     }
-
-    const connection = await TrelloConnection.findByUserId(share.userId);
-    if (!connection) {
-      return res.status(500).json({
-        success: false,
-        message: 'Owner not connected to Trello'
-      });
-    }
+    const { share, connection } = result;
 
     // Get attachment metadata (includes direct file URL)
     const metaUrl = `${TRELLO_API_BASE}/cards/${share.cardId}/attachments/${req.params.attachmentId}?key=${process.env.TRELLO_API_KEY}&token=${connection.trelloToken}`;
@@ -375,6 +381,7 @@ exports.downloadAttachment = async (req, res) => {
 
     // Fetch the actual file from Trello using the owner's token as auth header
     const fileResponse = await fetch(attachmentUrl, {
+      redirect: 'error',
       headers: {
         'Authorization': `OAuth oauth_consumer_key="${process.env.TRELLO_API_KEY}", oauth_token="${connection.trelloToken}"`
       }
@@ -389,9 +396,9 @@ exports.downloadAttachment = async (req, res) => {
 
     // Pass content-type and force browser download with filename
     const contentType = fileResponse.headers.get('content-type') || 'application/octet-stream';
-    const fileName = attachment.name || 'attachment';
+    const fileName = safeFileName(attachment.name);
     res.setHeader('Content-Type', contentType);
-    res.setHeader('Content-Disposition', `attachment; filename="${encodeURIComponent(fileName)}"`);
+    res.setHeader('Content-Disposition', `attachment; filename="download"; filename*=UTF-8''${encodeURIComponent(fileName)}`);
     const contentLength = fileResponse.headers.get('content-length');
     if (contentLength) res.setHeader('Content-Length', contentLength);
 
@@ -412,22 +419,11 @@ exports.uploadAttachment = [
   upload.single('file'),
   async (req, res) => {
     try {
-      const share = await SharedLink.findByShareId(req.params.shareId);
-
-      if (!share || !share.permissions.canUpload) {
-        return res.status(403).json({
-          success: false,
-          message: 'Upload not allowed'
-        });
+      const result = await getShareAndConnection(req, { permission: 'canUpload' });
+      if (result.error) {
+        return res.status(result.status).json({ success: false, code: result.code, message: result.error });
       }
-
-      const connection = await TrelloConnection.findByUserId(share.userId);
-      if (!connection) {
-        return res.status(500).json({
-          success: false,
-          message: 'Owner not connected to Trello'
-        });
-      }
+      const { share, connection } = result;
 
       if (!req.file) {
         return res.status(400).json({
@@ -438,11 +434,12 @@ exports.uploadAttachment = [
 
       // Build multipart form data for Trello API
       const formData = new FormData();
+      const fileName = safeFileName(req.file.originalname);
       formData.append('file', req.file.buffer, {
-        filename: req.file.originalname,
+        filename: fileName,
         contentType: req.file.mimetype
       });
-      formData.append('name', req.file.originalname);
+      formData.append('name', fileName);
 
       const trelloUrl = `${TRELLO_API_BASE}/cards/${share.cardId}/attachments?key=${process.env.TRELLO_API_KEY}&token=${connection.trelloToken}`;
 
@@ -485,25 +482,23 @@ exports.uploadAttachment = [
 exports.setDueDate = async (req, res) => {
   try {
     const { due } = req.body;
-    const share = await SharedLink.findByShareId(req.params.shareId);
-
-    if (!share || !share.permissions.canSetDueDate) {
-      return res.status(403).json({
-        success: false,
-        message: 'Setting due date not allowed'
-      });
+    if (due !== null && due !== '' && Number.isNaN(new Date(due).getTime())) {
+      return res.status(400).json({ success: false, message: 'Due date must be a valid date or null' });
     }
-
-    const connection = await TrelloConnection.findByUserId(share.userId);
-    if (!connection) {
-      return res.status(500).json({
-        success: false,
-        message: 'Owner not connected to Trello'
-      });
+    const result = await getShareAndConnection(req, { permission: 'canSetDueDate' });
+    if (result.error) {
+      return res.status(result.status).json({ success: false, code: result.code, message: result.error });
     }
+    const { share, connection } = result;
 
-    const url = `${TRELLO_API_BASE}/cards/${share.cardId}?key=${process.env.TRELLO_API_KEY}&token=${connection.trelloToken}&due=${due || 'null'}`;
+    const query = new URLSearchParams({
+      key: process.env.TRELLO_API_KEY,
+      token: connection.trelloToken,
+      due: due ? new Date(due).toISOString() : 'null'
+    });
+    const url = `${TRELLO_API_BASE}/cards/${share.cardId}?${query}`;
     const response = await fetch(url, { method: 'PUT' });
+    if (!response.ok) throw new Error(`Trello due-date update failed (${response.status})`);
     const card = await response.json();
 
     // Log action
@@ -531,7 +526,7 @@ exports.setDueDate = async (req, res) => {
 // Fix #12 & #13: Get comments for shared card with ISO timestamps and full history
 exports.getSharedComments = async (req, res) => {
   try {
-    const result = await getShareAndConnection(req.params.shareId);
+    const result = await getShareAndConnection(req, { permission: 'canView' });
     if (result.error) {
       return res.status(result.status).json({ success: false, message: result.error });
     }
@@ -553,7 +548,7 @@ exports.getSharedComments = async (req, res) => {
 // Fix #13: Get full action history for shared card
 exports.getSharedActions = async (req, res) => {
   try {
-    const result = await getShareAndConnection(req.params.shareId);
+    const result = await getShareAndConnection(req, { permission: 'canView' });
     if (result.error) {
       return res.status(result.status).json({ success: false, message: result.error });
     }
@@ -572,7 +567,7 @@ exports.getSharedActions = async (req, res) => {
 // Fix #7: Get checklists for shared card
 exports.getSharedChecklists = async (req, res) => {
   try {
-    const result = await getShareAndConnection(req.params.shareId);
+    const result = await getShareAndConnection(req, { permission: 'canView' });
     if (result.error) {
       return res.status(result.status).json({ success: false, message: result.error });
     }
@@ -591,7 +586,7 @@ exports.getSharedChecklists = async (req, res) => {
 // Fix #10: Get members for shared card
 exports.getSharedMembers = async (req, res) => {
   try {
-    const result = await getShareAndConnection(req.params.shareId);
+    const result = await getShareAndConnection(req, { permission: 'canView' });
     if (result.error) {
       return res.status(result.status).json({ success: false, message: result.error });
     }
@@ -610,7 +605,7 @@ exports.getSharedMembers = async (req, res) => {
 // Fix #14: Get card-level links for shared card
 exports.getSharedLinks = async (req, res) => {
   try {
-    const result = await getShareAndConnection(req.params.shareId);
+    const result = await getShareAndConnection(req, { permission: 'canView' });
     if (result.error) {
       return res.status(result.status).json({ success: false, message: result.error });
     }
@@ -639,12 +634,12 @@ exports.verifyPassword = async (req, res) => {
     const { password } = req.body;
     const share = await SharedLink.findByShareId(req.params.shareId);
 
-    if (!share || !share.isActive) {
+    if (!share || !share.isActive || (share.expiresAt && new Date(share.expiresAt) <= new Date())) {
       return res.status(404).json({ success: false, message: 'Share not found' });
     }
 
     if (!share.password) {
-      return res.json({ success: true, message: 'No password required' });
+      return res.json({ success: true, message: 'No password required', passwordToken: null });
     }
 
     const match = await bcrypt.compare(password || '', share.password);
@@ -652,7 +647,11 @@ exports.verifyPassword = async (req, res) => {
       return res.status(401).json({ success: false, message: 'Incorrect secret' });
     }
 
-    res.json({ success: true, message: 'Access granted' });
+    res.json({
+      success: true,
+      message: 'Access granted',
+      passwordToken: signPasswordGrant(share.shareId)
+    });
   } catch (error) {
     console.error('Verify password error:', error);
     res.status(500).json({ success: false, message: 'Error verifying secret' });

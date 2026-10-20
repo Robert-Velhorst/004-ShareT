@@ -14,10 +14,12 @@ const PreviousLinks = ({ onShowQRCode }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [pagination, setPagination] = useState({ total: 0, pages: 1 });
+  const [loadError, setLoadError] = useState('');
 
   // Fix #2: Fetch links from backend API (persistent, survives logout/restart)
   const fetchLinks = useCallback(async (page) => {
     setIsLoading(true);
+    setLoadError('');
     try {
       const response = await sharedLinks.getAll({ page, limit: LINKS_PER_PAGE });
       if (response.success && response.data) {
@@ -29,14 +31,9 @@ const PreviousLinks = ({ onShowQRCode }) => {
       }
     } catch (error) {
       console.error('Error fetching links:', error);
-      // Fallback to localStorage
-      const storedLinks = JSON.parse(localStorage.getItem('previousLinks') || '[]');
-      const start = (page - 1) * LINKS_PER_PAGE;
-      setLinks(storedLinks.slice(start, start + LINKS_PER_PAGE));
-      setPagination({
-        total: storedLinks.length,
-        pages: Math.max(1, Math.ceil(storedLinks.length / LINKS_PER_PAGE)),
-      });
+      setLinks([]);
+      setPagination({ total: 0, pages: 1 });
+      setLoadError(error.message || 'ShareT could not load your stored links.');
     } finally {
       setIsLoading(false);
     }
@@ -94,6 +91,16 @@ const PreviousLinks = ({ onShowQRCode }) => {
     return (
       <div className="flex justify-center py-8">
         <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
+
+  if (loadError) {
+    return (
+      <div className="space-y-3 rounded-md border border-destructive/40 bg-destructive/5 p-4">
+        <p className="font-medium">Previous links could not be loaded</p>
+        <p className="text-sm text-muted-foreground">{loadError}</p>
+        <Button type="button" variant="outline" onClick={() => fetchLinks(currentPage)}>Try again</Button>
       </div>
     );
   }

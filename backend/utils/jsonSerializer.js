@@ -1,7 +1,5 @@
 /**
- * Fast JSON Serialization using fast-json-stringify
- * 2x faster than JSON.stringify for structured data
- * GitHub: https://github.com/fastify/fast-json-stringify (3.5k+ stars)
+ * Schema-based JSON serialization for stable response shapes.
  */
 
 const fastJson = require('fast-json-stringify');
@@ -158,45 +156,6 @@ const errorResponseSchema = fastJson({
   }
 });
 
-// Schema for resource usage response
-const resourceUsageSchema = fastJson({
-  title: 'ResourceUsageResponse',
-  type: 'object',
-  properties: {
-    success: { type: 'boolean' },
-    data: {
-      type: 'object',
-      properties: {
-        period: { type: 'string' },
-        usage: {
-          type: 'object',
-          properties: {
-            cpu: { type: 'number' },
-            ram: { type: 'number' },
-            bandwidth: { type: 'number' },
-            storage: { type: 'number' },
-            electricity: { type: 'number' }
-          }
-        },
-        cost: { type: 'number' },
-        breakdown: {
-          type: 'array',
-          items: {
-            type: 'object',
-            properties: {
-              resource: { type: 'string' },
-              usage: { type: 'number' },
-              unit: { type: 'string' },
-              rate: { type: 'number' },
-              cost: { type: 'number' }
-            }
-          }
-        }
-      }
-    }
-  }
-});
-
 /**
  * Helper function to send fast JSON response
  * @param {Response} res - Express response object
@@ -218,7 +177,6 @@ module.exports = {
   trelloBoardsSchema,
   trelloCardsSchema,
   errorResponseSchema,
-  resourceUsageSchema,
   
   // Helper
   sendFastJSON,

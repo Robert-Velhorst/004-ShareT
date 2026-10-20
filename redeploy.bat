@@ -85,6 +85,14 @@ echo  [OK] Docker is running.
 echo.
 echo  [2/3] Local Docker setup does not start a public tunnel.
 
+:: Pass only Compose's two tunnel settings through the current process. The
+:: application consumes .env.docker in raw mode so credentials stay literal.
+set "NGROK_AUTHTOKEN="
+set "NGROK_DOMAIN="
+if exist .env.docker (
+    for /f "tokens=1,* delims==" %%A in ('findstr /B "NGROK_AUTHTOKEN= NGROK_DOMAIN=" .env.docker') do set "%%A=%%B"
+)
+
 :: ════════════════════════════════════════════════
 :: STEP 3  START DOCKER STACK (App + Autoheal)
 :: ════════════════════════════════════════════════
@@ -93,7 +101,7 @@ echo  [3/3] Building and starting ShareT stack in Docker...
 echo        (App + Autoheal; no public tunnel)
 echo.
 
-docker-compose up -d --build
+docker compose up -d --build
 if !errorlevel! neq 0 (
     echo.
     echo  [!] Docker compose failed. See errors above.
@@ -109,9 +117,9 @@ set _h=0
 :waithealth
 timeout /t 3 /nobreak >nul
 set /a _h+=3
-curl -sf http://localhost:%PORT%/health >nul 2>&1
+curl -sf http://127.0.0.1:%PORT%/ready >nul 2>&1
 if !errorlevel! equ 0 goto health_ok
-if !_h! lss 60 goto waithealth
+if !_h! lss 120 goto waithealth
 echo  [WARN] Health check timed out - ShareT may still be starting.
 
 :health_ok
@@ -138,10 +146,10 @@ if defined PUBLIC_URL (
 )
 echo.
 echo  ============================================================
-echo    Useful Docker Commands:
-echo      View App Logs:    docker logs -f sharet-app
-echo      Stop ShareT:      docker-compose down
-echo      Restart:          redeploy.bat
+echo    Everything runs under Docker with auto-restart.
+echo    To STOP:     docker compose down
+echo    To RESTART:  run this file again
+echo    Watchdog log: watchdog.log
 echo  ============================================================
 echo.
 pause

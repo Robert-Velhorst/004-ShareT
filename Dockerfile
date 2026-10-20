@@ -4,7 +4,11 @@ FROM node:26.12.0-alpine@sha256:6f08a523443ddedf52941874c203475b0ad503e859ad70cb
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
-COPY . .
+# Keep frontend and backend cache boundaries independent. Server-only changes
+# must not force Vite to rebuild all frontend modules.
+COPY index.html vite.config.js postcss.config.js tailwind.config.cjs ./
+COPY public/ ./public/
+COPY src/ ./src/
 RUN npm run build
 
 # Stage 2: Production server
@@ -20,9 +24,6 @@ COPY backend/ ./backend/
 # Copy built frontend to backend's serving directory
 COPY --from=frontend-build /app/dist ./backend/frontend/dist
 
-# Copy power-up files (served at /power-up/ route)
-COPY power-up/ ./power-up/
-
 # Create data directory for PouchDB
 RUN mkdir -p /app/backend/data
 
@@ -36,7 +37,7 @@ ENV DATA_DIR=/app/backend/data
 EXPOSE 5005
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:5005/health || exit 1
+HEALTHCHECK --interval=30s --timeout=10s --start-period=90s --retries=3 \
+  CMD wget --no-verbose --tries=1 --spider http://127.0.0.1:5005/ready || exit 1
 
 CMD ["node", "server.js"]

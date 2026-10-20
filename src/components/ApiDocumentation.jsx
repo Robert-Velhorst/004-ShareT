@@ -13,7 +13,9 @@ const codeSnippets = {
 const axios = require('axios');
 
 const SHARET_URL = 'https://sharet.example.com';
-const ACCESS_TOKEN = 'token_returned_by_login';
+// Request a bearer token with X-ShareT-Token-Response: true on /api/auth/login.
+// Browser sessions use HttpOnly cookies and do not expose this token.
+const ACCESS_TOKEN = 'token_returned_by_opt_in_login';
 
 async function createShareLink(card) {
   try {
@@ -46,7 +48,8 @@ async function createShareLink(card) {
 import requests
 
 SHARET_URL = 'https://sharet.example.com'
-ACCESS_TOKEN = 'token_returned_by_login'
+# Request this explicitly from /api/auth/login with X-ShareT-Token-Response: true.
+ACCESS_TOKEN = 'token_returned_by_opt_in_login'
 
 def create_share_link(card):
     url = f'{SHARET_URL}/api/shared-links'
@@ -73,7 +76,7 @@ def create_share_link(card):
     return response.json()`,
   curl: `# Use the URL of your own ShareT installation
 curl -X POST https://sharet.example.com/api/shared-links \\
-  -H "Authorization: Bearer token_returned_by_login" \\
+  -H "Authorization: Bearer token_returned_by_opt_in_login" \\
   -H "Content-Type: application/json" \\
   -d '{
     "cardId": "trello_card_id",
@@ -163,7 +166,7 @@ const ApiDocumentation = () => {
               </p>
               <h3 className="text-lg font-semibold mt-4">Authentication</h3>
               <p>
-                Sign in through <code>/api/auth/login</code> and use the returned access token in the Authorization header. ShareT does not issue separate API keys.
+                Browser sessions use HttpOnly cookies. For a non-browser client, send <code>X-ShareT-Token-Response: true</code> to <code>/api/auth/login</code>, then place the explicitly returned access token in the Authorization header. ShareT does not issue permanent API keys.
               </p>
               <pre className="bg-muted p-4 rounded-md text-sm">
                 Authorization: Bearer your_access_token

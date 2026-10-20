@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import {
   Card,
   CardContent,
@@ -32,11 +32,9 @@ const SignIn = () => {
     setIsSubmitting(true);
     try {
       await signIn(email, password);
-      toast.success("Signed in successfully");
       // navigation handled inside signIn()
-    } catch (error) {
-      console.error("Error signing in:", error);
-      toast.error(error.message || "Failed to sign in");
+    } catch {
+      // The authentication context presents the server error once.
     } finally {
       setIsSubmitting(false);
     }
@@ -64,6 +62,7 @@ const SignIn = () => {
                 placeholder="your.email@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                autoComplete="email"
                 required
               />
             </div>
@@ -84,6 +83,7 @@ const SignIn = () => {
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
                 required
               />
             </div>

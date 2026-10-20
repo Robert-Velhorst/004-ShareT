@@ -1,0 +1,48 @@
+name: ShareT quality
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NODE_ENV: test
+      JWT_SECRET: ci-jwt-secret-0123456789-abcdefghijklmnopqrstuvwxyz
+      JWT_REFRESH_SECRET: ci-refresh-secret-0123456789-abcdefghijklmnopqrstuvwxyz
+      SESSION_SECRET: ci-session-secret-0123456789-abcdefghijklmnopqrstuvwxyz
+      ENCRYPTION_KEY: ci-encryption-secret-0123456789-abcdefghijklmnopqrstuvwxyz
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Gitleaks needs the relevant commit range rather than a shallow
+          # snapshot so deleted or moved credentials cannot evade the gate.
+          fetch-depth: 0
+      - name: Scan changed history for secrets
+        uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2.3.9
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+      - name: Install backend dependencies
+        working-directory: backend
+        run: npm ci
+      - name: Run backend tests
+        working-directory: backend
+        run: npm test
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+      - name: Audit backend production dependencies
+        working-directory: backend
+        run: npm audit --omit=dev --audit-level=high

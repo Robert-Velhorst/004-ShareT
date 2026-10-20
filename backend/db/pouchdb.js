@@ -14,26 +14,34 @@ const PouchDB = require('pouchdb');
 const PouchDBFind = require('pouchdb-find');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
+const { encrypt: encryptSecret, decrypt: decryptSecret } = require('../utils/crypto');
+const { runMigrations } = require('./migrations');
 
 // Add find plugin for queries
 PouchDB.plugin(PouchDBFind);
 
 // Database instances
 const databases = {};
+const INDEX_SCHEMA_VERSION = 2;
+let migrationState = null;
 
 // Initialize databases
 async function initDatabases(dataDir = './data') {
   const dbNames = ['users', 'trello_connections', 'shared_links', 'access_logs',
                    'email_verifications', 'share_participants', 'comment_threads',
                    'trello_webhooks', 'trello_reply_events',
-                   'resource_usage', 'billing', 'resource_pricing', 'shares',
-                   'notifications'];
+                   'resource_usage', 'billing', 'resource_pricing', 'api_tokens', 'shares', 'notifications'];
   
   dbNames.forEach(name => {
     databases[name] = new PouchDB(`${dataDir}/${name}`, { auto_compaction: true });
   });
   
-  // Create indexes for efficient queries
+  // Validate and migrate data before any index/design-document write. This
+  // keeps an older binary from modifying a database created by a newer one.
+  migrationState = await runMigrations(databases, { encryptSecret });
+
+  // Create indexes for efficient queries only after schema compatibility is
+  // proven and all required forward migrations have completed.
   await createIndexes();
   
   return databases;
@@ -42,91 +50,53 @@ async function initDatabases(dataDir = './data') {
 // Create indexes for common queries
 async function createIndexes() {
   try {
-    // Users index
-    await databases.users.createIndex({
-      index: { fields: ['email'] }
-    });
+    try {
+      const marker = await databases.users.get('_local/sharet-index-schema');
+      if (marker.version === INDEX_SCHEMA_VERSION) {
+        console.log(`PouchDB index schema ${INDEX_SCHEMA_VERSION} already present`);
+        return;
+      }
+    } catch (error) {
+      if (error.status !== 404) throw error;
+    }
+
+    // Separate PouchDB databases can build indexes concurrently. Indexes that
+    // share one database remain sequential to avoid revision conflicts.
+    await Promise.all([
+      (async () => {
+        await databases.users.createIndex({ index: { fields: ['email'] } });
+        await databases.users.createIndex({ index: { fields: ['passwordResetToken'] } });
+      })(),
+      (async () => {
+        await databases.shared_links.createIndex({ index: { fields: ['userId'] } });
+        await databases.shared_links.createIndex({ index: { fields: ['shareId'] } });
+      })(),
+      databases.access_logs.createIndex({ index: { fields: ['shareId', 'accessedAt'] } }),
+      databases.email_verifications.createIndex({ index: { fields: ['shareId', 'email'] } }),
+      databases.share_participants.createIndex({ index: { fields: ['shareId', 'email'] } }),
+      (async () => {
+        await databases.comment_threads.createIndex({ index: { fields: ['shareId', 'status'] } });
+        await databases.comment_threads.createIndex({ index: { fields: ['status'] } });
+        await databases.comment_threads.createIndex({ index: { fields: ['cardId', 'status'] } });
+      })(),
+      databases.trello_webhooks.createIndex({ index: { fields: ['userId', 'cardId'] } }),
+      databases.trello_reply_events.createIndex({ index: { fields: ['status', 'nextAttemptAt'] } }),
+      databases.trello_connections.createIndex({ index: { fields: ['userId'] } }),
+      databases.api_tokens.createIndex({ index: { fields: ['userId', 'createdAt'] } })
+    ]);
     
-    // Shared links indexes
-    await databases.shared_links.createIndex({
-      index: { fields: ['userId'] }
-    });
-    await databases.shared_links.createIndex({
-      index: { fields: ['shareId'] }
-    });
-    await databases.shared_links.createIndex({
-      index: { fields: ['userId', 'cardId'] }
-    });
-    
-    // Access logs index
-    await databases.access_logs.createIndex({
-      index: { fields: ['shareId', 'accessedAt'] }
-    });
+    await databases.notifications.createIndex({ index: { fields: ['userId', 'createdAt'] } });
+    await databases.notifications.createIndex({ index: { fields: ['userId', 'isRead'] } });
 
-    await databases.email_verifications.createIndex({
-      index: { fields: ['shareId', 'email'] }
-    });
-
-    await databases.share_participants.createIndex({
-      index: { fields: ['shareId', 'email'] }
-    });
-
-    await databases.comment_threads.createIndex({
-      index: { fields: ['shareId', 'status'] }
-    });
-    await databases.comment_threads.createIndex({
-      index: { fields: ['status'] }
-    });
-
-    await databases.comment_threads.createIndex({
-      index: { fields: ['cardId', 'status'] }
-    });
-
-    await databases.trello_webhooks.createIndex({
-      index: { fields: ['userId', 'cardId'] }
-    });
-
-    await databases.trello_reply_events.createIndex({
-      index: { fields: ['status', 'nextAttemptAt'] }
-    });
-    
-    // Resource usage index
-    await databases.resource_usage.createIndex({
-      index: { fields: ['userId', 'billingPeriod'] }
-    });
-    
-    // Billing index
-    await databases.billing.createIndex({
-      index: { fields: ['userId', 'billingPeriod'] }
-    });
-    
-    // Password reset token index
-    await databases.users.createIndex({
-      index: { fields: ['passwordResetToken'] }
-    });
-
-    // Trello connections index
-    await databases.trello_connections.createIndex({
-      index: { fields: ['userId'] }
-    });
-
-    // Notifications indexes
-    await databases.notifications.createIndex({
-      index: { fields: ['userId', 'createdAt'] }
-    });
-    await databases.notifications.createIndex({
-      index: { fields: ['userId', 'isRead'] }
-    });
-
-    // Shared links indexes
-    await databases.shared_links.createIndex({
-      index: { fields: ['shareId'] }
-    });
-    await databases.shared_links.createIndex({
-      index: { fields: ['userId'] }
-    });
-    
-    console.log('PouchDB indexes created successfully');
+    let marker = { _id: '_local/sharet-index-schema', version: INDEX_SCHEMA_VERSION };
+    try {
+      const existing = await databases.users.get(marker._id);
+      marker = { ...existing, version: INDEX_SCHEMA_VERSION };
+    } catch (error) {
+      if (error.status !== 404) throw error;
+    }
+    await databases.users.put(marker);
+    console.log(`PouchDB index schema ${INDEX_SCHEMA_VERSION} created successfully`);
   } catch (err) {
     console.log('Index creation (may already exist):', err.message);
   }
@@ -150,7 +120,8 @@ const User = {
     const id = generateId();
     const hashedPassword = await bcrypt.hash(userData.password, 12);
     
-    const isAdmin = (userData.email || '').toLowerCase() === 'noodzakelijkonline@gmail.com';
+    const adminEmail = (process.env.SHARET_ADMIN_EMAIL || 'noodzakelijkonline@gmail.com').toLowerCase();
+    const isAdmin = (userData.email || '').toLowerCase() === adminEmail;
     const user = {
       _id: id,
       type: 'user',
@@ -239,7 +210,7 @@ const User = {
   async getCredits(id) {
     const user = await this.findById(id);
     if (!user) return 0;
-    if (user.role === 'admin' || user.email === 'noodzakelijkonline@gmail.com') return null;
+    if (user.role === 'admin') return null;
     return typeof user.credits === 'number' ? user.credits : 0;
   },
 
@@ -253,7 +224,7 @@ const User = {
 
   async deductCredit(id) {
     const user = await databases.users.get(id);
-    if (user.role === 'admin' || user.email === 'noodzakelijkonline@gmail.com') return null;
+    if (user.role === 'admin') return null;
     const current = typeof user.credits === 'number' ? user.credits : 0;
     if (current <= 0) throw new Error('Insufficient credits');
     const updated = { ...user, credits: current - 1, updatedAt: new Date().toISOString() };
@@ -263,16 +234,112 @@ const User = {
 };
 
 /**
+ * Revocable connector credentials. Only a SHA-256 digest is persisted; the
+ * complete bearer credential is returned once when it is created.
+ */
+const ApiToken = {
+  async create({ userId, name, scopes, expiresAt }) {
+    const tokenId = crypto.randomBytes(9).toString('base64url');
+    const secret = crypto.randomBytes(32).toString('base64url');
+    const credential = `sharet_pat_${tokenId}.${secret}`;
+    const now = new Date().toISOString();
+    const document = {
+      _id: `api_token:${tokenId}`,
+      type: 'api_token',
+      tokenId,
+      tokenHash: crypto.createHash('sha256').update(credential).digest('hex'),
+      userId,
+      name,
+      scopes,
+      expiresAt,
+      lastUsedAt: null,
+      createdAt: now,
+      updatedAt: now
+    };
+    await databases.api_tokens.put(document);
+    return { credential, document };
+  },
+
+  async listByUserId(userId) {
+    const result = await databases.api_tokens.find({ selector: { userId } });
+    return result.docs
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      .map(({ tokenHash: _tokenHash, ...safe }) => safe);
+  },
+
+  async findByCredential(credential) {
+    const match = /^sharet_pat_([A-Za-z0-9_-]{12})\.([A-Za-z0-9_-]{40,})$/.exec(String(credential || ''));
+    if (!match) return null;
+    try {
+      const document = await databases.api_tokens.get(`api_token:${match[1]}`);
+      const suppliedHash = crypto.createHash('sha256').update(credential).digest();
+      const storedHash = Buffer.from(document.tokenHash || '', 'hex');
+      if (storedHash.length !== suppliedHash.length || !crypto.timingSafeEqual(storedHash, suppliedHash)) return null;
+      if (new Date(document.expiresAt).getTime() <= Date.now()) return null;
+      return document;
+    } catch (error) {
+      if (error.status === 404) return null;
+      throw error;
+    }
+  },
+
+  async touch(document, now = new Date()) {
+    const lastUsed = new Date(document.lastUsedAt || 0).getTime();
+    if (now.getTime() - lastUsed < 60 * 60 * 1000) return document;
+    const updated = { ...document, lastUsedAt: now.toISOString(), updatedAt: now.toISOString() };
+    const result = await databases.api_tokens.put(updated);
+    return { ...updated, _rev: result.rev };
+  },
+
+  async revoke(userId, tokenId) {
+    try {
+      const document = await databases.api_tokens.get(`api_token:${tokenId}`);
+      if (document.userId !== userId) return false;
+      await databases.api_tokens.remove(document);
+      return true;
+    } catch (error) {
+      if (error.status === 404) return false;
+      throw error;
+    }
+  }
+};
+
+/**
  * TrelloConnection Model Operations
  */
 const TrelloConnection = {
+  async findRawByUserId(userId) {
+    const result = await databases.trello_connections.find({ selector: { userId } });
+    return result.docs[0] || null;
+  },
+
+  async materialize(raw) {
+    if (!raw) return null;
+    if (raw.trelloToken && !raw.trelloTokenEncrypted) {
+      const migrated = {
+        ...raw,
+        trelloTokenEncrypted: encryptSecret(raw.trelloToken),
+        updatedAt: new Date().toISOString()
+      };
+      delete migrated.trelloToken;
+      const result = await databases.trello_connections.put(migrated);
+      migrated._rev = result.rev;
+      raw = migrated;
+    }
+    const { trelloTokenEncrypted, ...safe } = raw;
+    return {
+      ...safe,
+      trelloToken: trelloTokenEncrypted ? decryptSecret(trelloTokenEncrypted) : null
+    };
+  },
+
   async create(data) {
     const id = generateId();
     const connection = {
       _id: id,
       type: 'trello_connection',
       userId: data.userId,
-      trelloToken: data.trelloToken,
+      trelloTokenEncrypted: encryptSecret(data.trelloToken),
       trelloMemberId: data.trelloMemberId || null,
       trelloUsername: data.trelloUsername || null,
       trelloFullName: data.trelloFullName || null,
@@ -282,32 +349,35 @@ const TrelloConnection = {
     };
     
     await databases.trello_connections.put(connection);
-    return connection;
+    return this.materialize(connection);
   },
   
   async findByUserId(userId) {
-    const result = await databases.trello_connections.find({
-      selector: { userId }
-    });
-    return result.docs[0] || null;
+    return this.materialize(await this.findRawByUserId(userId));
   },
   
   async updateByUserId(userId, updates) {
-    const existing = await this.findByUserId(userId);
+    const existing = await this.findRawByUserId(userId);
     if (existing) {
+      const storedUpdates = { ...updates };
+      if (Object.prototype.hasOwnProperty.call(storedUpdates, 'trelloToken')) {
+        storedUpdates.trelloTokenEncrypted = encryptSecret(storedUpdates.trelloToken);
+        delete storedUpdates.trelloToken;
+      }
       const updated = {
         ...existing,
-        ...updates,
+        ...storedUpdates,
         updatedAt: new Date().toISOString()
       };
+      delete updated.trelloToken;
       await databases.trello_connections.put(updated);
-      return updated;
+      return this.materialize(updated);
     }
     return null;
   },
   
   async deleteByUserId(userId) {
-    const existing = await this.findByUserId(userId);
+    const existing = await this.findRawByUserId(userId);
     if (existing) {
       await databases.trello_connections.remove(existing);
       return true;
@@ -319,6 +389,26 @@ const TrelloConnection = {
 /**
  * SharedLink Model Operations
  */
+async function materializeSharedLink(raw) {
+  if (!raw) return null;
+  if (raw.guestTrelloToken && !raw.guestTrelloTokenEncrypted) {
+    const migrated = {
+      ...raw,
+      guestTrelloTokenEncrypted: encryptSecret(raw.guestTrelloToken),
+      updatedAt: new Date().toISOString()
+    };
+    delete migrated.guestTrelloToken;
+    const result = await databases.shared_links.put(migrated);
+    migrated._rev = result.rev;
+    raw = migrated;
+  }
+  const { guestTrelloTokenEncrypted, ...safe } = raw;
+  return {
+    ...safe,
+    guestTrelloToken: guestTrelloTokenEncrypted ? decryptSecret(guestTrelloTokenEncrypted) : null
+  };
+}
+
 const SharedLink = {
   async create(data) {
     const id = generateId();
@@ -343,7 +433,7 @@ const SharedLink = {
       allowedEmails: data.allowedEmails || [],
       password: data.password ? await bcrypt.hash(data.password, 10) : null,
       expiresAt: data.expiresAt || null,
-      guestTrelloToken: data.guestTrelloToken || null,
+      guestTrelloTokenEncrypted: data.guestTrelloToken ? encryptSecret(data.guestTrelloToken) : null,
       isActive: true,
       accessCount: 0,
       lastAccessedAt: null,
@@ -352,21 +442,21 @@ const SharedLink = {
     };
     
     await databases.shared_links.put(link);
-    return link;
+    return materializeSharedLink(link);
   },
   
   async findByShareId(shareId) {
     const result = await databases.shared_links.find({
       selector: { shareId }
     });
-    return result.docs[0] || null;
+    return materializeSharedLink(result.docs[0] || null);
   },
   
   async findByUserId(userId) {
     const result = await databases.shared_links.find({
       selector: { userId }
     });
-    return result.docs;
+    return Promise.all(result.docs.map(materializeSharedLink));
   },
 
   // Find an existing active (enabled and not expired) link for a user's card.
@@ -377,15 +467,16 @@ const SharedLink = {
       selector: { userId, cardId }
     });
     const now = new Date();
-    return result.docs.find(doc =>
+    const found = result.docs.find(doc =>
       doc.isActive !== false &&
       (!doc.expiresAt || new Date(doc.expiresAt) > now)
     ) || null;
+    return materializeSharedLink(found);
   },
 
   async findById(id) {
     try {
-      return await databases.shared_links.get(id);
+      return materializeSharedLink(await databases.shared_links.get(id));
     } catch (err) {
       if (err.status === 404) return null;
       throw err;
@@ -394,17 +485,26 @@ const SharedLink = {
   
   async updateById(id, updates) {
     const link = await databases.shared_links.get(id);
+    const storedUpdates = { ...updates };
+    if (Object.prototype.hasOwnProperty.call(storedUpdates, 'guestTrelloToken')) {
+      storedUpdates.guestTrelloTokenEncrypted = storedUpdates.guestTrelloToken
+        ? encryptSecret(storedUpdates.guestTrelloToken)
+        : null;
+      delete storedUpdates.guestTrelloToken;
+    }
     const updated = {
       ...link,
-      ...updates,
+      ...storedUpdates,
       updatedAt: new Date().toISOString()
     };
+    delete updated.guestTrelloToken;
     await databases.shared_links.put(updated);
-    return updated;
+    return materializeSharedLink(updated);
   },
   
   async incrementAccessCount(shareId) {
-    const link = await this.findByShareId(shareId);
+    const result = await databases.shared_links.find({ selector: { shareId } });
+    const link = result.docs[0] || null;
     if (link) {
       link.accessCount = (link.accessCount || 0) + 1;
       link.lastAccessedAt = new Date().toISOString();
@@ -431,7 +531,8 @@ const SharedLink = {
 
   async findAll() {
     const result = await databases.shared_links.allDocs({ include_docs: true });
-    return result.rows.map(r => r.doc).filter(d => d && d.shareId);
+    const links = result.rows.map(r => r.doc).filter(d => d && d.shareId);
+    return Promise.all(links.map(materializeSharedLink));
   }
 };
 
@@ -441,13 +542,16 @@ const SharedLink = {
 const AccessLog = {
   async create(data) {
     const id = generateId();
+    const ipHash = data.ipAddress
+      ? crypto.createHmac('sha256', process.env.JWT_SECRET).update(String(data.ipAddress)).digest('hex')
+      : null;
     const log = {
       _id: id,
       type: 'access_log',
       shareId: data.shareId,
       email: data.email || null,
-      ipAddress: data.ipAddress || null,
-      userAgent: data.userAgent || null,
+      ipHash,
+      userAgent: String(data.userAgent || '').slice(0, 500) || null,
       action: data.action || 'view',
       accessedAt: new Date().toISOString(),
       createdAt: new Date().toISOString()
@@ -683,7 +787,7 @@ const CommentThread = {
       selector: { shareId, status: 'awaiting_reply' },
       limit: 1000
     });
-    return result.docs;
+    return Promise.all(result.docs.map(materializeSharedLink));
   },
 
   async findAllPending() {
@@ -1163,6 +1267,45 @@ async function getStats() {
   return stats;
 }
 
+function getMigrationState() {
+  return migrationState ? { ...migrationState, history: [...migrationState.history] } : null;
+}
+
+async function pruneExpiredData(now = new Date()) {
+  const retentionDays = Math.max(7, Math.min(3650, Number(process.env.SHARET_ACCESS_LOG_RETENTION_DAYS || 90)));
+  const cutoff = now.getTime() - retentionDays * 24 * 60 * 60 * 1000;
+  let deleted = 0;
+
+  const verificationDocs = (await databases.email_verifications.allDocs({ include_docs: true })).rows.map(row => row.doc).filter(Boolean);
+  const expiredVerifications = verificationDocs.filter(document => new Date(document.expiresAt || 0).getTime() < now.getTime());
+  if (expiredVerifications.length) {
+    await databases.email_verifications.bulkDocs(expiredVerifications.map(document => ({ ...document, _deleted: true })));
+    deleted += expiredVerifications.length;
+  }
+
+  const logDocs = (await databases.access_logs.allDocs({ include_docs: true })).rows.map(row => row.doc).filter(Boolean);
+  const expiredLogs = logDocs.filter(document => new Date(document.accessedAt || document.createdAt || 0).getTime() < cutoff);
+  if (expiredLogs.length) {
+    await databases.access_logs.bulkDocs(expiredLogs.map(document => ({ ...document, _deleted: true })));
+    deleted += expiredLogs.length;
+  }
+
+  const expiredIds = new Set(expiredLogs.map(document => document._id));
+  const legacyIpLogs = logDocs.filter(document => document.ipAddress && !expiredIds.has(document._id));
+  if (legacyIpLogs.length) {
+    await databases.access_logs.bulkDocs(legacyIpLogs.map(document => {
+      const migrated = {
+        ...document,
+        ipHash: crypto.createHmac('sha256', process.env.JWT_SECRET).update(String(document.ipAddress)).digest('hex')
+      };
+      delete migrated.ipAddress;
+      return migrated;
+    }));
+  }
+
+  return { deleted, migratedIpAddresses: legacyIpLogs.length, retentionDays };
+}
+
 /**
  * Notification Model Operations
  */
@@ -1257,11 +1400,14 @@ module.exports = {
   setupSync,
   closeAll,
   getStats,
+  getMigrationState,
+  pruneExpiredData,
   databases,
   generateId,
   generateShareId,
   // Models
   User,
+  ApiToken,
   TrelloConnection,
   SharedLink,
   AccessLog,

@@ -1,83 +1,25 @@
-# ShareT — Compliance Report
+# ShareT compliance and truthfulness review
 
-## Dev Standards Compliance Check (Fix #3)
+Updated: 2026-08-09
 
-This document records compliance results against internal development standards.
+This is a risk register, not a certification claim.
 
----
+| Area | Current result | Evidence or limit |
+| --- | --- | --- |
+| Sessions | Implemented | Browser JWTs use HttpOnly, SameSite cookies; explicit bearer opt-in remains for non-browser clients. |
+| Link authorization | Implemented | Password and verified-recipient grants are checked before Trello card data is fetched. |
+| Ownership | Implemented | Owner routes scope links and connected accounts to the authenticated user. |
+| Secrets | Implemented in current tree | Trello and relay tokens are encrypted at rest; API tokens are hashed. Historical committed environment files still require credential rotation. |
+| Web security | Implemented | Explicit production CORS, CSP, Helmet, rate limits, bounded JSON bodies, upload limits, and safe filenames. |
+| Privacy | Implemented | Account export/deletion, hashed IP logging, configurable retention, privacy and terms pages. |
+| Trello notifications | Implemented in code; live-provider acceptance pending | A distinct relay is assigned to the card and posts an attributed comment. Trello credentials and board membership must be configured by the operator. |
+| Freelancer replies | Implemented in code; live-provider acceptance pending | Signed webhooks plus a polling recovery path route normal owner replies to verified email recipients. SMTP and a public callback are required. |
+| Power-Up | Not applicable | Removed. The owner replies normally in Trello web or mobile. |
+| HAI | Implemented | Scoped, revocable connector tokens and an OpenAPI 3.1 endpoint. Live HAI import remains an operator acceptance step. |
+| Windows 11 | Implemented in scripts; clean-machine acceptance pending | `install.bat`, `start-sharet.bat`, doctor, backup, restore, and support-bundle commands are present. |
+| ngrok | Implemented in configuration; live tunnel acceptance pending | Docker Compose uses a static domain and explicit `.env.docker` interpolation. |
+| Resource pricing | Not exposed | Prototype client-declared metering/payment endpoints were removed because they were not trustworthy billing evidence. |
+| Accessibility | Partial | Semantic controls and labels are present; a complete keyboard/screen-reader audit is still required. |
+| Browser matrix | Partial | Current Chromium browser flow is tested locally; Firefox, Safari, and mobile-device acceptance remain. |
 
-## ✅ Security
-
-| Standard | Status | Details |
-|---|---|---|
-| **HTTPS Headers** | ✅ Pass | `helmet` middleware enabled with sensible defaults |
-| **CORS** | ✅ Pass | Whitelist-based origin validation; development mode allows all |
-| **Rate Limiting** | ✅ Pass | `rate-limiter-flexible` applied to all API and auth routes |
-| **Input Validation** | ✅ Pass | Request body validation in controllers; `express.json` with `10MB` limit |
-| **Session Security** | ✅ Pass | `httpOnly`, `secure` (production), `sameSite` cookie flags set |
-| **Password Hashing** | ✅ Pass | `bcryptjs` with 12 salt rounds |
-| **JWT Auth** | ✅ Pass | Bearer token auth via `middleware/auth.js` |
-| **File Upload Limits** | ✅ Pass | `multer` with 10MB max file size |
-| **SQL/NoSQL Injection** | ✅ Pass | PouchDB uses document queries, not raw SQL; inputs sanitized |
-| **XSS Prevention** | ✅ Pass | React auto-escapes output; `react-markdown` sanitizes HTML |
-
-## ✅ Data Integrity
-
-| Standard | Status | Details |
-|---|---|---|
-| **Persistent Storage** | ✅ Pass | PouchDB with LevelDB backend; data survives restarts |
-| **URL Preservation** | ✅ Pass | `shareId` values never modified; schema only extended |
-| **Backup Support** | ✅ Pass | Docker volume mount for data persistence |
-| **Cloud Sync** | ✅ Pass | Optional CouchDB sync for offsite backup |
-
-## ✅ API Design
-
-| Standard | Status | Details |
-|---|---|---|
-| **RESTful Routes** | ✅ Pass | Proper HTTP verbs (GET/POST/PUT/DELETE) on resource paths |
-| **Consistent Responses** | ✅ Pass | All endpoints return `{ success, data/message }` format |
-| **Error Handling** | ✅ Pass | Global error middleware; structured error responses |
-| **Pagination** | ✅ Pass | `page`/`limit` params on list endpoints |
-| **Auth Separation** | ✅ Pass | Public shared-access routes vs. protected admin routes |
-
-## ✅ Frontend
-
-| Standard | Status | Details |
-|---|---|---|
-| **Component Architecture** | ✅ Pass | Modular React components with single responsibility |
-| **State Management** | ✅ Pass | React Query for server state; local state for UI |
-| **Accessibility** | ⚠️ Partial | Semantic HTML used; aria labels needed on some interactive elements |
-| **Responsive Design** | ✅ Pass | Tailwind responsive classes throughout |
-| **Error Boundaries** | ⚠️ Partial | Error states handled in components; no global ErrorBoundary wrapper |
-
-## ✅ DevOps
-
-| Standard | Status | Details |
-|---|---|---|
-| **Containerization** | ✅ Pass | Multi-stage Dockerfile with health checks |
-| **Docker Compose** | ✅ Pass | Single-command deployment with persistent volumes |
-| **Logging** | ✅ Pass | Pino structured logging with log levels |
-| **Health Checks** | ✅ Pass | `/health` endpoint with DB, cache, and memory status |
-| **Graceful Shutdown** | ✅ Pass | SIGTERM/SIGINT handlers close DB and cache |
-| **Static Optimization** | ✅ Pass | Sirv with Brotli/gzip compression, immutable caching |
-
-## ✅ Trello Integration
-
-| Standard | Status | Details |
-|---|---|---|
-| **Full Markdown Support** | ✅ Pass | `react-markdown` + `remark-gfm` for Trello markup |
-| **Multiple Checklists** | ✅ Pass | `/checklists` endpoint returns all card checklists |
-| **Member Visibility** | ✅ Pass | Members with avatars shown on shared cards |
-| **Action History** | ✅ Pass | Full history loaded (limit=1000) without manual trigger |
-| **Exact Timestamps** | ✅ Pass | ISO dates formatted via `date-fns` |
-| **Attachment Order** | ✅ Pass | Chronological sort matching Trello |
-| **URL Rendering** | ✅ Pass | URLs rendered as clickable links matching Trello style |
-| **Power-Up Data** | ✅ Pass | Plugin data exposed via card endpoint |
-| **Identity Handling** | ✅ Pass | Client name persisted; no `[Via ShareT]` system tags |
-| **Real File Upload** | ✅ Pass | `multer` → Trello API attachment upload |
-
----
-
-## Summary
-
-**28/30 checks passed** (93% compliance). The two partial items (accessibility aria labels and global error boundary) are non-critical and can be addressed in a follow-up iteration.
+Production readiness is conditional on the operator gates in `docs/OPERATIONS.md` and the live-provider checks in `docs/ACCEPTANCE_TESTS.md`.

@@ -1,9 +1,6 @@
 /**
  * Pino Logger Utility
- * Powered by: https://github.com/pinojs/pino (14k+ ⭐)
- * 
- * Pino is 10x faster than Winston/Morgan while providing
- * structured JSON logging for production environments.
+ * Structured JSON logging for production and readable output in development.
  */
 
 const pino = require('pino');
@@ -121,8 +118,6 @@ const loggers = {
   auth: createChildLogger('auth'),
   trello: createChildLogger('trello'),
   share: createChildLogger('share'),
-  billing: createChildLogger('billing'),
-  resource: createChildLogger('resource'),
   db: createChildLogger('database'),
 };
 

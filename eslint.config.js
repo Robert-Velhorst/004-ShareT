@@ -77,6 +77,7 @@ export default [
   {
     files: [
       "backend/**/*.js",
+      "scripts/**/*.cjs",
       "ecosystem.config.js",
       "tailwind.config.cjs",
       "scripts/health-check.js",

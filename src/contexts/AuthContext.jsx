@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { toast } from "sonner";
 import { auth as authAPI } from '../api';
 
@@ -37,27 +37,17 @@ export const AuthProvider = ({ children }) => {
   // Check for existing session on load
   useEffect(() => {
     const initAuth = async () => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        try {
-          // Verify token and get current user from backend
-          const response = await authAPI.getCurrentUser();
-          if (response.success) {
-            const user = normalizeUser(response.user || response.data?.user || response.data);
-            setCurrentUser(user);
-            // Update localStorage with fresh user data
-            localStorage.setItem('sharetUser', JSON.stringify(user));
-          } else {
-            // Token is invalid, clear it
-            localStorage.removeItem('token');
-            localStorage.removeItem('sharetUser');
-          }
-        } catch (error) {
-          console.error('Failed to verify session', error);
-          // Clear invalid token
-          localStorage.removeItem('token');
-          localStorage.removeItem('sharetUser');
+      try {
+        const response = await authAPI.getCurrentUser();
+        if (response.success) {
+          const user = normalizeUser(response.user || response.data?.user || response.data);
+          setCurrentUser(user);
+          localStorage.setItem('sharetUser', JSON.stringify(user));
         }
+      } catch (error) {
+        if (error.status !== 401) console.error('Failed to verify session', error);
+        localStorage.removeItem('token');
+        localStorage.removeItem('sharetUser');
       }
       setLoading(false);
     };
@@ -76,11 +66,7 @@ export const AuthProvider = ({ children }) => {
       });
 
       if (response.success) {
-        const { token } = response;
         const user = normalizeUser(response.user);
-        
-        // Store JWT token
-        localStorage.setItem('token', token);
         
         // Store user data
         localStorage.setItem('sharetUser', JSON.stringify(user));
@@ -111,11 +97,7 @@ export const AuthProvider = ({ children }) => {
       });
 
       if (response.success) {
-        const { token } = response;
         const user = normalizeUser(response.user);
-        
-        // Store JWT token
-        localStorage.setItem('token', token);
         
         // Store user data
         localStorage.setItem('sharetUser', JSON.stringify(user));

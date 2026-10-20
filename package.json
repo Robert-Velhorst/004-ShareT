@@ -4,15 +4,21 @@
   "version": "0.0.0",
   "type": "module",
   "engines": {
-    "node": ">=22.13.0"
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
   },
   "scripts": {
+    "dev": "node ./node_modules/vite/bin/vite.js",
+    "build": "node ./node_modules/vite/bin/vite.js build",
+    "build:dev": "node ./node_modules/vite/bin/vite.js build --mode development",
+    "build:serve": "npm run build && node scripts/copy-frontend-build.js",
+    "backup": "node scripts/backup.cjs",
+    "doctor": "node scripts/doctor.cjs",
+    "lint": "node ./node_modules/eslint/bin/eslint.js . --report-unused-disable-directives --max-warnings 0",
+    "preview": "node ./node_modules/vite/bin/vite.js preview",
+    "restore": "node scripts/restore.cjs",
+    "support-bundle": "node scripts/support-bundle.cjs",
     "test:homepage": "node --test test/homepage.test.mjs",
-    "dev": "vite",
-    "build": "vite build",
-    "build:dev": "vite build --mode development",
-    "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "test:billing-ui": "vitest run src/components/PaymentDialog.test.jsx"
   },
   "dependencies": {
     "@daypicker/react": "^10.0.2",
@@ -62,7 +68,7 @@
     "react-hook-form": "^7.52.0",
     "react-markdown": "^10.1.0",
     "react-resizable-panels": "^4.14.5",
-    "react-router-dom": "^7.18.4",
+    "react-router": "^7.18.4",
     "recharts": "^3.7.0",
     "remark-breaks": "^4.0.0",
     "remark-gfm": "^4.0.1",
@@ -75,6 +81,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.5",
     "@tailwindcss/vite": "^4.3.3",
+    "@testing-library/react": "^16.3.3",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.2",
@@ -84,9 +91,11 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.7",
     "globals": "^17.13.0",
+    "jsdom": "^30.0.1",
     "postcss": "^8.5.19",
     "tailwindcss": "^4.3.3",
-    "vite": "^8.3.4"
+    "vite": "^8.3.4",
+    "vitest": "^5.0.0"
   },
   "optionalDependencies": {
     "@emnapi/core": "^1.11.3",

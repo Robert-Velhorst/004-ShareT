@@ -15,6 +15,7 @@
  */
 
 const { SharedLink, TrelloConnection, AccessLog, ShareParticipant, CommentThread, Notification } = require('../db/pouchdb');
+const { authorizeShareRequest } = require('../utils/shareAccess');
 const { sendShareTUpdateNotification } = require('../utils/notificationService');
 const { ensureTrelloWebhook } = require('../services/trelloWebhookService');
 
@@ -214,7 +215,7 @@ async function ensureOwnerSubscribedToCard({ cardId, key, token, force = false }
     return { subscribed: true, cached: false };
   } catch (error) {
     console.error(`Unable to subscribe the owner to card ${cardId}:`, error.message);
-    return { subscribed: false, reason: 'subscription-failed', error: error.message };
+    return { subscribed: false, reason: 'subscription-failed' };
   }
 }
 
@@ -324,7 +325,7 @@ function buildNotificationStatus() {
 // relay token, directly mentions the owner, and can also send an email fallback.
 exports.addComment = async (req, res) => {
   try {
-    const { text, participantToken } = req.body;
+    const { text } = req.body;
 
     if (!text || !text.trim()) {
       return res.status(400).json({
@@ -346,13 +347,14 @@ exports.addComment = async (req, res) => {
       return res.status(403).json({ success: false, message: 'This share link is no longer active' });
     }
 
-    const participant = await ShareParticipant.findByAccessToken(req.params.shareId, participantToken);
-    if (!participant) {
-      return res.status(401).json({
-        success: false,
-        message: 'Verify your email address before commenting'
-      });
+    const access = await authorizeShareRequest(req, share, { requireIdentity: true });
+    if (!access.allowed) {
+      return res.status(access.status).json({ success: false, code: access.code, message: access.message });
     }
+    if (text.trim().length > 10000) {
+      return res.status(400).json({ success: false, message: 'Comment is too long (maximum 10,000 characters)' });
+    }
+    const participant = access.participant;
     const authorName = participant.name;
     const authorEmail = participant.email;
 
@@ -473,7 +475,7 @@ exports.addComment = async (req, res) => {
       webhook = await ensureTrelloWebhook({ share, connection });
     } catch (error) {
       console.error('Unable to enable immediate Trello reply detection:', error);
-      webhook = { enabled: false, reason: 'registration-failed', error: error.message };
+      webhook = { enabled: false, reason: 'registration-failed' };
     }
 
     const trelloNotification = assessTrelloNotification({
