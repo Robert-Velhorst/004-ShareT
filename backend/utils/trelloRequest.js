@@ -11,12 +11,15 @@ async function fetchTrelloApi(url, options = {}) {
     throw new TypeError('Invalid Trello API request');
   }
   if (target.origin !== 'https://api.trello.com' || target.username || target.password
-      || target.hash || !target.pathname.startsWith('/1/')) {
+      || target.hash || !/^https:\/\/api\.trello\.com\/1\/[A-Za-z0-9]+(?:\/[A-Za-z0-9]+)*(?:\?[^#]*)?$/.test(url)) {
     throw new TypeError('Invalid Trello API request');
   }
-  // Rebuild from the literal authority and API prefix. Even validated callers
-  // supply only the remaining path/query; no supplied URL authority reaches fetch.
-  const requestUrl = `https://api.trello.com/1/${target.pathname.slice(3)}${target.search}`;
+  // Callers use canonical API URLs with literal resource names and alphanumeric
+  // identifiers. Validate the original spelling above, before URL normalization
+  // can hide dot segments, then encode every component at the request boundary.
+  const path = target.pathname.slice(3).split('/').map(segment => encodeURIComponent(segment)).join('/');
+  const query = [...target.searchParams].map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`).join('&');
+  const requestUrl = `https://api.trello.com/1/${path}${query ? `?${query}` : ''}`;
   return fetch(requestUrl, { ...options, redirect: 'error' });
 }
 

@@ -13,6 +13,14 @@ test('API requests preserve method/body/headers and enforce redirect rejection',
   assert.equal(await fetchTrelloApi('https://api.trello.com/1/cards/AbCd1234/actions/comments', options), response);
   assert.deepEqual(calls, [['https://api.trello.com/1/cards/AbCd1234/actions/comments', { ...options, redirect: 'error' }]]);
   assert.equal(options.redirect, 'follow', 'caller options are not mutated');
+  const query = new URLSearchParams({ text: 'synthetic & scope=other / unicode \u20ac', token: 'synthetic+token' });
+  await fetchTrelloApi(`https://api.trello.com/1/cards/AbCd1234/actions/comments?${query}`, options);
+  const sent = new URL(calls[1][0]);
+  assert.equal(sent.origin, 'https://api.trello.com');
+  assert.equal(sent.pathname, '/1/cards/AbCd1234/actions/comments');
+  assert.equal(sent.searchParams.get('text'), query.get('text'));
+  assert.equal(sent.searchParams.get('token'), 'synthetic+token');
+  assert.equal(sent.searchParams.has('scope'), false);
 });
 
 test('API requests reject other origins, credentials, fragments and non-API paths before fetch', async t => {
@@ -25,6 +33,11 @@ test('API requests reject other origins, credentials, fragments and non-API path
     'https://api.trello.com/1/cards/AbCd1234#fragment',
     'https://api.trello.com/cards/AbCd1234',
     'https://api.trello.com/1/../../outside',
+    'https://api.trello.com/1/cards/AbCd1234/../members',
+    'https://api.trello.com/1/cards/%2e%2e/members',
+    'https://api.trello.com/1/cards/AbCd1234%2Fother',
+    'https://api.trello.com/1/cards/AbCd1234//actions',
+    'https://api.trello.com/1/',
     '/1/cards/AbCd1234', null,
   ]) {
     await assert.rejects(fetchTrelloApi(url), { message: 'Invalid Trello API request' });
