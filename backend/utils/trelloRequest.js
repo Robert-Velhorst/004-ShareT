@@ -14,7 +14,10 @@ async function fetchTrelloApi(url, options = {}) {
       || target.hash || !target.pathname.startsWith('/1/')) {
     throw new TypeError('Invalid Trello API request');
   }
-  return fetch(target.href, { ...options, redirect: 'error' });
+  // Rebuild from the literal authority and API prefix. Even validated callers
+  // supply only the remaining path/query; no supplied URL authority reaches fetch.
+  const requestUrl = `https://api.trello.com/1/${target.pathname.slice(3)}${target.search}`;
+  return fetch(requestUrl, { ...options, redirect: 'error' });
 }
 
 module.exports = { fetchTrelloApi };
