@@ -333,7 +333,7 @@ exports.getAttachments = async (req, res) => {
     if (result.error) {
       return res.status(result.status).json({ success: false, code: result.code, message: result.error });
     }
-    const { share, connection, cardId } = result;
+    const { connection, cardId } = result;
 
     const url = `${TRELLO_API_BASE}/cards/${cardId}/attachments?key=${encodeURIComponent(process.env.TRELLO_API_KEY)}&token=${encodeURIComponent(connection.trelloToken)}`;
     const attachments = await fetchJSON(url);
@@ -366,7 +366,7 @@ exports.downloadAttachment = async (req, res) => {
     if (result.error) {
       return res.status(result.status).json({ success: false, code: result.code, message: result.error });
     }
-    const { share, connection, cardId } = result;
+    const { connection, cardId } = result;
 
     // Get attachment metadata (includes direct file URL)
     const metaUrl = `${TRELLO_API_BASE}/cards/${cardId}/attachments/${attachmentId}?key=${encodeURIComponent(process.env.TRELLO_API_KEY)}&token=${encodeURIComponent(connection.trelloToken)}`;
@@ -432,7 +432,7 @@ exports.uploadAttachment = [
       if (result.error) {
         return res.status(result.status).json({ success: false, code: result.code, message: result.error });
       }
-      const { share, connection, cardId } = result;
+      const { connection, cardId } = result;
 
       if (!req.file) {
         return res.status(400).json({
@@ -498,7 +498,7 @@ exports.setDueDate = async (req, res) => {
     if (result.error) {
       return res.status(result.status).json({ success: false, code: result.code, message: result.error });
     }
-    const { share, connection, cardId } = result;
+    const { connection, cardId } = result;
 
     const query = new URLSearchParams({
       key: process.env.TRELLO_API_KEY,
@@ -562,7 +562,7 @@ exports.getSharedActions = async (req, res) => {
       return res.status(result.status).json({ success: false, message: result.error });
     }
 
-    const { share, connection, cardId } = result;
+    const { connection, cardId } = result;
     const url = `${TRELLO_API_BASE}/cards/${cardId}/actions?key=${encodeURIComponent(process.env.TRELLO_API_KEY)}&token=${encodeURIComponent(connection.trelloToken)}&limit=1000`;
     const actions = await fetchJSON(url);
 
@@ -581,7 +581,7 @@ exports.getSharedChecklists = async (req, res) => {
       return res.status(result.status).json({ success: false, message: result.error });
     }
 
-    const { share, connection, cardId } = result;
+    const { connection, cardId } = result;
     const url = `${TRELLO_API_BASE}/cards/${cardId}/checklists?key=${encodeURIComponent(process.env.TRELLO_API_KEY)}&token=${encodeURIComponent(connection.trelloToken)}&checkItem_fields=name,state,pos`;
     const checklists = await fetchJSON(url);
 
@@ -600,7 +600,7 @@ exports.getSharedMembers = async (req, res) => {
       return res.status(result.status).json({ success: false, message: result.error });
     }
 
-    const { share, connection, cardId } = result;
+    const { connection, cardId } = result;
     const url = `${TRELLO_API_BASE}/cards/${cardId}/members?key=${encodeURIComponent(process.env.TRELLO_API_KEY)}&token=${encodeURIComponent(connection.trelloToken)}&fields=fullName,username,avatarUrl`;
     const members = await fetchJSON(url);
 
@@ -619,7 +619,7 @@ exports.getSharedLinks = async (req, res) => {
       return res.status(result.status).json({ success: false, message: result.error });
     }
 
-    const { share, connection, cardId } = result;
+    const { connection, cardId } = result;
     const url = `${TRELLO_API_BASE}/cards/${cardId}/attachments?key=${encodeURIComponent(process.env.TRELLO_API_KEY)}&token=${encodeURIComponent(connection.trelloToken)}`;
     const attachments = await fetchJSON(url);
 
