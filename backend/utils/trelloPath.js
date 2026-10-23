@@ -5,4 +5,11 @@ function encodeTrelloPathSegment(value) {
   return encodeURIComponent(value);
 }
 
-module.exports = { encodeTrelloPathSegment };
+function validateTrelloPathParam(_req, res, next, value) {
+  if (!encodeTrelloPathSegment(value)) {
+    return res.status(400).json({ success: false, message: 'Invalid Trello resource identifier' });
+  }
+  return next();
+}
+
+module.exports = { encodeTrelloPathSegment, validateTrelloPathParam };
