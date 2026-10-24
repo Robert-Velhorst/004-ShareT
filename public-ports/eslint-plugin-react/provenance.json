@@ -1,0 +1,1238 @@
+{
+  "prepared_at": "2026-10-24T23:52:38.081017+00:00",
+  "name": "eslint-plugin-react",
+  "version": "7.37.5+sharet.eslint10.1",
+  "upstream_version": "7.37.5",
+  "upstream_source_commit": "2c98b83c451a4297edf1787d9a616e50687e27e8",
+  "publisher_tarball_url": "https://registry.npmjs.org/eslint-plugin-react/-/eslint-plugin-react-7.37.5.tgz",
+  "publisher_tarball_sha256": "45cc9f87030c2d56bf53b5db62367d3cde946cd63e6dde865d66a6b21051ba0b",
+  "publisher_tarball_integrity": "sha512-Qteup0SqU15kdocexFNAJMvCJEfa2xUKNV4CC1xsVMrIIqEy3SQ/rqyxCWNzfrd3/ldy6HMlD2e0JDVpDg2qIA==",
+  "upstream_source_url": "https://codeload.github.com/jsx-eslint/eslint-plugin-react/tar.gz/2c98b83c451a4297edf1787d9a616e50687e27e8",
+  "upstream_source_sha256": "368fbbad2895ea2b93fcb2ca064b9f9cbd7c47e25bfd9fdc170348083d42e6c5",
+  "candidate_archive": {
+    "file": "eslint-plugin-react-7.37.5+sharet.eslint10.1.tgz",
+    "bytes": 185169,
+    "sha256": "8bc40dda30ac33bbcf8090fa9666a3f69ad73aee97aabdc6dfc87b64a2c27cce",
+    "integrity": "sha512-WQSUdz7U8yJlyuh1feSxsZBe8Eu5CfCvwRBopPvMRx4zr1fjLi9PYqnMfIxXg+fobdb3O/0xGtjrN9gefOHf5A=="
+  },
+  "unit_source_archive": {
+    "file": "eslint-plugin-react-7.37.5+sharet.eslint10.1-unit-source.tgz",
+    "bytes": 453970,
+    "sha256": "a56de3ecabefaf5858c4f539a9fe137db739d1568b22b0e14663974b0e40038c",
+    "integrity": "sha512-gfVqw3nVtrSzlxwWtdyNrVagA65llmsbfAffzUtO6/5Awv/CbOSH9SOS5qR4rfy/ccnNQYYUSODey+gv0otC4Q=="
+  },
+  "changed_library_files": [
+    "lib/rules/forward-ref-uses-ref.js",
+    "lib/rules/jsx-filename-extension.js"
+  ],
+  "production_runtime_dependency_targets": {
+    "array-includes": "3.2.0",
+    "array.prototype.findlast": "1.2.5",
+    "array.prototype.flatmap": "1.3.3",
+    "array.prototype.tosorted": "1.1.4",
+    "doctrine": "3.0.0",
+    "es-iterator-helpers": "1.4.0",
+    "estraverse": "5.3.0",
+    "hasown": "2.0.4",
+    "jsx-ast-utils": "3.3.5",
+    "minimatch": "10.2.6",
+    "object.entries": "1.1.9",
+    "object.fromentries": "2.0.8",
+    "object.values": "1.2.1",
+    "prop-types": "15.8.1",
+    "resolve": "1.22.13",
+    "semver": "7.8.5",
+    "string.prototype.matchall": "4.1.0",
+    "string.prototype.repeat": "1.0.0"
+  },
+  "unit_sdk_dependency_targets": {
+    "@babel/core": "8.0.9",
+    "@babel/eslint-parser": "8.0.7",
+    "@babel/preset-react": "8.0.1",
+    "@babel/plugin-syntax-decorators": "8.0.1",
+    "@babel/plugin-syntax-function-bind": "8.0.1",
+    "@babel/plugin-syntax-do-expressions": "8.0.1",
+    "@typescript-eslint/parser": "8.72.0",
+    "babel-eslint": "10.1.0",
+    "eslint": "10.13.0",
+    "eslint-scope": "9.1.2",
+    "espree": "11.2.0",
+    "glob": "13.0.6",
+    "istanbul": "0.4.5",
+    "mocha": "12.0.3",
+    "sinon": "22.1.0",
+    "typescript": "7.0.2",
+    "typescript-eslint-parser": "22.0.0"
+  },
+  "dependency_publisher_metadata": {
+    "@babel/core": {
+      "version": "8.0.9",
+      "dist": {
+        "shasum": "4d597c512a119d16ffab53a71b967b3a48088cbf",
+        "tarball": "https://registry.npmjs.org/@babel/core/-/core-8.0.9.tgz",
+        "fileCount": 18,
+        "integrity": "sha512-wXtyKlpR/pXf/u0vmib+OBakQaIzLglLcRoKpWxCHW/whqq7YfQYPD0IAAl9H/evi40MyLIjYYdvb6N+9DI2yA==",
+        "signatures": [
+          {
+            "sig": "MEYCIQCCHXL/kBqWAZkypH8ETpFnCv39Aj9qUGv4MBWQNQF6KAIhAIeTfLmctGc6HTZmXS/NOlMVpvFWCJw4lnACG4xZZQcG",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          },
+          {
+            "sig": "MEUCIQCJdVhM6zk6U4aDdOE8eg4r0AcsDKH5nOnU2vER5TRB1wIgX4T11kLbXhjKT1yNxQI7mh2U3/CQUZ2tASHs9Jvx6v0=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/@babel%2fcore@8.0.9",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 167878
+      },
+      "engines": {
+        "node": "^22.18.0 || >=24.11.0"
+      },
+      "peerDependencies": {},
+      "metadata_sha256": "85eeba33f585f5f873c0129989fd90199d938cd5728ece126db7ff998f5cf7be",
+      "url": "https://registry.npmjs.org/%40babel%2Fcore/latest"
+    },
+    "@babel/eslint-parser": {
+      "version": "8.0.7",
+      "dist": {
+        "shasum": "ae5b9f9bf09dae608fd6e696a6a7018c4a74650d",
+        "tarball": "https://registry.npmjs.org/@babel/eslint-parser/-/eslint-parser-8.0.7.tgz",
+        "fileCount": 7,
+        "integrity": "sha512-ik5I+U64QuQQPohw0A1wVWPR+vTRYVfWBDLOLc1KwZQ2SKayQLD52DgoB3W/kmwc4MP1E37qh7nZuDD9xsKYcA==",
+        "signatures": [
+          {
+            "sig": "MEUCIQCCMxsRn193MITSMJdBaxJ+cFYdViSyiuZeGiTyaBcFRQIgW+n4enmDn7fVPiFRUx4bCdo4qHOvhSCQ+X9Qv9z0hJk=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          },
+          {
+            "sig": "MEUCICQGXZQRBOSIO8UEerum94/z4fKH4KO/Pz6c1Wvum/UeAiEA2mY70oLY967MTKfqIR7LS3bcEMpx0ggAZ4FU8BMpHyw=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/@babel%2feslint-parser@8.0.7",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 28114
+      },
+      "engines": {
+        "node": "^22.18.0 || >=24.11.0"
+      },
+      "peerDependencies": {
+        "eslint": "^9.0.0 || ^10.0.0",
+        "@babel/core": "^8.0.0"
+      },
+      "metadata_sha256": "84c1bbfbae20c67bc40598f89fe43bc5f9f796b5e080cfbeba883f294b209dfa",
+      "url": "https://registry.npmjs.org/%40babel%2Feslint-parser/latest"
+    },
+    "@babel/plugin-syntax-decorators": {
+      "version": "8.0.1",
+      "dist": {
+        "shasum": "e32484d8b60b7b1fdf588ecde6e8e605d355ae52",
+        "tarball": "https://registry.npmjs.org/@babel/plugin-syntax-decorators/-/plugin-syntax-decorators-8.0.1.tgz",
+        "fileCount": 6,
+        "integrity": "sha512-NI+0S/6MvR6GlcQFwjDZ+WIc2qvG6TXN534lYs9llNldwW4b7Dh6KTtk030FA0xWdYGs4t1lWo+OEWN8wGB+Nw==",
+        "signatures": [
+          {
+            "sig": "MEUCIEehlJzyYykrtbfQe0U6JeIG5Dw4Y0C+Rpmz/I1s89e9AiEA6A3S/XcbkSBNWgRX4hK4ZvffOqm92QIt6RHVfEinL14=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/@babel%2fplugin-syntax-decorators@8.0.1",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 6147
+      },
+      "engines": {
+        "node": "^22.18.0 || >=24.11.0"
+      },
+      "peerDependencies": {
+        "@babel/core": "^8.0.0"
+      },
+      "metadata_sha256": "93faa0b37d5b13866e26fb4cc5ec35faae457f6d0a82c784c16c76ec9cd0fbba",
+      "url": "https://registry.npmjs.org/%40babel%2Fplugin-syntax-decorators/latest"
+    },
+    "@babel/plugin-syntax-do-expressions": {
+      "version": "8.0.1",
+      "dist": {
+        "shasum": "286aaabefea4a4a55e278c72727ce51fb781d082",
+        "tarball": "https://registry.npmjs.org/@babel/plugin-syntax-do-expressions/-/plugin-syntax-do-expressions-8.0.1.tgz",
+        "fileCount": 6,
+        "integrity": "sha512-pmOZCQSXCXEtiW9iRZTBZp9ysIk+NoxIyNhMvNK7wpRUEKZh8XAY0m3t4Bs/uFqDKB8fNKe15SCLhG2qpxOTUQ==",
+        "signatures": [
+          {
+            "sig": "MEQCIH9g8BQEN1sm9F4ynNk2aKNHFQHLNSwtcTEMR32pezbFAiAH85v3FpA5DekBiNtxjDIDP22U1M+vJkrmjXHymT9lFw==",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/@babel%2fplugin-syntax-do-expressions@8.0.1",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 3727
+      },
+      "engines": {
+        "node": "^22.18.0 || >=24.11.0"
+      },
+      "peerDependencies": {
+        "@babel/core": "^8.0.0"
+      },
+      "metadata_sha256": "c65c0e503d6e99c5e37bc8c9aead0b6b43727cb9124dd9e3a7a42f15d939b073",
+      "url": "https://registry.npmjs.org/%40babel%2Fplugin-syntax-do-expressions/latest"
+    },
+    "@babel/plugin-syntax-function-bind": {
+      "version": "8.0.1",
+      "dist": {
+        "shasum": "1b10eae7d95179da854c35ae7c33ab6c306300ba",
+        "tarball": "https://registry.npmjs.org/@babel/plugin-syntax-function-bind/-/plugin-syntax-function-bind-8.0.1.tgz",
+        "fileCount": 6,
+        "integrity": "sha512-9NoZBP4VJNei2OukMDZa0IcUIhPQmKkweCI5MXpJHEcHB2IJOSIsQooLda+mvNiZis7b8+0FT6BDO47yFnMBVA==",
+        "signatures": [
+          {
+            "sig": "MEUCIEFy8wau4nxWIBNujF6Nfupu1Fq3qyknI0RxH5XmyvKgAiEAoV3zaqQVIfCXKKKVBd/6FxDEjfT/Ubm7WFpHpNSUxXs=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/@babel%2fplugin-syntax-function-bind@8.0.1",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 3713
+      },
+      "engines": {
+        "node": "^22.18.0 || >=24.11.0"
+      },
+      "peerDependencies": {
+        "@babel/core": "^8.0.0"
+      },
+      "metadata_sha256": "bffc4e869c98efdd2ebbc9449d9e49b7ce38f4b5d44de6166a9274e5d5f3b570",
+      "url": "https://registry.npmjs.org/%40babel%2Fplugin-syntax-function-bind/latest"
+    },
+    "@babel/preset-react": {
+      "version": "8.0.1",
+      "dist": {
+        "shasum": "0cb1802ff37a96faf983b5e781270f2752bb3476",
+        "tarball": "https://registry.npmjs.org/@babel/preset-react/-/preset-react-8.0.1.tgz",
+        "fileCount": 6,
+        "integrity": "sha512-jrFuPp/pTddFZbtmWhdLNAYc6UMcpboeUPnw0BBrm4nOmcAko/1TRcFi1PzWCeOFRU+VaSiKmat87W1HvR7mIg==",
+        "signatures": [
+          {
+            "sig": "MEUCIQDM3Pb2mw2TeazSzavsHTWf0DDpim402YqPsNnugUksFQIgHokENNfZeiUjlSt7gTZh5fGrYkCRl2YqwgG9FZ9XqT0=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/@babel%2fpreset-react@8.0.1",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 14587
+      },
+      "engines": {
+        "node": "^22.18.0 || >=24.11.0"
+      },
+      "peerDependencies": {
+        "@babel/core": "^8.0.0"
+      },
+      "metadata_sha256": "866fb390035bb8a4b441df07a508adee9efecf6ff93731ce2105825072c73590",
+      "url": "https://registry.npmjs.org/%40babel%2Fpreset-react/latest"
+    },
+    "@typescript-eslint/parser": {
+      "version": "8.72.0",
+      "dist": {
+        "shasum": "e90d951ba97c6e2d8f1032f048292b7e39d8a019",
+        "tarball": "https://registry.npmjs.org/@typescript-eslint/parser/-/parser-8.72.0.tgz",
+        "fileCount": 7,
+        "integrity": "sha512-0O+x3ynciD6zuXb1CKSu165haQV6ey53DKhHHUnujP7U+XlltJG+/keT0Xhd1HXCze+IHf7Tvt39ovyepX/LNw==",
+        "signatures": [
+          {
+            "sig": "MEYCIQCRcXeOQME37c6qRD331oxnNDpVcOd8NLGV1cOmC9xc/QIhAJTkYF7jOhM5ywGMBfUC6CdGejqg330TaSTDKNmzMHNP",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          },
+          {
+            "sig": "MEUCIQCh34ZrY2PohpEVelHLQLduHy4eCxWa0aVdx3jyzk/9rgIgD13TTjDuVtNiAlGWR7oM65JKvCINiAstU/fO8CIewEg=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/@typescript-eslint%2fparser@8.72.0",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 16170
+      },
+      "engines": {
+        "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
+      },
+      "peerDependencies": {
+        "eslint": "^8.57.0 || ^9.0.0 || ^10.0.0",
+        "typescript": ">=4.8.4 <6.1.0"
+      },
+      "metadata_sha256": "3bd7978eca27c45094aaedf8ac0866280d0f92908628b789db094c02b2fb3655",
+      "url": "https://registry.npmjs.org/%40typescript-eslint%2Fparser/latest"
+    },
+    "array-includes": {
+      "version": "3.2.0",
+      "dist": {
+        "shasum": "18771e6837351aa139c3b58873371d0afa64964a",
+        "tarball": "https://registry.npmjs.org/array-includes/-/array-includes-3.2.0.tgz",
+        "fileCount": 20,
+        "integrity": "sha512-VXY5eFRarnXcYxwBjJzPmEhH55+rmP79/+ueDhi0F+TuqfHCItagIHqxeUZrmgrOPa31QTh9H85DjX3FfJ0FTg==",
+        "signatures": [
+          {
+            "sig": "MEQCIGjjNuBMq1Mt8jiKqY7bn6WppexEfkLjEqVwGl1RNhaFAiBadHNWlgH4XC1KIHH8rX8e6LkDa7MXiO6X2R4nZds52Q==",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "unpackedSize": 30980
+      },
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "peerDependencies": {},
+      "metadata_sha256": "c70d509758ad010b3370b6524efc69d01c25faecce24cae760c668fd3b5e30ba",
+      "url": "https://registry.npmjs.org/array-includes/latest"
+    },
+    "array.prototype.findlast": {
+      "version": "1.2.5",
+      "dist": {
+        "shasum": "3e4fbcb30a15a7f5bf64cf2faae22d139c2e4904",
+        "tarball": "https://registry.npmjs.org/array.prototype.findlast/-/array.prototype.findlast-1.2.5.tgz",
+        "fileCount": 17,
+        "integrity": "sha512-CVvd6FHg1Z3POpBLxO6E6zr+rSKEQ9L6rZHAaY7lLfhKsWYUBBOuMs0e9o24oopj6H+geRCX0YJ+TJLBK2eHyQ==",
+        "signatures": [
+          {
+            "sig": "MEUCIQC+p3zE5vygInX/Hzr1lijHPBnUAgr3AX5I1P3cAbFPXwIgF+1wN5KykYSAUGwNvIS7VnjkdhM31J4R8PTziiy9itk=",
+            "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+          }
+        ],
+        "unpackedSize": 29114
+      },
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "peerDependencies": {},
+      "metadata_sha256": "7f47d225af9d331ab801e35e035352396477e2ae35a1b648813146affadd60d7",
+      "url": "https://registry.npmjs.org/array.prototype.findlast/latest"
+    },
+    "array.prototype.flatmap": {
+      "version": "1.3.3",
+      "dist": {
+        "shasum": "712cc792ae70370ae40586264629e33aab5dd38b",
+        "tarball": "https://registry.npmjs.org/array.prototype.flatmap/-/array.prototype.flatmap-1.3.3.tgz",
+        "fileCount": 17,
+        "integrity": "sha512-Y7Wt51eKJSyi80hFrJCePGGNo5ktJCslFuboqJsbf57CCPcm5zztluPlc4/aD8sWsKvlwatezpV4U1efk8kpjg==",
+        "signatures": [
+          {
+            "sig": "MEUCIQDF9lD78N2klVa46Ik4qWueGbbaMRvgkydP/GRkrx8w0QIgIyaOiEFvcFtgiOSd54a+kkAK/1Mi2yVFsXmjtoOzGKI=",
+            "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+          }
+        ],
+        "unpackedSize": 20876
+      },
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "peerDependencies": {},
+      "metadata_sha256": "2e4723e3ac8768a9412ede8ac8775cace9d2241458712b0be3f9dde06fb83fad",
+      "url": "https://registry.npmjs.org/array.prototype.flatmap/latest"
+    },
+    "array.prototype.tosorted": {
+      "version": "1.1.4",
+      "dist": {
+        "shasum": "fe954678ff53034e717ea3352a03f0b0b86f7ffc",
+        "tarball": "https://registry.npmjs.org/array.prototype.tosorted/-/array.prototype.tosorted-1.1.4.tgz",
+        "fileCount": 16,
+        "integrity": "sha512-p6Fx8B7b7ZhL/gmUsAy0D15WhvDccw3mnGNbZpi3pmeJdxtWsj2jEaI4Y6oo3XiHfzuSgPwKc04MYt6KgvC/wA==",
+        "signatures": [
+          {
+            "sig": "MEYCIQCDh/3eAgSCSGLPYuOCpoA6zIDir8kz5x6IwGbJm2/NzQIhAN77Csx//xR7aPQwXFIUOdT2nn3B8WL45i1AdLK+1Q25",
+            "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+          }
+        ],
+        "unpackedSize": 20913
+      },
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "peerDependencies": {},
+      "metadata_sha256": "27c982ca48a47a141726eccc9595f105988e7f226e36e6fc083a9a61a634258a",
+      "url": "https://registry.npmjs.org/array.prototype.tosorted/latest"
+    },
+    "babel-eslint": {
+      "version": "10.1.0",
+      "dist": {
+        "shasum": "6968e568a910b78fb3779cdd8b6ac2f479943232",
+        "tarball": "https://registry.npmjs.org/babel-eslint/-/babel-eslint-10.1.0.tgz",
+        "fileCount": 16,
+        "integrity": "sha512-ifWaTHQ0ce+448CYop8AdrQiBsGrnC+bMgfyKFdi6EsPLTAWG+QfyDeM6OH+FmWnKvEq5NnBMLvlBUPKQZoDSg==",
+        "signatures": [
+          {
+            "sig": "MEQCIBYXIQAopbGpbNRXN8OfftWyQCeuBL3iAlviix3LrJriAiBVB3S6gCNsCAYj5BeWwtczO4FtxNpvpYQF6s5m1zkIIA==",
+            "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+          }
+        ],
+        "unpackedSize": 30390,
+        "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJeVbgkCRA9TVsSAnZWagAApggP/A1cGZW0mHkcn5N6PEMf\nZu0FVDRqTyaiNsLU149m4tVSd+GT3WDyWHs5/4X7Ih9x7tXIPqOV8rG1EcKI\ncSw+lZz6yaKe7a+OuN0SdnxR5LwrnKxGH3KALPpaAGY7UKW6+2lBSo3+10oy\n4lzTwQMTl9U/Wv10ktLLIizRVi19ZACk+HFLRFd5FChcykqJnmKee84GxKwW\nxUSWenNwDbbkGMfOr94Hm9y1ulHDgkx1BTxLbm/3F19JaBrHOJw6ZCVyFwPP\nclTamxSTOp7o3dkWtO5lRnNfBdqylK2yV1ySaNCbzWKjjn0ZBO4imOOMPDws\ntwAZksaoJqc775cZzrJsiRmhuEE6isdrEixM7lFbp965/nl2a1wmd9REDbs7\nTTxQ0l5LWX49y8zhQQnfLYrM6F59T7mdOkOFI4wAiPuDRlK4ihLabTmFpfOi\n3ul0ehkGEtoJTALjEObrTz8dDJhfVEXYFP8yUJoXWng44nt8MwPPG40p5q2c\nuR5S/MA/OPEzJrc+l3IZJqi0wWMBu2twItOJ1HiqIZjTlTF34ViLnLfQf6A3\nE/lNFPLMlvAeVvn7scCJKaSkucKC7P6AgYFjnrFbNdUCewZ619tPrOkwYTKI\nD/rk1wI1QG7bm3NRyviyM3/uNuAWiaTo4S/5mCWmX3TPQsjQgKzoB5eXsu8M\ncrvY\r\n=p34W\r\n-----END PGP SIGNATURE-----\r\n"
+      },
+      "engines": {
+        "node": ">=6"
+      },
+      "peerDependencies": {
+        "eslint": ">= 4.12.1"
+      },
+      "metadata_sha256": "b9a6d43d6ded5c2728b3baa4de45a8343ef39f71ef960a2efbea0a9565b3b4ae",
+      "url": "https://registry.npmjs.org/babel-eslint/latest"
+    },
+    "doctrine": {
+      "version": "3.0.0",
+      "dist": {
+        "shasum": "addebead72a6574db783639dc87a121773973961",
+        "tarball": "https://registry.npmjs.org/doctrine/-/doctrine-3.0.0.tgz",
+        "fileCount": 9,
+        "integrity": "sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==",
+        "signatures": [
+          {
+            "sig": "MEQCICP+mYHZ6FEJT9JqGob2lPEH7Wug9LfbGgcJAex3Wr0fAiAo/l1ys5DjWP/pqCILiJOXtRGQ63tatLIrV+yL3sDugg==",
+            "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+          }
+        ],
+        "unpackedSize": 106364,
+        "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJb5kSJCRA9TVsSAnZWagAAM00P/itvaBCsGIsKuop89hQR\nTDbrp2S+JVL+LskpX/8oZWtgl9Wp2ESbQM5YztbstuNLaddTqNXjWXGB2RR5\nNUSEbuu9tm+GaDq+7NxthnnYzDjYDSBGVizfkZnWVhcIKhN9PF9DJ5gGQb/n\nbHzSO3qLYURNHxAcsvHSUnm9b/RtgvQoyoiYWDMiHVQiUOYh9jRqsvpmO7Oq\n6mq9Zvk7VUzVPvJKJwBw6vcN/MmU5DVWgr2u4LkNWVp84GI1GxkRkZZfl4A0\nafOxiulTFM8c/L8K0dZV5CeTCWexEOBcQeBNNEw/LDskDGcN8zADXTnw+us/\nXKK59YBcur6zPpYdXhd2ZHTndnmcau6qxgK+OFlLlHVYsZwo2pUkdLd+/zha\n0MhjfUEw257qdiBHHhjbH6J46HN3JKQSUF0q7Y2tGEsOeN27AwBOprBdtcUI\n36kv76l+DU13+IJjoJwEnPgHu20fdahZ+lsJv+77BU+6YjFH9nLIw0HF8IU+\nSYnAGGKpPDlbF6kPMjbhcn9Y/hGPoH7Qz7966krmtop/EAHCww5RKtgw5Lov\n4cNNWCIHk97Yocv0KI2ws+8RvGtF4lEcDKeU38HvOUaUGaeVAe20V4HeOZg/\nQjMlD6l/mQYHsJgQB9iVXffgDW5I4H10p2/quMme7bT2JdSzGqvem6A8Pb+j\nLow/\r\n=M+kf\r\n-----END PGP SIGNATURE-----\r\n"
+      },
+      "engines": {
+        "node": ">=6.0.0"
+      },
+      "peerDependencies": {},
+      "metadata_sha256": "0d041fcb25a0752831a35509cb1279130092b25242a01df8bf29f2541637736b",
+      "url": "https://registry.npmjs.org/doctrine/latest"
+    },
+    "es-iterator-helpers": {
+      "version": "1.4.0",
+      "dist": {
+        "shasum": "2b4635ee3e8db2285378a47a1ea8f8dd34adb653",
+        "tarball": "https://registry.npmjs.org/es-iterator-helpers/-/es-iterator-helpers-1.4.0.tgz",
+        "fileCount": 155,
+        "integrity": "sha512-c/A0P0oxkACDc+cKWw8evLXK83oBKgn0qPOqCYT4x9uolpCIJAcYvJC9QYKNDRPsTeGyCrQ326jrvgZWdCdK5Q==",
+        "signatures": [
+          {
+            "sig": "MEUCIQCZTIM7DIZKXWOgRocuHHXoxBZ8ouwIdVznTpHf9t8jVAIgdJFR0dg58SpVelMygkQpZHgMk6iyiEwrmtiF0STUAqQ=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "unpackedSize": 388957
+      },
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "peerDependencies": {},
+      "metadata_sha256": "35da3ec1dc007591202b121c55c5eb2ac167fb575c19199c426e819d47ab8ecf",
+      "url": "https://registry.npmjs.org/es-iterator-helpers/latest"
+    },
+    "eslint": {
+      "version": "10.13.0",
+      "dist": {
+        "shasum": "a8a4742648c0fa9131f429b509de5407682d4864",
+        "tarball": "https://registry.npmjs.org/eslint/-/eslint-10.13.0.tgz",
+        "fileCount": 421,
+        "integrity": "sha512-UohDjD4zSzEwhf58M3O7vc/ycc8O1I7dNlhtD0WxE8Px8EHNJKtUwzBqrzeGhisRuv2ag4sAYswszCJRgKXYUg==",
+        "signatures": [
+          {
+            "sig": "MEUCIQDutjgxYLZqtIun3DFVcWxPyMo9ojiddOPK3TwtujUWjQIgakjqrpUWrhXflf7tPXD0pIMBj1CIGD7DbkRbXZJs4B8=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          },
+          {
+            "sig": "MEUCIFUTPg62nwv58a1UR/mGBrlCtgXsqeNpmbPXulRp0tPmAiEApozW22AumvLTz6QJbGvldiJuvBtMLTzP1KX/P66V3II=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "unpackedSize": 2950609
+      },
+      "engines": {
+        "node": "^20.19.0 || ^22.13.0 || >=24"
+      },
+      "peerDependencies": {
+        "jiti": "*"
+      },
+      "metadata_sha256": "1c53c5fad93e009f1315838f82bfb41e2bbf9c6da7ed8b90a5570d58c47e3f99",
+      "url": "https://registry.npmjs.org/eslint/latest"
+    },
+    "eslint-scope": {
+      "version": "9.1.2",
+      "dist": {
+        "shasum": "b9de6ace2fab1cff24d2e58d85b74c8fcea39802",
+        "tarball": "https://registry.npmjs.org/eslint-scope/-/eslint-scope-9.1.2.tgz",
+        "fileCount": 15,
+        "integrity": "sha512-xS90H51cKw0jltxmvmHy2Iai1LIqrfbw57b79w/J7MfvDfkIkFZ+kj6zC3BjtUwh150HsSSdxXZcsuv72miDFQ==",
+        "signatures": [
+          {
+            "sig": "MEUCICOUTAHWKrJRy9z6nyVknCxHRS6JVlnHOJVsW0/xRz0kAiEAnAisrMOkXRirdFwEnJMm5mUyDnOaKe1bdjIdqqvGidg=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/eslint-scope@9.1.2",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 173495
+      },
+      "engines": {
+        "node": "^20.19.0 || ^22.13.0 || >=24"
+      },
+      "peerDependencies": {},
+      "metadata_sha256": "59df96874dcb1b43df470c0a58a2890ead2948f74bc054e7b23e64e6461c1b24",
+      "url": "https://registry.npmjs.org/eslint-scope/latest"
+    },
+    "espree": {
+      "version": "11.2.0",
+      "dist": {
+        "shasum": "01d5e47dc332aaba3059008362454a8cc34ccaa5",
+        "tarball": "https://registry.npmjs.org/espree/-/espree-11.2.0.tgz",
+        "fileCount": 13,
+        "integrity": "sha512-7p3DrVEIopW1B1avAGLuCSh1jubc01H2JHc8B4qqGblmg5gI9yumBgACjWo4JlIc04ufug4xJ3SQI8HkS/Rgzw==",
+        "signatures": [
+          {
+            "sig": "MEYCIQDl6L1LCOc/d9LzPSQXQKB5n41XO4u4N0/tCX5yajUuAwIhAN0j3Dz97txuqdSFWei5HvmUrT31gl8tHYKoYH9sYMzQ",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/espree@11.2.0",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 95658
+      },
+      "engines": {
+        "node": "^20.19.0 || ^22.13.0 || >=24"
+      },
+      "peerDependencies": {},
+      "metadata_sha256": "7f00deb0251b68fbcc970d7324758411b24383634efc94f0e530d86d4933be56",
+      "url": "https://registry.npmjs.org/espree/latest"
+    },
+    "estraverse": {
+      "version": "5.3.0",
+      "dist": {
+        "shasum": "2eea5290702f26ab8fe5370370ff86c965d21123",
+        "tarball": "https://registry.npmjs.org/estraverse/-/estraverse-5.3.0.tgz",
+        "fileCount": 6,
+        "integrity": "sha512-MMdARuVEQziNTeJD8DgMqmhwR11BRQ/cBP+pLtYdSTnf3MIO8fFeiINEbX36ZdNlfU/7A9f3gUw49B3oQsvwBA==",
+        "signatures": [
+          {
+            "sig": "MEQCIQCYR8KHSGsYhvt254cgXY/g0anCJo0g8osIbtrNLsBxdAIfVtkztAOlpK9RiVwyxylJ66/86W2QK2ufoDb3jte9IQ==",
+            "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+          }
+        ],
+        "unpackedSize": 37094,
+        "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.13\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJh2qS2CRA9TVsSAnZWagAAie4P/2uTfbePOUfA3kgwgTjz\nLWJ67U3gEFGYbbZv6eyclXzZmxQxFRk27ycAMZfNFYkUR9irWamcHsvcGBAP\nnbWQBSjTre7FMVujvvv9gMFeLL34meYNI45gOdz0abvFNUSIpe+i8pW7+oW0\nm8pc6tlCYdnvqGn5kYovTCvamsOs6gt6dOwJCUZdfUlu8Y55xyDCwsf2gAC9\nh1KwnVhpe4ZS10CrEm8ZdwzTtT0ILjznRkCv2aR5/HMyvIDGjDL9DaavAfVP\nWXoH7SSw6loNu7SiBLfFk2U+bu6oqasFGeEbJgdCGlqL5PwbqaUYLPnerAfO\nLpDdN7jQDqd5BlStYBWEquhw3wREzbNmSgXkevZxNltSNUYKc8s7UUGGG58O\ngXX6SZAwilEMXBZlOgiOWudc2spcwBlR3Vb2L8+3YojjhKhmn1BLzOSXvnCv\nG2mXE5epBcB9rGDVSs0dmIFmWTkua+zTW1KKzWimZO/y2yAEI/CmeZoK00Vf\nvbb4iWOuT8NRyrPzFVaZPc+jto62S6Ze4g9bHo61JlEhYcDPttJioMPhfRjF\ndhuzCfef2C+MX7GiER/wtevJ+SEPxSSGuZxRB5u52JAaNzrSDWfsaVjqeLZs\nKVS2ClgC9bWMxUEMC6hV5w/wqBiN4/7jO+IQ6qXWO1uQiZjQGxh1m9zectF8\nalo/\r\n=oEPK\r\n-----END PGP SIGNATURE-----\r\n"
+      },
+      "engines": {
+        "node": ">=4.0"
+      },
+      "peerDependencies": {},
+      "metadata_sha256": "9bad9ba7e99266ea74d8fa2068b7f3d342e0a94a1bd8375af40460910ac25342",
+      "url": "https://registry.npmjs.org/estraverse/latest"
+    },
+    "glob": {
+      "version": "13.0.6",
+      "dist": {
+        "shasum": "078666566a425147ccacfbd2e332deb66a2be71d",
+        "tarball": "https://registry.npmjs.org/glob/-/glob-13.0.6.tgz",
+        "fileCount": 65,
+        "integrity": "sha512-Wjlyrolmm8uDpm/ogGyXZXb1Z+Ca2B8NbJwqBVg0axK9GbBeoS7yGV6vjXnYdGm6X53iehEuxxbyiKp8QmN4Vw==",
+        "signatures": [
+          {
+            "sig": "MEUCIFeZQ+6Wn9wYFbt/Wbnc8ax04O7dS1yNrFsrc7yW+oCVAiEA6/HzFWBMVK4axRis4zC3eFJJxZbgiHv4lCQ2x+rSh9Y=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "unpackedSize": 1607230
+      },
+      "engines": {
+        "node": "18 || 20 || >=22"
+      },
+      "peerDependencies": {},
+      "metadata_sha256": "fcc00e0272292524f86f8128ee095ed63f2221e1dbf668279788254decf42c18",
+      "url": "https://registry.npmjs.org/glob/latest"
+    },
+    "hasown": {
+      "version": "2.0.4",
+      "dist": {
+        "shasum": "8c62d8cb90beb2aad5d0a5b67581ad9854c3f003",
+        "tarball": "https://registry.npmjs.org/hasown/-/hasown-2.0.4.tgz",
+        "fileCount": 10,
+        "integrity": "sha512-T2UbfbBEF32wiepXIsMlTW9+dDYC6wMh/t/vYA4tuOMKqWz/n3vr1NFSxQiyP+zk2mXsoMA/i/7qV6LKut1t1A==",
+        "signatures": [
+          {
+            "sig": "MEUCIQD7mBP93ajj5PIrtTB7RZYHC5Mt6V5A7Dhx63LsJokNiQIgUwEVtJkPNDCtyRp7uUNxHkynqyzIHP27XsmnyCyZNWk=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "unpackedSize": 10332
+      },
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "peerDependencies": {},
+      "metadata_sha256": "dc00ea9560288aa32633618c71bce761d53a2cf1df5cca23b32a8e11fd26d341",
+      "url": "https://registry.npmjs.org/hasown/latest"
+    },
+    "istanbul": {
+      "version": "0.4.5",
+      "dist": {
+        "shasum": "65c7d73d4c4da84d4f3ac310b918fb0b8033733b",
+        "tarball": "https://registry.npmjs.org/istanbul/-/istanbul-0.4.5.tgz",
+        "integrity": "sha512-nMtdn4hvK0HjUlzr1DrKSUY8ychprt8dzHOgY2KXsIhHu5PuQQEOTM27gV9Xblyon7aUH/TSFIjRHEODF/FRPg==",
+        "signatures": [
+          {
+            "sig": "MEUCIQDemEu8TgdLFCwUpUiZP0++IXYr+5h3L1ykZv+yAbOCVAIgWPuspgB3A/yadtuT3OU6T2/ZG4e3N7bQjXw+0NlfOts=",
+            "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+          }
+        ]
+      },
+      "engines": null,
+      "peerDependencies": {},
+      "metadata_sha256": "d3c296060cb50f3834e700f2186415575b8f0b103389b1eded58a723aa385890",
+      "url": "https://registry.npmjs.org/istanbul/latest"
+    },
+    "jsx-ast-utils": {
+      "version": "3.3.5",
+      "dist": {
+        "shasum": "4766bd05a8e2a11af222becd19e15575e52a853a",
+        "tarball": "https://registry.npmjs.org/jsx-ast-utils/-/jsx-ast-utils-3.3.5.tgz",
+        "fileCount": 104,
+        "integrity": "sha512-ZZow9HBI5O6EPgSJLUb8n2NKgmVWTwCvHGwFuJlMjvLFqlGG6pjirPhtdsseaLZjSibD8eegzmYpUZwoIlj2cQ==",
+        "signatures": [
+          {
+            "sig": "MEUCIHanbJ/csNXsMrOdrL4J4EA+uUKpBjI1vFxBV902LyRfAiEAoZJoNwT1Hh5sTYVXUV5ycNaO7zQyPdRf0Q/AZpK1Rs4=",
+            "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+          }
+        ],
+        "unpackedSize": 235572
+      },
+      "engines": {
+        "node": ">=4.0"
+      },
+      "peerDependencies": {},
+      "metadata_sha256": "b21b272f0149576663d946ddd962dba7840c6a888fa33f80e110b5af5b92cf49",
+      "url": "https://registry.npmjs.org/jsx-ast-utils/latest"
+    },
+    "minimatch": {
+      "version": "10.2.6",
+      "dist": {
+        "shasum": "fd956bbe0b77241e9f15ac5dccb1c638060968ef",
+        "tarball": "https://registry.npmjs.org/minimatch/-/minimatch-10.2.6.tgz",
+        "fileCount": 53,
+        "integrity": "sha512-vpLQEs+VLCr1nU0BXS07maYoFwlDAH0gngQuuttxIwutDFEMHq2blX+8vpgxDdK3J1PwjCJiep77OitTZ4Ll1A==",
+        "signatures": [
+          {
+            "sig": "MEYCIQDLegvdEjBRh1U1nDKkfh4BzwQz166O6MJMgYwImofKYAIhAIOZCIrS3n41sqBbTqWzE9xT7zS0ViICJO5QAHrKtEUw",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          },
+          {
+            "sig": "MEUCIQDP7WdDO/71coBXkjGtERJGHnRsczabTsOPQqfMzzwhhQIgeAbHT9TWRID3gwOZwgiDnon8eEFMO9ytSJnU6tD8pic=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "unpackedSize": 536122
+      },
+      "engines": {
+        "node": "18 || 20 || >=22"
+      },
+      "peerDependencies": {},
+      "metadata_sha256": "938adf25bff40260a930f723f448231fc7a03f9e85dd809f2196b50ebd06d88c",
+      "url": "https://registry.npmjs.org/minimatch/latest"
+    },
+    "mocha": {
+      "version": "12.0.3",
+      "dist": {
+        "shasum": "f3022f5684f5a8306323dd5ab4d0f881a90cd031",
+        "tarball": "https://registry.npmjs.org/mocha/-/mocha-12.0.3.tgz",
+        "fileCount": 74,
+        "integrity": "sha512-beammieDdiWdkjANWeWPpkxUROYGi5FN88fPOkLiticz7HTg3Y+Pho3EYE6SUdcuWnZ3h2WD8EXCA55JF4o6wg==",
+        "signatures": [
+          {
+            "sig": "MEQCIAaQkNGImKKp1VplUWATtSM6C7+Pvk2pQ87PJ7PbhyXhAiAtzzZG/taZzA0jSnjf7s82+68YULt9iQ/RmVF7C/35WQ==",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          },
+          {
+            "sig": "MEYCIQDHov78NllzJhgbRutx30C1EfzjWM4NmlsvWEUpA4PDOwIhAKe7vgWODZkoauwexi7QAJzbSBZLFyGNXuTvN1NQmLUl",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/mocha@12.0.3",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 1443342
+      },
+      "engines": {
+        "node": "^20.19.0 || >=22.12.0"
+      },
+      "peerDependencies": {},
+      "metadata_sha256": "86103eba3dcc5b9a316026ed925979ac5e9267374938f84c8411ce5a114a8752",
+      "url": "https://registry.npmjs.org/mocha/latest"
+    },
+    "object.entries": {
+      "version": "1.1.9",
+      "dist": {
+        "shasum": "e4770a6a1444afb61bd39f984018b5bede25f8b3",
+        "tarball": "https://registry.npmjs.org/object.entries/-/object.entries-1.1.9.tgz",
+        "fileCount": 18,
+        "integrity": "sha512-8u/hfXFRBD1O0hPUjioLhoWFHRmt6tKA4/vZPyckBr18l1KE9uHrFaFaUi8MDRTpi4uak2goyPTSNJLXX2k2Hw==",
+        "signatures": [
+          {
+            "sig": "MEQCIAvADEVGbDNVRw0R/CjyimUu365QiYICsoxDtJuiPuI+AiAs5R5+f/kaNQqAM1HWiyA4C7O0R4iPtvwhAqrBmJXrSA==",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "unpackedSize": 33658
+      },
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "peerDependencies": {},
+      "metadata_sha256": "98095a4e3ff37b13752ca9540db3611eca6ae970c1d5845a02df3281987afc6d",
+      "url": "https://registry.npmjs.org/object.entries/latest"
+    },
+    "object.fromentries": {
+      "version": "2.0.8",
+      "dist": {
+        "shasum": "f7195d8a9b97bd95cbc1999ea939ecd1a2b00c65",
+        "tarball": "https://registry.npmjs.org/object.fromentries/-/object.fromentries-2.0.8.tgz",
+        "fileCount": 16,
+        "integrity": "sha512-k6E21FzySsSK5a21KRADBd/NGneRegFO5pLHfdQLpRDETUNJueLXs3WCzyQ3tFRDYgbq3KHGXfTbi2bs8WQ6rQ==",
+        "signatures": [
+          {
+            "sig": "MEUCIAc6UmUy/ZzE+PfiR7+1/02wPNgs/LbaQF8tgqZm/FmHAiEAkcYu3FGVZWdX8KLYYujTs76HRoGeg7mLO5wbbQn4Z5w=",
+            "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+          }
+        ],
+        "unpackedSize": 16324
+      },
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "peerDependencies": {},
+      "metadata_sha256": "46449b21c31957f2696abba7317260c83f620a9bf29c29eed7aae308a5922ef9",
+      "url": "https://registry.npmjs.org/object.fromentries/latest"
+    },
+    "object.values": {
+      "version": "1.2.1",
+      "dist": {
+        "shasum": "deed520a50809ff7f75a7cfd4bc64c7a038c6216",
+        "tarball": "https://registry.npmjs.org/object.values/-/object.values-1.2.1.tgz",
+        "fileCount": 17,
+        "integrity": "sha512-gXah6aZrcUxjWg2zR2MwouP2eHlCBzdV4pygudehaKXSGW4v2AsRQUK+lwwXhii6KFZcunEnmSUoYp5CXibxtA==",
+        "signatures": [
+          {
+            "sig": "MEYCIQD9mHHpu2RYuhT0VIn+gTVjd3Vpsgw8QMQMuhgkqziqrgIhAIGSXq8i7pYcV3Y/Pwu+Jg9q9kx7sd1OuWnWQ8qYNZa+",
+            "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+          }
+        ],
+        "unpackedSize": 32667
+      },
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "peerDependencies": {},
+      "metadata_sha256": "aa177ace063e3768b74449d6c48e48c425f0bb1ce81a8a7abcb4fa98118940a1",
+      "url": "https://registry.npmjs.org/object.values/latest"
+    },
+    "prop-types": {
+      "version": "15.8.1",
+      "dist": {
+        "shasum": "67d87bf1a694f48435cf332c24af10214a3140b5",
+        "tarball": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+        "fileCount": 12,
+        "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+        "signatures": [
+          {
+            "sig": "MEUCIDFKTxcQ7L//I6VGZgOwfotCO21ylQ/hnFk47qypS0+wAiEAuQUR5mg5GsHTR1eiNZ8Wsa4cmR2eSxYJJIdUM+kwQp0=",
+            "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+          }
+        ],
+        "unpackedSize": 94537,
+        "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.13\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJh1OGBCRA9TVsSAnZWagAAQOUP/jQkSH1VR711WunvFORR\nAF7hDK2MBglQeh3JOrLm68UNvVxU5Wo01M9kQxE2tixSX+aIv8KGxXMyQBNn\nOwoNPpvy2h8MMNG16vUrFnu5HkO/jnTbq7tbkmE+tojdXrCOgj48fQdhNcIf\nSzODODlgEXbE1m/f4xa2nl1W5IG2p8Y0hH8oP81XG67HKMCG03NpLWpnEWOx\nUOfd2D6g9lO8NhbFaEs4+fafL53OJehdNBJgZVJhLhlKPdEkNKaXDtd5CwGF\n5DFba7cIdSzbhYlT5abOE//VWoGOr9OjtLl5iSegqNY9rjECZhcvWFbPNVl5\nr2YoJMEL+R0vvufiiMO6nIiY6OkN6CqjHIOHgEiP5xYB8cXhMdI1yEF+OiNj\n7uhRoKZv1G+gExruy+1Ftm3AZU+bCXbKGb6IMdBob992OXMWDpvEvh2NNKLh\nYi6avrTFInnNdDFAPZknwQ7SAOn759oSyq7lmOW1deqAa7n6uixoT87tGtot\nLK+Onk+N3pVQBfigYPXAc/4RgA6YZh16eT+yhd/EX9lc0O6m9Yrd8ax88JtZ\nFyyngeQKjWW/MjtaaTNasahFdiw964cedQU/KtUg5h7cztWDq/B5FVkj4sHS\nvyBne7zBPhEqnSA/8txAdpEN/CgtRSAQ26HJtspJoENXKLVQFLKMEzqOX157\nOZxK\r\n=q+dC\r\n-----END PGP SIGNATURE-----\r\n"
+      },
+      "engines": null,
+      "peerDependencies": {},
+      "metadata_sha256": "bc53818ce000b91f1f5c84e530a929edea66b9f65acd24b071065314b30a3a9d",
+      "url": "https://registry.npmjs.org/prop-types/latest"
+    },
+    "resolve": {
+      "version": "1.22.13",
+      "dist": {
+        "shasum": "d542f97758d768f36091251a6b07540b4343f7b5",
+        "tarball": "https://registry.npmjs.org/resolve/-/resolve-1.22.13.tgz",
+        "fileCount": 103,
+        "integrity": "sha512-Dj/cW9zBV2aRj6XzCxuGIs3ESZKv02jixne3q6jFZYZ3/Tg09gHHviSMDL4kObh9pqSahdRHEnDoaP2gn8YLhA==",
+        "signatures": [
+          {
+            "sig": "MEUCIQCPP5dgLHoQ8bb9s7Y4PFeTvjkmz9R3JY7Dbwi5Ue0dTgIgOXPNb1l4ZimdDzcN61Z7lMBXRsmW9sZk/aDjLtWwsSA=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "unpackedSize": 163562
+      },
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "peerDependencies": {},
+      "metadata_sha256": "61f28dbdf088a7cba4b6baa69e0d6b75ef32a14617fb948d4fb506663aac5ac1",
+      "url": "https://registry.npmjs.org/resolve/latest"
+    },
+    "semver": {
+      "version": "7.8.5",
+      "dist": {
+        "shasum": "39b646037dd50c14fb451e7e4cac58ed8b863f69",
+        "tarball": "https://registry.npmjs.org/semver/-/semver-7.8.5.tgz",
+        "fileCount": 53,
+        "integrity": "sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA==",
+        "signatures": [
+          {
+            "sig": "MEQCIA1IMvQVanynk4boyVwPRYxqwVyNO88VINzVnIEactQlAiB/YQz4fEE45VLTLw/CEEHBWzh+hzED63yilqQQZPcQ1Q==",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/semver@7.8.5",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 101065
+      },
+      "engines": {
+        "node": ">=10"
+      },
+      "peerDependencies": {},
+      "metadata_sha256": "595600ec8060055e4582121441e8227bc6ab12ff63b42030686e18ec46226ff2",
+      "url": "https://registry.npmjs.org/semver/latest"
+    },
+    "sinon": {
+      "version": "22.1.0",
+      "dist": {
+        "shasum": "df5a9308d1818166d1370795a4953ceadc5ff706",
+        "tarball": "https://registry.npmjs.org/sinon/-/sinon-22.1.0.tgz",
+        "fileCount": 48,
+        "integrity": "sha512-n1ajF2rBWMTtEwbKcw4UdFg4nCnDdq/U6RDoxtOd7oapOlRoJ5ynwFx60owROyhDpA9QhMZi0pCO/xtmwFjG7w==",
+        "signatures": [
+          {
+            "sig": "MEUCIQD9hRiBWHcCbSpYLiK24qpcRbIcla9dULLgdif5H9fEpQIgSV7wOIIk1VrLAxBwkT0fn6WYz4D/2brfSxuyRZjd0G0=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "unpackedSize": 2520767
+      },
+      "engines": null,
+      "peerDependencies": {},
+      "metadata_sha256": "2cd117b229c919e81dc899fb2cda84ba436833a3ffe4d27ea5a6a0a9f252361f",
+      "url": "https://registry.npmjs.org/sinon/latest"
+    },
+    "string.prototype.matchall": {
+      "version": "4.1.0",
+      "dist": {
+        "shasum": "8d854b2318fc596fc0877cfc6c4bcc50d0455b8e",
+        "tarball": "https://registry.npmjs.org/string.prototype.matchall/-/string.prototype.matchall-4.1.0.tgz",
+        "fileCount": 18,
+        "integrity": "sha512-tHNHTxInrYLCga9O9YGxWA3G9/nnzQw8UGAyqGx3Ar1pSTTzIuM4woFSq4SowkXCjJIwq5sIiQvEfRI9tCH1qQ==",
+        "signatures": [
+          {
+            "sig": "MEYCIQCSo4SNh5aMp4YfBNKl+ynRQKmQ14H9nzRblFfxCqsRIwIhAOL/77zEqI6RqwuML6HszmTc+DT0OWQnBVqyIwRLAVud",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "unpackedSize": 58677
+      },
+      "engines": {
+        "node": ">= 0.4"
+      },
+      "peerDependencies": {},
+      "metadata_sha256": "4da205f7f087d9f09ce8f497880fb5bad83b09af1a7ac56a412b2e5ec12d1eb8",
+      "url": "https://registry.npmjs.org/string.prototype.matchall/latest"
+    },
+    "string.prototype.repeat": {
+      "version": "1.0.0",
+      "dist": {
+        "shasum": "e90872ee0308b29435aa26275f6e1b762daee01a",
+        "tarball": "https://registry.npmjs.org/string.prototype.repeat/-/string.prototype.repeat-1.0.0.tgz",
+        "fileCount": 14,
+        "integrity": "sha512-0u/TldDbKD8bFCQ/4f5+mNRrXwZ8hg2w7ZR8wa16e8z9XpePWl3eGEcUD0OXpEH/VJH/2G3gjUtR3ZOiBe2S/w==",
+        "signatures": [
+          {
+            "sig": "MEYCIQDi3cHTWoBYP2/+p60rcMnLFf07NuMryXotW77NkgiJvwIhANXRGWHe+e8LIv6I9vgVtm4AXzd5FOCumACIf70fGgci",
+            "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+          }
+        ],
+        "unpackedSize": 8613,
+        "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJexvxDCRA9TVsSAnZWagAAV4YP/0c3y8RlbSXqzHoRaPe2\n4Kl+oWlBS3TFcQobnCRJIcw200dHopTS/Q3YphwEclupi4czkjEQBm6311sI\nBzGHhPZje7PKgu2Snht8XbYujNstObryZtYGyYAVXAyFWeuiaXOLOgYmR0tQ\nnqF1Uznbwd0ukYC9ZowCC/HWp6yAgut9FEiRu9ZYdURVHdURYDUMcWpd4DxZ\nzkrP8Ocz/ADiQNabSbx7nc3aFmmEwjfj9CsOqyl8sD+TuNvz4UFH0yC/EClR\n+lFqD8gkF8aC9gg8yvH5cF5wFgVRY02J0zbvTogzva3U994wx8Ab0Fst7m2q\nol3Gen2MSePC6urtI9XfCa/XLiCiJ/9HdquNlvoxeye3HTD0ydtu3htNSMrV\notOLSoMsn0Jx/McO8mMOIAweAsEVRVLvecCmaHkYo61EyNfAKOJ5sFdxsB31\n5Adc7tjJmqlPjSX8Q7H1eYscpHPwKKA/iEe6Y3sQs8Qq9rR5qEtvce6W6VM8\n2gdQfZHzmxrVreKnD+RBLeqHmIpy+sCf4EgMJXQ2XTnaVimZ85QTHlJ/EtCo\nYVHAxmIHEaYwLaqTkcHjstNvIzF9BWcFh8jYyog3b+YyZjI6JGWHMIjo8NUV\n7cL22WD7qLMr7mv7WXgmbLvP1w57CkeNg5nW/Sr9wuvs5Jk6vMqYXFwhfdiR\nz9UM\r\n=OoAP\r\n-----END PGP SIGNATURE-----\r\n"
+      },
+      "engines": null,
+      "peerDependencies": {},
+      "metadata_sha256": "096a71c12cf0b958ce60cb45cbf6b3c5d6ee2eaecae9a1cf61bd82b9dd0e9cea",
+      "url": "https://registry.npmjs.org/string.prototype.repeat/latest"
+    },
+    "typescript": {
+      "version": "7.0.2",
+      "dist": {
+        "shasum": "9ec773d7954a8c182c17cc5bbd575aa28bc51582",
+        "tarball": "https://registry.npmjs.org/typescript/-/typescript-7.0.2.tgz",
+        "fileCount": 416,
+        "integrity": "sha512-8FYau96o3NKOhbjKi/qNvG/W5jhzxkbdm5sj9AbZ/5T5sWqn3hJgLfGx27sRKZWTvyzCP8dLRBTf5tBTSRVUNA==",
+        "signatures": [
+          {
+            "sig": "MEUCIHn8lVrLBbTJToaOcV3IJ0oVPREmFT5BhqmO2niVNCaSAiEAjbubGExGAYMSJN39iEgX/eDYhwBGnh/iyyGTRigXGjY=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "unpackedSize": 2497498
+      },
+      "engines": {
+        "node": ">=16.20.0"
+      },
+      "peerDependencies": {},
+      "metadata_sha256": "28a8ef314c6bbc3fddb831088f80eb2fcac6351cb618c8ac029f7229f587b8aa",
+      "url": "https://registry.npmjs.org/typescript/latest"
+    },
+    "typescript-eslint-parser": {
+      "version": "22.0.0",
+      "dist": {
+        "shasum": "f5e766c9b50711b03535e29a10b45f957e3c516a",
+        "tarball": "https://registry.npmjs.org/typescript-eslint-parser/-/typescript-eslint-parser-22.0.0.tgz",
+        "fileCount": 7,
+        "integrity": "sha512-pD8D7oTeRwWvFVxK3PaY6FYAiZsuRXFkIc2+1xkwCT3NduySgCgjeAkR5/dnIWecOiFVcEHf4ypXurF02Q6Z3Q==",
+        "signatures": [
+          {
+            "sig": "MEYCIQCZvY4rU8stBfa06odlOVnytzdxZgGRNX0nF+G4DEoXtwIhANJ0ahPzujv1U6tcMr/ThPlGf+aXewpefK5pbYPvrjdi",
+            "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+          }
+        ],
+        "unpackedSize": 60994,
+        "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJcQhE5CRA9TVsSAnZWagAAkkEQAIFG+AuFKGccToGpVYx0\nrXsF1WFZVz9h6yVmHOClYMHRgbWc+oVx2N1P1yJhJlkqwd+Kd/MJyC8QIYqT\n/Q8E+ZQ6ZpDFs8QFD341BEji0joY3Kxg1y11I7vG6upSes6V9vYZwi6lGj3D\ne7o4Zo3z6RL4G19TwXxXiCuuwZoawxU3hkOJqVfv2uzpAMWIOB82jCpnW0BE\nyddTkr9mln66H/avvVyPxhV97SNHYbsAXBYCBqVX3lUAcVM6wBoz8Fy4C5R+\nWSOs4SXhjzWmavnBSx3l2cTJ83CeQhHIr6AnuWiXSO9btS+8rEu88gW84Ad4\nr2csN6OPDeou//QRk65PJnVTo5uWp2hex3yq3RTrS/qYR9E22ZUpoUbfNDTO\nRl+FWBKwl2YuDZRNfp+if2Eg9+fyPKdkJimkWpBunwXPVIUCtJicLXRHa184\nYEB+kBzh7xlMASUhmLmE4+OaF9Ih7ISpgC30BsQ6feuSfgUOOnNA7NyWZm7s\nLUznaJvvMxSXN99xWe3AMio3RoEmLDYUfq/dZPfVnlMaRAJWVKVrFiscRjMn\nCGcfAAvXgInEMm9YzymVgAs4ZtsbqNG85UFpuUXR4htXsawyn+WPJfiCpXpn\na/UFWopIFgo7p8dxer8Jqi6wEVS0YKXqqe+MNqEZnuOLPdO3OhhE4BWwuAU5\nTObI\r\n=+AYu\r\n-----END PGP SIGNATURE-----\r\n"
+      },
+      "engines": {
+        "node": ">=6.14.0"
+      },
+      "peerDependencies": {
+        "eslint": ">=4.19.1",
+        "typescript": "*"
+      },
+      "metadata_sha256": "9b35c2ac6ca6215804e5ae9933cd408adcf9988c800ebc386fd4b7345fb04000",
+      "url": "https://registry.npmjs.org/typescript-eslint-parser/latest"
+    }
+  },
+  "original_unit_test_script": "istanbul cover node_modules/mocha/bin/_mocha tests/lib/**/*.js tests/util/**/*.js tests/index.js tests/flat-config.js",
+  "original_case_and_helper_file_sha256": {
+    "tests/fixtures/flat-config/config-all/eslint.config-deep.js": "07de9dc9a38e6a1f113ea11d074a06825ed6fc9e413c8303d4f18ba216e3bf94",
+    "tests/fixtures/flat-config/config-all/eslint.config-root.js": "947ecc0c2026d406fc61022ad07160383331487b4af58cf9709743adeaf9ecc2",
+    "tests/fixtures/flat-config/config-all/test.jsx": "868029a0c59c1219e914774708f6498944d9843cb37cbeca4b67ddfafcf53889",
+    "tests/fixtures/flat-config/config-jsx-runtime/eslint.config-deep.js": "ca399705c633742ea723c1bca5a2937bd89cde9c30626f845b411f8e0cf67390",
+    "tests/fixtures/flat-config/config-jsx-runtime/eslint.config-root.js": "1dcc928a83145f34f41e48008b81b46859bcc628453b9a9493b9e7e8e31a12e4",
+    "tests/fixtures/flat-config/config-jsx-runtime/test.jsx": "868029a0c59c1219e914774708f6498944d9843cb37cbeca4b67ddfafcf53889",
+    "tests/fixtures/flat-config/config-recommended/eslint.config-deep.js": "636cc0053c97f94d0dc410c163e28cbab8fc4de77ee4c12af719dfc6a6ad8a8d",
+    "tests/fixtures/flat-config/config-recommended/eslint.config-root.js": "fc6c8d2171156b01ad39e98b083f087a049ddc7c8a0d23e448e1621152a3e07f",
+    "tests/fixtures/flat-config/config-recommended/test.jsx": "868029a0c59c1219e914774708f6498944d9843cb37cbeca4b67ddfafcf53889",
+    "tests/fixtures/flat-config/plugin-and-config/eslint.config-deep.js": "05fa3b7561c141fa587a8d52e850f5a7b9034548817dc953da273e97077e53ee",
+    "tests/fixtures/flat-config/plugin-and-config/eslint.config-root.js": "c06ac93cb22386144c90b63860c967a3d046461d108845efefcf4e37ca35295c",
+    "tests/fixtures/flat-config/plugin-and-config/test.jsx": "868029a0c59c1219e914774708f6498944d9843cb37cbeca4b67ddfafcf53889",
+    "tests/fixtures/flat-config/plugin/eslint.config.js": "3af7407914cd3cff5de03de618006db20d9ac2911509d7b18ea7c39f4c140ebc",
+    "tests/fixtures/flat-config/plugin/test.jsx": "868029a0c59c1219e914774708f6498944d9843cb37cbeca4b67ddfafcf53889",
+    "tests/fixtures/version/detect-version-missing/node_modules/react/index.js": "18278832990488f432022c11538668d2341924fc58c31cbddf87106f89fe9609",
+    "tests/fixtures/version/detect-version-missing/node_modules/react/package.json": "3259bf61a6de35780843342c6b97a2f8385c016129eb485d36a8e86189e484f8",
+    "tests/fixtures/version/detect-version-missing/test.js": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tests/fixtures/version/detect-version-sibling/node_modules/flow-bin/package.json": "1fb2296b60b9e0f6cd6931582d28111a2aab17da6bb9b6413e0dcfdc38794ccf",
+    "tests/fixtures/version/detect-version-sibling/node_modules/react/index.js": "7bad59ed3d9ddbf50c03e8284e44b9a4b8465b0b25ddde9a2b3d0b9fdc2c3169",
+    "tests/fixtures/version/detect-version-sibling/node_modules/react/package.json": "2b44f25f07264a444ba6643bc7a1f478583f5f2eb2805bc86923bbbb645a7402",
+    "tests/fixtures/version/detect-version-sibling/test.js": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tests/fixtures/version/detect-version/detect-version-child/node_modules/flow-bin/package.json": "88e6325761feca182c6cfc3370d34304a278c7138876a35fe67f710c19470727",
+    "tests/fixtures/version/detect-version/detect-version-child/node_modules/react/index.js": "138a913df336f391362c3f3cc855015aa9e4d1476e540e9a717aa8b2b8e61d2e",
+    "tests/fixtures/version/detect-version/detect-version-child/node_modules/react/package.json": "86a4ba2525086c3eafaf810adb6b5f7e1b0a64003d6543bba9f6a82f61e6236d",
+    "tests/fixtures/version/detect-version/detect-version-child/test.js": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tests/fixtures/version/detect-version/node_modules/flow-bin/package.json": "1ee530397ebd213de3aa62010bebf6d8b12dee76ab4182e92a4863c6349f86fe",
+    "tests/fixtures/version/detect-version/node_modules/react/index.js": "17d2ced70b1d36c7ba95c93af50a13686440c03be8854589add4270ad7dc4fa9",
+    "tests/fixtures/version/detect-version/node_modules/react/package.json": "7357bb01b9a68ce88d34d41329f0b0928c038f0be17e3f9f03d227efe8c235dc",
+    "tests/fixtures/version/detect-version/test.js": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tests/flat-config.js": "b1b198fbc1e83a97ed2863eaed990f312ea97d12e4938ee7982204761414b7fe",
+    "tests/helpers/getESLintCoreRule.js": "5f23ad5e6fea3287c4bfce1552d25494f58b64d2e3a6263cc61b164034af703b",
+    "tests/helpers/getRuleDefiner.js": "75779094b7642f6490478d49ff781970408fce0e299d5423a0d60276be944669",
+    "tests/helpers/parsers.js": "12f33202d47e5e9efd0baaa04861dc40232ca814e22c0e008c9754d073cc6a46",
+    "tests/helpers/ruleTester.js": "c94099d7e51e3c34bcec45336031b70c615562ac17376d4871d1fed7701aacd7",
+    "tests/index.js": "337004650ef966a91c51922465911e59b769f80d58f210f8a4bd071cd1724aa3",
+    "tests/lib/rules/boolean-prop-naming.js": "8cab0f95c34872ca73370da342ca8f9a4ef603cf2cdc3bc4ac60c8f08008a7cd",
+    "tests/lib/rules/button-has-type.js": "b4f35bc2d5dabb974a020239d8e9007f10b25bca1c3f89b2490288575784c403",
+    "tests/lib/rules/checked-requires-onchange-or-readonly.js": "d67368159ae5fa4cb258082df2ab16fbe66f4acfa28b8193fa2a44a89b2ab8fb",
+    "tests/lib/rules/default-props-match-prop-types.js": "4dffaeec817b261a84fb18228bc480648db63f15068bf81a86c160f883d5d58c",
+    "tests/lib/rules/destructuring-assignment.js": "b7671e6c0d3c8b7cea475867c80435761da2264897af441b96433f1a4ef959e1",
+    "tests/lib/rules/display-name.js": "df4a9c2163cf3d663684b9003b9ba865c1cef0b546c8274178d1ae23e7d512ed",
+    "tests/lib/rules/forbid-component-props.js": "644c6799c85478fc103103b09bb41aed5293e6c077d69f8e124e456d0de9d761",
+    "tests/lib/rules/forbid-dom-props.js": "5201e61cc710ee7cda200bd64bfe9ba047788d5c894c95a30df7dc496f56a01e",
+    "tests/lib/rules/forbid-elements.js": "cfb1e5d9043a39dcc2d3fad0d44ebc9a148aa2d4df7b3b85549c9e85292a4900",
+    "tests/lib/rules/forbid-foreign-prop-types.js": "bf07a78d14b51cdd9f4a8140365427e55b88c170535fda864e98267ccb137afe",
+    "tests/lib/rules/forbid-prop-types.js": "ae8c7990b4aa68205a35369b80ae770bd2310ce55edf34991edbea14177445d1",
+    "tests/lib/rules/forward-ref-uses-ref.js": "7c28c1d0d8330f7870c36d41d57340705ff4a365f44fb0f06ae0cbdde92c5136",
+    "tests/lib/rules/function-component-definition.js": "8eb32bf9fb823d007a16817028be9a36601e01cc80ec694c0054f616ecde8ae1",
+    "tests/lib/rules/hook-use-state.js": "735ab851d6c4b49f836a9195e9018564a5c14915e68c7f84ff7615fb6654dfb3",
+    "tests/lib/rules/iframe-missing-sandbox.js": "f2b7946b68a85ef713428b825592e1eb37b874dd1db96c67cca262b2d48e564b",
+    "tests/lib/rules/jsx-boolean-value.js": "ed57460b18b9813d70825d0e80da208dde1e14abb3101ad393935000711048a4",
+    "tests/lib/rules/jsx-child-element-spacing.js": "7156cb32e8788126cf33ac95a6c40a2a0c8818d7ac9cdfc692fb8532ca16119b",
+    "tests/lib/rules/jsx-closing-bracket-location.js": "ba5d6fbd028f9da0fff680ce3025b77426d39966abff4c42a75e22b0e616be6e",
+    "tests/lib/rules/jsx-closing-tag-location.js": "2a69d451e03133a90ddb7951cc295bb04c1144c7a1462e598ed68a82e4b62dd1",
+    "tests/lib/rules/jsx-curly-brace-presence.js": "d0545b706529b34bbd7e58c835b6aaa97efa78fbce5127268d4b6f9ccc895b33",
+    "tests/lib/rules/jsx-curly-newline.js": "69d5d5bfa3f784a9be3856b394a436532372e45c99a5144ce0a8e31a24b6b313",
+    "tests/lib/rules/jsx-curly-spacing.js": "be6977e88e480908d7cb8b5953c05456d28a89ea9f82b9b16b4c5b19eac5d296",
+    "tests/lib/rules/jsx-equals-spacing.js": "1a34aa289613db2caf84cfc062ed79c1749993c4c3be9d891a31ae0a73215bfb",
+    "tests/lib/rules/jsx-filename-extension.js": "9e8c29ba41834c93c3039125ff34cece733b2f4a2ab4f5d0e9dcec0aa84e2bda",
+    "tests/lib/rules/jsx-first-prop-new-line.js": "64994c6d1642e134e00bb919c7e953fe26284e007b1e07021efa376c9f1bab2a",
+    "tests/lib/rules/jsx-fragments.js": "688b6c59f3c0ca24e28a24266c1e37c9ff0acc9453c9ff72ed566d38708f02fa",
+    "tests/lib/rules/jsx-handler-names.js": "bce043c16ab7059a9ee169e758a6437337c8615e5fead39fcb15676a331eb7de",
+    "tests/lib/rules/jsx-indent-props.js": "486c298492081d52dc933861c37d2b67f54a3af129768e46ada89046292ad5e9",
+    "tests/lib/rules/jsx-indent.js": "5a6ad6159cc5c7b91ce77e3ef95a2211aa62e8a488d8752ed7c11544c99260c7",
+    "tests/lib/rules/jsx-key.js": "54110c0620f5a176ddb105b6a9d34c5d4b2e96a60c7d5d560df9f04a46dbfa00",
+    "tests/lib/rules/jsx-max-depth.js": "8a0dc7dc9c2c507c86e2d2f6486dae32912ed02896d1a5a0d845eabe66c8501f",
+    "tests/lib/rules/jsx-max-props-per-line.js": "c2ac3ea4f0e4a57fcb4e6238cf35160db1ae679d5f6f1920de8c6c2f342a22f6",
+    "tests/lib/rules/jsx-newline.js": "783a11c92f7e07c6175c4fd9defa256b06b9aca4c11d8933abdaed9763339254",
+    "tests/lib/rules/jsx-no-bind.js": "53a6550db60e6955b5ccd032b6814b7f1938b3e11ddb21fe14725baefa63049b",
+    "tests/lib/rules/jsx-no-comment-textnodes.js": "647aed78cb1d655c198c026137ae2f5fc72b91bcede5f165942e111307832852",
+    "tests/lib/rules/jsx-no-constructed-context-values.js": "83f01c1da582a6797ff49ac0ed8b6ee0b14632c4d36dd1e703afde7166e9ef02",
+    "tests/lib/rules/jsx-no-duplicate-props.js": "053fb56d239be1b59cf9bab6dcc5117488f2eaad0d043083e274ff440464e130",
+    "tests/lib/rules/jsx-no-leaked-render.js": "e9568977b749287eb7f7c90d14db27839f69a7b5fddc9143d1bd18dafa628e24",
+    "tests/lib/rules/jsx-no-literals.js": "54ba68ca29c46a4ddf2443c7bfc6ab7a18fb45bdd4fe6c952a4cb2f15706ffc4",
+    "tests/lib/rules/jsx-no-script-url.js": "1c9edc00542ca8e6ae6e1538bfb63ee78a12ee2efa39211f0954ea5c6d8c5f9c",
+    "tests/lib/rules/jsx-no-target-blank.js": "da69ac6a352a1c109799c284e1709335a3efce2db1682061734818918a42cc82",
+    "tests/lib/rules/jsx-no-undef.js": "c3d8d35e991164740f2a006c3e1cfcd7976a5aef5e25a10649059ef48e9b0026",
+    "tests/lib/rules/jsx-no-useless-fragment.js": "59d03cece8dbf7320f22de0d6bc5ef5016a054345d5092b5e9987ca9f1d5c919",
+    "tests/lib/rules/jsx-one-expression-per-line.js": "1dfb0ad823514160d198d690878860534fad88dc1073e7ac0972ac35e7ae5ab1",
+    "tests/lib/rules/jsx-pascal-case.js": "8bfd3e2e2e64681de4de6aff15b6d4e524ac58ee2cb0a2aa3b983817285eea0e",
+    "tests/lib/rules/jsx-props-no-multi-spaces.js": "aedd01c14082adaaccacef0881fdd5d0b4f4ad6670351abe5ac0f2af92d724e9",
+    "tests/lib/rules/jsx-props-no-spread-multi.js": "243fa62f82104a92ed36440d8382a84e40e8e9e56e209cb4ba53ceac891a25b4",
+    "tests/lib/rules/jsx-props-no-spreading.js": "6ea26cd75268ea9d422e0a354b325c32af12149c51b13a190898add499fd669a",
+    "tests/lib/rules/jsx-sort-default-props.js": "7ca4423afc926ebc377be65135b00cba9002a8ff54ad3229e2659b34371ea1a8",
+    "tests/lib/rules/jsx-sort-props.js": "ab77dffefee01b593b82b908ad4f797f69a7fb9d028845cc98e37c289cf9fefe",
+    "tests/lib/rules/jsx-space-before-closing.js": "4da5e6b5a21477e18cfb7e4d0b1732aa77c913d9fb775f7b0ebbb8db13777f71",
+    "tests/lib/rules/jsx-tag-spacing.js": "3eb8a308096c1ff448fed01540ce7dd4132dc736c25b26a24b70cb660d2f8541",
+    "tests/lib/rules/jsx-uses-react.js": "7596bec958f20673177aeaf08e3c8f5d440f09b05d3bb9ffdcacf6712862a20e",
+    "tests/lib/rules/jsx-uses-vars.js": "19b0499da321425e4ab3a645a311f7fd6545d4160cf92feb22669e3af2ef5e2e",
+    "tests/lib/rules/jsx-wrap-multilines.js": "c0f822bafab7dc3e1ac9e470fe67e0338a2526a8b48df7ba4cf0cff6310a37e8",
+    "tests/lib/rules/no-access-state-in-setstate.js": "aaaec6e6731ca295729623caa4fd96c2d844b0916c130f6643706fb1c31f977a",
+    "tests/lib/rules/no-adjacent-inline-elements.js": "7422d2ac150f567e21a0ebb2f839284511c7a6601bfac5bff75967aa5651220d",
+    "tests/lib/rules/no-array-index-key.js": "fd5d98602c356d86e5a97b9bcd31489dc00894fc5d9732e062f69e91021894fb",
+    "tests/lib/rules/no-arrow-function-lifecycle.js": "c20c54373bc147a7c90ce37a9de77906139fe192388efab81aff082af7d88d1b",
+    "tests/lib/rules/no-children-prop.js": "1f9a512ab30b2a7e9ddbe682a6482e1706c1246718758ea65d285301dd30cf52",
+    "tests/lib/rules/no-danger-with-children.js": "7d9408788de1f9509f1a1693fbf41cb80f73bae8195e6e67e43645c9f2ea7102",
+    "tests/lib/rules/no-danger.js": "615d2baf2625634481be6c80f20fe15e14fa6814dcdb09dda2b8914ddbd2fdb0",
+    "tests/lib/rules/no-deprecated.js": "e6ee571894fcf3fa28347c01a6d066b30c092ffed179cc7ad3da9068457116ee",
+    "tests/lib/rules/no-did-mount-set-state.js": "4a25a69d474221ff3013c56be2ecd8852874a9b0db86b602d86527f40fc9e86a",
+    "tests/lib/rules/no-did-update-set-state.js": "23a6b99c3625efb74b77a3950f6ca150cc412900eeba5bf3e039d630d1971076",
+    "tests/lib/rules/no-direct-mutation-state.js": "bb5f420539cda8803e32029afa5b33d73ac48f145f1ca91f69b82d9cf55cbcaf",
+    "tests/lib/rules/no-find-dom-node.js": "fb9d79d39d9c89465580edb1e62a414f6e31f00d9564b270490f7753a4b90ff5",
+    "tests/lib/rules/no-invalid-html-attribute.js": "db9389572ae619fc3a0312a6734f4993a4c3076637c8f722bb495dc4682da999",
+    "tests/lib/rules/no-is-mounted.js": "c8d7af8998166c6adfb71f02501121bbe299021583c67b1a20210f00f60beee6",
+    "tests/lib/rules/no-multi-comp.js": "4891e39b1c1185f3add2defecb6a35bfecf7be828b936c60b5d0591094e98ff2",
+    "tests/lib/rules/no-namespace.js": "8206219da889aa799283ed54ae8fc00b75b6e8b6c6b84005626fa83425db1192",
+    "tests/lib/rules/no-object-type-as-default-prop.js": "511b6601587ec1f69bfce1239a8098aae4be3b68681d207780ceb6e23463212e",
+    "tests/lib/rules/no-redundant-should-component-update.js": "98387d033da06e640df173e41d843e73c24e58ccdd5c305ff8b786375d714b52",
+    "tests/lib/rules/no-render-return-value.js": "97507478ace00a34efbd7c08d226c16a83f07345a11e8a9f61483fdd481156b6",
+    "tests/lib/rules/no-set-state.js": "0a659d080a6f6e5f6935da6405ce9b4bb2c7f2939c974cb3ab8e370eb5402d0f",
+    "tests/lib/rules/no-string-refs.js": "c04eeeec2426ed6ae15b936ca1eaa61f59ed3617b45218a30d979e609e8856ba",
+    "tests/lib/rules/no-this-in-sfc.js": "dc5916b449a9733a631236949cac4bcb0b340d3a1e7f18c9c5dc3a063f0e279e",
+    "tests/lib/rules/no-typos.js": "941d63e3e6ba7476e0590ae45f376e4a5d77ef07c674b974859a3350a70d1010",
+    "tests/lib/rules/no-unescaped-entities.js": "46c78b93d4d0e293b9f6c0558843b8da647483d835b102a77cd1fcde3d99f1e5",
+    "tests/lib/rules/no-unknown-property.js": "186deb927c4bd11efc37d315a09a25429aa22a5874defa48aa8148bae2344647",
+    "tests/lib/rules/no-unsafe.js": "61520f8a453cb33e7dae11efc83069bc051692d80226f210e9640ad6c028f6a7",
+    "tests/lib/rules/no-unstable-nested-components.js": "d82b888eae42d4b06a8c2a6e0d86e99518521226573ebc2d7904b4fdd5ff0604",
+    "tests/lib/rules/no-unused-class-component-methods.js": "87f6715ba71492fe3ce6a9083466c79dbbc969ccb196f5385e8c15765c597d69",
+    "tests/lib/rules/no-unused-prop-types.js": "57e8cde366860b3ad81fb47903c2293c12b82a9e936ea283e827983f2a4fe35d",
+    "tests/lib/rules/no-unused-state.js": "173a6037580de7f59e9661adf6e2d295ae4792966c213833d5cad213ae2e75a9",
+    "tests/lib/rules/no-will-update-set-state.js": "de28c4f60f8394bb506b855f2d31b6f1173eb9e6a87311ad1dc33bce14ec63a3",
+    "tests/lib/rules/prefer-es6-class.js": "bc38b80945ded367c12b98acf8db16e4aff084bd5ddacc59348ba90cef0e1539",
+    "tests/lib/rules/prefer-exact-props.js": "9cd3e3ef6f67db653e1d4cf0ca16c12d3f9a1fb511fa420c0ef5d13e96c10b29",
+    "tests/lib/rules/prefer-read-only-props.js": "cf4b80c99e495428a33cfa0bfb610327aac250e8164b6c40892964ad29d11fb4",
+    "tests/lib/rules/prefer-stateless-function.js": "82b464240eb2f82c194d17b7257cbc2e52fe605081ae6f337b58a8d4ec72cc26",
+    "tests/lib/rules/prop-types.js": "4b9aa22f5c080f8d07ebe468884e4363407e7f0f8fb9cd15d23a02ac0970e5bd",
+    "tests/lib/rules/react-in-jsx-scope.js": "0aeb5d2caa14037fa58d40e24c2f04f06133fab115471e37a64466554c1e65c1",
+    "tests/lib/rules/require-default-props.js": "58c8d420a03b1d31f13741da438d93d3d73dd70fe7db1117939aa6bb3072716f",
+    "tests/lib/rules/require-optimization.js": "0d26ef380c84d4afcf0fbddba9883f0e27b552c911df07b08e7b43adf7400861",
+    "tests/lib/rules/require-render-return.js": "41004e08a50d7635e4df434e8feefda7c4152b5d7611d1de49bf05affb6c0c63",
+    "tests/lib/rules/self-closing-comp.js": "9272c8e43c9fc070468212302cd40f18f977dc0f148110d49c495228659f0d69",
+    "tests/lib/rules/sort-comp.js": "1aec81c427e334699aa741b86472897742b8f280270f7e7772fd725b65ddf879",
+    "tests/lib/rules/sort-default-props.js": "5dd34efd4b1bdbe91b8ff32cad8a35f5a962e4d71e5cce24a1879c7e84e18512",
+    "tests/lib/rules/sort-prop-types.js": "5b44be4072e635618acae43bdbbcae7d73cfd6df8b4ca4c5dd333b96708f7920",
+    "tests/lib/rules/state-in-constructor.js": "786795ed4439c1d35761163eeb18bb80973b6e27e788d6ac1da1ee5720506119",
+    "tests/lib/rules/static-property-placement.js": "db1f3eb87e46b9cc3fe5de6f52af924930de7791610e913ce79683ff396fa516",
+    "tests/lib/rules/style-prop-object.js": "59ee3aafa1fbd30ab9feb82b606e56e502295e0df71bafae7b0f9e2d5ecbc2ff",
+    "tests/lib/rules/void-dom-elements-no-children.js": "23bc76972e61820175857c1a1a159bce42ce69652527e5961b0024f20f14fccf",
+    "tests/util/.eslintrc": "84efcdda0f4bc0b320916fbb2c8c5ed46fd9a46985c73974ef9c5588854ddad3",
+    "tests/util/Components.js": "a1a53296e729b764fbe0cfc02e179c0a0012fdde47f6ae6ff0237166962586b9",
+    "tests/util/ast.js": "e5ee4b212544922ffb37e4701b3713966fb63cc023de83079155b80b4b2919ec",
+    "tests/util/isFirstLetterCapitalized.js": "ef8f455ffc6125b191a90fb28f278ceb633917b462fcb6c53381a5ca521a21a8",
+    "tests/util/jsx.js": "025666e4be2aa33fea7371fa451ade9b8568c0263a1c27b1af631baa22e21d11",
+    "tests/util/linkComponents.js": "00b315fdda60cf93d58acd9d48efe26c86af3545f2e4f0731c52d73047d3f299",
+    "tests/util/pragma.js": "c51dc581a2b2fa3da724ff1f3ee62ca1ef94453a1a2bc91dedd8d83c976d78ba",
+    "tests/util/propWrapper.js": "8344fcf64c5a4e5a653457994dad78647c0e1292e668e880303acd92ae7cfe3d",
+    "tests/util/variable.js": "8214d5315e9d7b66e9dd22cf83b86aa9934b4efa4a8ec15e21f0cf71bb6450b2",
+    "tests/util/version.js": "cfd861716f5c6463cf11ba8bf58c8e71aace5700e8f68a1d543544af9ac5e541"
+  },
+  "candidate_library_JS_sha256": {
+    "lib/util/annotations.js": "0ee704096da1847e165ea39ce00e2c090b39f13d4f418c78103c4eb402ccce62",
+    "lib/util/ast.js": "548cf88d0e73c1559cdfe05348b8fbe9382ba78a250e1de24a4dc77dff061dc6",
+    "lib/rules/boolean-prop-naming.js": "904cc135f31c3daeb32641fc43f6736a2bea532afe79224a063da103ce4a3e5d",
+    "lib/rules/button-has-type.js": "2c93fb09652561779e512375689096085c8771d888c811a59f5ba55f5cef7de6",
+    "lib/rules/checked-requires-onchange-or-readonly.js": "2f26668a3166123267983c4902c07cc0ea3f0cb31042a8f027d242eac1ab3720",
+    "lib/util/Components.js": "151a97d58f4f2dac8df14bd29e0d8310336ab92e37dbc3b60aceeef51a64745f",
+    "lib/util/componentUtil.js": "53c4cf250b7bae1186ef20b1f590cfe10030443dabd0f0d9754ac16f2c8cb9d7",
+    "lib/rules/default-props-match-prop-types.js": "db5428778ad97fff5042dd5b264897e14fecbdd4e8832ab7bbef9dde033c2e8e",
+    "lib/util/defaultProps.js": "2cb67db97b1b14071bb369ae49769771f4af794155f6e6ddae3dadd32f8486df",
+    "lib/rules/destructuring-assignment.js": "aa6ec4528a76cca8c757b5ef24a5af0d537fc73a63cb8ce21fb7da2a1aca07aa",
+    "lib/rules/display-name.js": "79c686db3ead96f6a3eb4913a5d7b8240a4af9436e5a931727fa5c8dc1b4096a",
+    "lib/util/docsUrl.js": "3a9f36f88197252f066ce63d9a560f043533d2355d59601bd657a9706b65ccdc",
+    "lib/util/error.js": "667d5313fe51611223c3be1e3b5f624b8cc0ce81e7cd67d96cca8c55bbe15f69",
+    "lib/util/eslint.js": "d95839eb72de05e86d37c78f8058b442e3c92f9e8d4a2518eb42cc3e3eb084ae",
+    "lib/rules/forbid-component-props.js": "2f928750174f7c93846598ba7939cdc0844ebda46954be2c990b056c9ec662b6",
+    "lib/rules/forbid-dom-props.js": "d68c559490f74d716e0c7cab372efd441bcff427c7b1e4336f1b3362194874b1",
+    "lib/rules/forbid-elements.js": "b0f7bfd95a08392c17e1095705c5946a2c30eb5518037ee0066c649e58658e71",
+    "lib/rules/forbid-foreign-prop-types.js": "0eee1bd07bce25111f313da63f6b68a4ba06be3d08e80284593eb430bed625f1",
+    "lib/rules/forbid-prop-types.js": "850bcca97bc537fc347434d5f769ca527da62d8263f78593ccd78b886b201325",
+    "lib/rules/forward-ref-uses-ref.js": "f699cd1f19f44138660bdc41922c457b81765b178ce26672faec10bf0c1b8959",
+    "lib/rules/function-component-definition.js": "e188698a158aaf521f1f74446c8e299185279630d86befc55e796683ca352f87",
+    "lib/util/getTokenBeforeClosingBracket.js": "f8bc247742a2edc2933cdfda008df8914309b1570d201f15500a9684663ac2e2",
+    "lib/rules/hook-use-state.js": "ec310b2d9ccde0c0dc154e3a9b8c51678a316690793d32c9985772edb4a497d9",
+    "lib/rules/iframe-missing-sandbox.js": "fd3aceddeb3caebc19da4211ba6b3c5d3e198616086e83cab3b72ab1958ba16b",
+    "lib/rules/index.js": "23436c30b5f945fb6f6b229bf370413cb2c9d3de1978582dad639abc59de2ac1",
+    "lib/util/isCreateContext.js": "47c12e82b5173b31a2785299201a7f156b586e96381795e12f1bd5ae78615335",
+    "lib/util/isCreateElement.js": "f05ddb642f7b72d6e4b3895fa8f24e07463b58483f1abb2fe711dafece788ec1",
+    "lib/util/isDestructuredFromPragmaImport.js": "d870d29e1b3e482fdd475abfa72b84d2b2a081d09628d4ed9778bbbe584bf082",
+    "lib/util/isFirstLetterCapitalized.js": "eda356ed3d7e48ac96b3de45ba4e514b4a671ab3128200477d944d23f93beb1a",
+    "lib/rules/jsx-boolean-value.js": "d8df32e0eaececf32f62af44d6bc9503652a71c3b97519f68d200f4e0623124e",
+    "lib/rules/jsx-child-element-spacing.js": "86aa0aa85221e9439bd33d9450c4cbab4e11d3f85ade79b346f8853d83e7819c",
+    "lib/rules/jsx-closing-bracket-location.js": "84aa73ef63c734f5fd3d38bd1d4dec2dbe7c98555c4f343708b293edb5679e0a",
+    "lib/rules/jsx-closing-tag-location.js": "3f2eb440aae41a3408c4a5f3150a7166e19b8a074dba5cfd517077b1d2565215",
+    "lib/rules/jsx-curly-brace-presence.js": "29ac8bb9666c7571363da480eb3bcaddb65e2caefc5931f73050a63e62552764",
+    "lib/rules/jsx-curly-newline.js": "0aae2d01e815b00ea8fd2e785b0797788cf362d9fd48aaeb57365db636b8aafc",
+    "lib/rules/jsx-curly-spacing.js": "984644348de74e7b1df83c3d7e4bb2b2057d70190e3af494561349bdfa045268",
+    "lib/rules/jsx-equals-spacing.js": "5874751c83af94146edf992e6cd129d22a820c874a066aaeee69594129194714",
+    "lib/rules/jsx-filename-extension.js": "47993899161339145b2fb5bac518b61f2dc35263e7a5f16d7ba2049565f2df17",
+    "lib/rules/jsx-first-prop-new-line.js": "58c9cdb4290bf5a14be840f1bff8e7393686ffd6dbf201540383243945b67a34",
+    "lib/rules/jsx-fragments.js": "9b1b9541bddc8c140ca7007f79c34084baf5282346364cf5c0f3cc5c78f088ae",
+    "lib/rules/jsx-handler-names.js": "2a0ffd32c997da581b9b7acecfec800b126774902fd06c09e08a8803e44155ca",
+    "lib/rules/jsx-indent-props.js": "a8ede363d2c7a004c4cc66f1740bf049c9e9fc2d3898eab8b5a8015af61a896f",
+    "lib/rules/jsx-indent.js": "e83a792db08e18d74d79b3d1a45bb0e47568e8d0db5cb5489be1564160a0f8d2",
+    "lib/rules/jsx-key.js": "bf70f5a9241f0843a297ae09623d8cd24c6bcd1dac6f360f149749b9b72b36eb",
+    "lib/rules/jsx-max-depth.js": "b7d33878822b49ee4f1f94c82869ecd8cc0c7171cf1670a2093d914d80e38a39",
+    "lib/rules/jsx-max-props-per-line.js": "2ecce24c8c586593aafb1b141a1d299891d5bff1b7dd499de4816f4baa80a94f",
+    "lib/rules/jsx-newline.js": "42cb217796d26fa0a2bbe46838f66bb093a33bc47a161534b9ad63306bc1d28b",
+    "lib/rules/jsx-no-bind.js": "830d5f2724c739ecd04afb9366e4d9de44b53762af2d085f787a31f93e4f3b56",
+    "lib/rules/jsx-no-comment-textnodes.js": "2e685cf390f8a69f548a5c947976bb1c808811b12b2141b0c2a2102ff885b3cc",
+    "lib/rules/jsx-no-constructed-context-values.js": "96542852585153ed97bff3b443cf20c378f9f89e803a18c912df2949b3287c0d",
+    "lib/rules/jsx-no-duplicate-props.js": "f1b70fff7c78a2b38fd72ec2e0db3466c0bb753674e889de6e151abbb813f932",
+    "lib/rules/jsx-no-leaked-render.js": "f86ea524e043ef5d3481dedbfedeb9a11281aa879f5de791c79ea0230d40d843",
+    "lib/rules/jsx-no-literals.js": "bfb36046bd2ff32465f03e0055b8586a749ca6e9a8af7f70c27ef4f02a5d5dda",
+    "lib/rules/jsx-no-script-url.js": "d4fc606f2fa708fcb4e1a5ab029962b499884850a8337b7fc42d9cd4c158b6fd",
+    "lib/rules/jsx-no-target-blank.js": "4b068103b4dc39fa5cdbc97e75248572996b74d1d37744cdf60e26b0677b2f93",
+    "lib/rules/jsx-no-undef.js": "fcd5cdcd8626b1b36acc890356e067d1fe4eabfa6053a1884c3d1cb1878d0864",
+    "lib/rules/jsx-no-useless-fragment.js": "d755c722163d87ffdabafc968511b2d54c6cc3eafdaec45d07000e3999e17932",
+    "lib/rules/jsx-one-expression-per-line.js": "a16a7018f755b6ecf996e71396294c584bbf003635acfdcc77f2e7b01ccd24eb",
+    "lib/rules/jsx-pascal-case.js": "dc9cdba6bd5897142976cf0ce68bc3cb134c45da8c2883c88c1db9ba933f0f17",
+    "lib/rules/jsx-props-no-multi-spaces.js": "551c50fb9ed09dd931dcf7dd321d1bf1fcbe45d03dc5f44eac84af549e6bc23a",
+    "lib/rules/jsx-props-no-spread-multi.js": "90c6061cada0d469a069b8e73c82ff2aaf73ee8ac4f375fb692b6bf2b50db532",
+    "lib/rules/jsx-props-no-spreading.js": "6f9119b56dd0dffbb44507270fc12f172eb32c0219d643560dea03f143196b07",
+    "lib/rules/jsx-sort-default-props.js": "434fbd97d45220bf45ed577a2a598cf1cd65302ee70670eacbda56e843b3e73d",
+    "lib/rules/jsx-sort-props.js": "45d810ace76e71585a2370e19f27ea5e643be5716c837261d74050226ef1f79f",
+    "lib/rules/jsx-space-before-closing.js": "4839a2d112aa3e5d3b478789116e61d3d0b8b290f928c3e5d0aa984778ac9e0b",
+    "lib/rules/jsx-tag-spacing.js": "daf7061d4b5c65f69c263f8f9a706b3cf89fc75bc9c453831813686ef302d519",
+    "lib/rules/jsx-uses-react.js": "226c51659db4177a41fafda0bef8464c9a472da4799445fbf7ae016ee58d6174",
+    "lib/rules/jsx-uses-vars.js": "6e562dd84711562365fb02d3d083df1cf4a8ed545593bcb9e87622203bda750c",
+    "lib/rules/jsx-wrap-multilines.js": "3f917f8764f1005c55d1608ebe1f9090df1e4847423bf0d33a0838a875fa55fb",
+    "lib/util/jsx.js": "0d79b47ee189552e9525bd6589ea935dbc3df0b5a71f7deca792281bfffe82eb",
+    "lib/util/lifecycleMethods.js": "14356cd1a731b447b671755c970f985f18a23afab24c3420106e306ef978f52f",
+    "lib/util/linkComponents.js": "f2633b025dbaa6fba84a71b240dc20c41d9e322116eeb8f73738044f9a052819",
+    "lib/util/log.js": "6432d4b62019f03555974157a1b1ea308e0bb77c1841e8c665674ca77261b776",
+    "lib/util/makeNoMethodSetStateRule.js": "5e3448f9cfa50bf857fc8f1af5d60d21b55c0a399aba0f6a82165cc6ff70ee04",
+    "lib/util/message.js": "ada7585b41ebd642d180c1057cd1155c5cdc4e06f52ab3247c43979ee4ca5b8a",
+    "lib/rules/no-access-state-in-setstate.js": "d085cb866b5c050d1ddb0262499285621ca2e04ddf4092c943df9ac22ed7a945",
+    "lib/rules/no-adjacent-inline-elements.js": "1bd573c64481a935ebd0b9081c5bcd76298c4d3717a928392edea3920a790400",
+    "lib/rules/no-array-index-key.js": "51516b948d1d2df7bfcc67c14fd7fccd8b2c43d75171660cc08d9c4c4e065f95",
+    "lib/rules/no-arrow-function-lifecycle.js": "9a6661ad2c0e0637f82e3d326b636f62eca5b2cde5d22ce6e5dff25b00c1df36",
+    "lib/rules/no-children-prop.js": "a56882bf41f256a184337ff494c40831f8c1a77ec5e89f5839fdd315ea4528c4",
+    "lib/rules/no-danger-with-children.js": "fe91fe9ae5fd983f6c51e218a800d94184d0e59dae15a2b935b78090fcba0051",
+    "lib/rules/no-danger.js": "61f9fd97581e959d75bfb7ef030e9fb7b74c2df224980bed89f6463d05d2734a",
+    "lib/rules/no-deprecated.js": "342faddd33e45e2de289b2e8f8874809e385547614b4270ded175f89ac3279d3",
+    "lib/rules/no-did-mount-set-state.js": "7b3cd57fb4fb0f85559b8e381c8e190d348c9870012aa45fe90d7aea7bf3e2b8",
+    "lib/rules/no-did-update-set-state.js": "00105a4c1a5157f3567fc10c65edc3471769b70ba4eba246973f25e5226d8d40",
+    "lib/rules/no-direct-mutation-state.js": "f0a0908a7521f51fe86f9f7258e93b400175a72638b606c86f0862ec3025a237",
+    "lib/rules/no-find-dom-node.js": "21cc095a6709487956c57c3063f315487ae363bba5b4d6ab557557c5864bc80b",
+    "lib/rules/no-invalid-html-attribute.js": "216b61fb170375a4df603e18db761e195ca5f8596cd4a1010bbffb5024fe52c9",
+    "lib/rules/no-is-mounted.js": "c3e7f03c894f7ecdb814e860e1fbbd95ace17ae66c5d38b21b7fd0a906092ce1",
+    "lib/rules/no-multi-comp.js": "e2772b01b6e75d2d4de6f2634c652e98884fda9c10bd40a376910a959780c3f2",
+    "lib/rules/no-namespace.js": "035e9a8b57eb5385f19f71929ae94c2d183dc7ad11acf00fd8aa7e88863ab331",
+    "lib/rules/no-object-type-as-default-prop.js": "cb8f30916e13b19f35977f6f78572e781f99647037521e28b85b059b02ea0bf2",
+    "lib/rules/no-redundant-should-component-update.js": "19dd0042a6eb3f1c9a29ecdc8e75e2047cff3bdd35f115ec55c9f606f2d1cabf",
+    "lib/rules/no-render-return-value.js": "288edd1650d6281b5c9db6342c638f75e6cf6385069b61de0af875abb004fea6",
+    "lib/rules/no-set-state.js": "3218648259990139d8da6cd58f5d8213845ef77a83badb01216c35bce96ab68f",
+    "lib/rules/no-string-refs.js": "125edbd67e2f7f9ca847a90079ae37180d223430fb8508d527fad30d294953fb",
+    "lib/rules/no-this-in-sfc.js": "0e41bebc3484a0ef417e5092dee13628d72092d0c977f00f90e49271e0fd09f5",
+    "lib/rules/no-typos.js": "b56c823c2a3a7a485700d49e551b2b8716e4cfd168b813179ccfe123dcc9eff2",
+    "lib/rules/no-unescaped-entities.js": "ffaf89faf79c655a08f4da3f05d178303cf5a11b3c66237562a8e4ad57b6e463",
+    "lib/rules/no-unknown-property.js": "daaf106d7af3c33c214d5e01d34c67a188e043e3bbd0413c522924d9db1f36ae",
+    "lib/rules/no-unsafe.js": "e8147fe033bf8401dba458f8118d2a97e57637aefde858dbbcd03e39b9965914",
+    "lib/rules/no-unstable-nested-components.js": "5ae81f553263438f6fc9e059872fb617519fa8de08777a78a06a738db12313e8",
+    "lib/rules/no-unused-class-component-methods.js": "9efdb5952c711d870ce72ce805868cc7b05c345dc6899460929d7a916a63d9ed",
+    "lib/rules/no-unused-prop-types.js": "27b0f113f4b465f69e42b70e014c478b8cfa8ee57ca565dfd70b406dd0948a98",
+    "lib/rules/no-unused-state.js": "45b0dddbd2e08c6545d8b73c64455e108a4fc610a58c996dc2b9a12789162c34",
+    "lib/rules/no-will-update-set-state.js": "b365b06930af78831c97889ee922fff3ff8cc8e9f291d8d891d3d16704e28077",
+    "lib/util/pragma.js": "7a6497cbc18cf36865cf284733768026c3f4b67d0d9e35e893cd5edcc301c959",
+    "lib/rules/prefer-es6-class.js": "47bea6022c995ecf3ff2eadf09b0201728e2b4b04576691b2aa3276c0f007896",
+    "lib/rules/prefer-exact-props.js": "eaa97955927ea28e8340bfa7f446c17e896865e27938a9ffa9219f3b25272a0a",
+    "lib/rules/prefer-read-only-props.js": "8f469b2b6218f0b1d18367b696ba48a779183b79d9cde49a1618039cbbd248cd",
+    "lib/rules/prefer-stateless-function.js": "b60ad10b212cdab764ffdc0d43860ea83f99ce5fd807970e5b2f80cb613534d3",
+    "lib/rules/prop-types.js": "56889e18d77aaccb3d90a76025fa2ed0856423c595e75edbe4679673fe01677b",
+    "lib/util/props.js": "6ded67e8340ff69ddd6ff90583994d4fdd7daca00cec59d615393b3c8ee00dd2",
+    "lib/util/propTypes.js": "bcee4893df35149ff78c72b6839decea2ef025b8fc162f6c8fb2c3a5814dc912",
+    "lib/util/propTypesSort.js": "453e8cfed4f8a3596d13b72c87e756501e2e56b7aee0dabe58d6d1c4af9cab62",
+    "lib/util/propWrapper.js": "132912be6438713385b26c64d8efde65bbac441fea3f7c4b7c83fdb6e512d416",
+    "lib/rules/react-in-jsx-scope.js": "225a72731c5bac28aa48459edb1e5c164f8a182764a9ef6061a27193403be1c9",
+    "lib/util/report.js": "b9290267cafdbd51cde2dabfc909e254cb592c7031653ba1313d8c049f291b5c",
+    "lib/rules/require-default-props.js": "4b5427b15c7b63bb8465f7b532d62c3ab9cbcc55600e7302938f7e3328eb133d",
+    "lib/rules/require-optimization.js": "12c0b5468ad7961eaf6167543cbf53df12cfd9d503be44710290cff6502f4848",
+    "lib/rules/require-render-return.js": "d312111fe6af11413df3c1741e207fa3ad53f2d5688e8417fdf040fc824caa8b",
+    "lib/rules/self-closing-comp.js": "6a7138e454212992ed2d84f3e75049b97c4012cf790b2e5f682d41ea83efdcef",
+    "lib/rules/sort-comp.js": "fc5200381735b4d33fb639bf0cb938e3d85e2fe8af2fd867c03e26141147c710",
+    "lib/rules/sort-default-props.js": "f6c88828c1f3492a4bde175bc47f92c48f0c81b1061858ec80c6fa79f06de271",
+    "lib/rules/sort-prop-types.js": "a1a0f34c80c7445edfb87ea2fdb78b18d038eed75a03810d0fbb41fe79b29264",
+    "lib/rules/state-in-constructor.js": "0c1a3eb8c8326422a000faa9e100dba64bdc1db60157fe51c9eda40564b92215",
+    "lib/rules/static-property-placement.js": "39e1b481adc9df4d84c6b6d61d18849b4372b9bce30e3728ad08a8bb2d385d41",
+    "lib/rules/style-prop-object.js": "ec81a05a2d7fa2f5fb26288223880cf9e8ccebdb39315e6c7aa28f2e947eb86b",
+    "lib/util/usedPropTypes.js": "58d605ae11208c39c1cd02e90d14fc6704fff9003ba017681eaa986e9ef4ba3b",
+    "lib/util/variable.js": "5103f78e701729c6d37bf8f13a2b38b4321694a72475922eaf1263bc937400f4",
+    "lib/util/version.js": "8e72563a22cc6f5ba2a5b55a89b958854fa80cd860218498f49f2cfc15ae42c9",
+    "lib/rules/void-dom-elements-no-children.js": "41c5635caea20fa9487d9d55fbc34d6da2737811be3b982ff03f6dc7cf4ca9d2"
+  },
+  "all_publisher_LICENSE_files_preserved": true,
+  "all_original_case_and_helper_files_unchanged": true,
+  "normal_dependency_and_unit_test_qualification": false,
+  "application_dependency_manifest_activated": false,
+  "local_vendor_code_or_test_execution": false,
+  "full_upstream_lint_type_documentation_or_all_parser_platform_acceptance": false,
+  "known_sdk_peer_compatibility_work": "@typescript-eslint/parser 8.72.0 declares TypeScript <6.1 while target TypeScript is 7.0.2"
+}
