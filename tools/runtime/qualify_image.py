@@ -30,9 +30,9 @@ def invoke(arguments, name, timeout=300):
 
 if mode == 'inventory':
     # These are direct interpreter/package-file metadata reads, not imports.
-    script = str(Path('tools/runtime/image_inventory.cjs').resolve())
+    script = str(Path('tools/runtime/image_inventory.mjs').resolve())
     raw = subprocess.check_output([*common, '--rm', '--mount',
-        'type=bind,src=' + script + ',dst=/ci/image_inventory.cjs,readonly', image, 'node', '/ci/image_inventory.cjs'])
+        'type=bind,src=' + script + ',dst=/ci/image_inventory.mjs,readonly', image, 'node', '/ci/image_inventory.mjs'])
     (folder / 'installed-metadata.json').write_bytes(raw)
     data = json.loads(raw)
     assert data['node'] == 'v26.12.1' and data['uid'] == data['gid'] == 10001

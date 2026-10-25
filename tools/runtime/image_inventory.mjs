@@ -1,9 +1,8 @@
-'use strict';
-
 // Metadata only: do not import application or third-party package code.
-const fs = require('node:fs');
-const path = require('node:path');
-const crypto = require('node:crypto');
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import process from 'node:process';
 const hash = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 const manifests = [];
 const fileErrors = [];
