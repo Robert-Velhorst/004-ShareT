@@ -3,9 +3,9 @@
   "guidance": "https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/#running-side-by-side-with-typescript-6.0",
   "unit_source_archive": {
     "file": "eslint-plugin-react-7.37.5+sharet.eslint10.1-publisher-side-by-side-sdk.tgz",
-    "bytes": 454000,
-    "sha256": "9325e62fa755c2738208dc798b21e9adb4ab12c5cd811b28ef99c09cee6bb6de",
-    "integrity": "sha512-++D7PO/IflAp1EaI/PsaRpiGRXeOHKBOnIIhQ679Pei5ny5fxB7nSJ48Aau/6jkP8447FuL0H+OEpZEl4MBcpQ=="
+    "bytes": 454004,
+    "sha256": "2308d1da931407baf103e9464ab2e64908f99ae39fa954eb6502d2c5246265a9",
+    "integrity": "sha512-AfYxwSFL0GprHaiU+P5FzvgZ5d1JCSEakFbwZagAFjfziKhR3vRPgeOkpOs63ywxfzf9ksy2jam+GITd4uxg/g=="
   },
   "unit_sdk_dependency_targets": {
     "@babel/core": "8.0.9",
@@ -24,7 +24,7 @@
     "mocha": "12.0.3",
     "sinon": "22.1.0",
     "typescript": "npm:@typescript/typescript6@6.0.2",
-    "typescript-eslint-parser": "22.0.0",
+    "typescript-eslint-parser": "npm:@typescript-eslint/parser@8.72.0",
     "@typescript/native": "npm:typescript@7.0.2"
   },
   "direct_package_identities": {
@@ -363,21 +363,30 @@
       }
     },
     "typescript-eslint-parser": {
-      "name": "typescript-eslint-parser",
-      "version": "22.0.0",
+      "name": "@typescript-eslint/parser",
+      "version": "8.72.0",
       "dist": {
-        "shasum": "f5e766c9b50711b03535e29a10b45f957e3c516a",
-        "tarball": "https://registry.npmjs.org/typescript-eslint-parser/-/typescript-eslint-parser-22.0.0.tgz",
+        "shasum": "e90d951ba97c6e2d8f1032f048292b7e39d8a019",
+        "tarball": "https://registry.npmjs.org/@typescript-eslint/parser/-/parser-8.72.0.tgz",
         "fileCount": 7,
-        "integrity": "sha512-pD8D7oTeRwWvFVxK3PaY6FYAiZsuRXFkIc2+1xkwCT3NduySgCgjeAkR5/dnIWecOiFVcEHf4ypXurF02Q6Z3Q==",
+        "integrity": "sha512-0O+x3ynciD6zuXb1CKSu165haQV6ey53DKhHHUnujP7U+XlltJG+/keT0Xhd1HXCze+IHf7Tvt39ovyepX/LNw==",
         "signatures": [
           {
-            "sig": "MEYCIQCZvY4rU8stBfa06odlOVnytzdxZgGRNX0nF+G4DEoXtwIhANJ0ahPzujv1U6tcMr/ThPlGf+aXewpefK5pbYPvrjdi",
-            "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+            "sig": "MEYCIQCRcXeOQME37c6qRD331oxnNDpVcOd8NLGV1cOmC9xc/QIhAJTkYF7jOhM5ywGMBfUC6CdGejqg330TaSTDKNmzMHNP",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          },
+          {
+            "sig": "MEUCIQCh34ZrY2PohpEVelHLQLduHy4eCxWa0aVdx3jyzk/9rgIgD13TTjDuVtNiAlGWR7oM65JKvCINiAstU/fO8CIewEg=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
           }
         ],
-        "unpackedSize": 60994,
-        "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJcQhE5CRA9TVsSAnZWagAAkkEQAIFG+AuFKGccToGpVYx0\nrXsF1WFZVz9h6yVmHOClYMHRgbWc+oVx2N1P1yJhJlkqwd+Kd/MJyC8QIYqT\n/Q8E+ZQ6ZpDFs8QFD341BEji0joY3Kxg1y11I7vG6upSes6V9vYZwi6lGj3D\ne7o4Zo3z6RL4G19TwXxXiCuuwZoawxU3hkOJqVfv2uzpAMWIOB82jCpnW0BE\nyddTkr9mln66H/avvVyPxhV97SNHYbsAXBYCBqVX3lUAcVM6wBoz8Fy4C5R+\nWSOs4SXhjzWmavnBSx3l2cTJ83CeQhHIr6AnuWiXSO9btS+8rEu88gW84Ad4\nr2csN6OPDeou//QRk65PJnVTo5uWp2hex3yq3RTrS/qYR9E22ZUpoUbfNDTO\nRl+FWBKwl2YuDZRNfp+if2Eg9+fyPKdkJimkWpBunwXPVIUCtJicLXRHa184\nYEB+kBzh7xlMASUhmLmE4+OaF9Ih7ISpgC30BsQ6feuSfgUOOnNA7NyWZm7s\nLUznaJvvMxSXN99xWe3AMio3RoEmLDYUfq/dZPfVnlMaRAJWVKVrFiscRjMn\nCGcfAAvXgInEMm9YzymVgAs4ZtsbqNG85UFpuUXR4htXsawyn+WPJfiCpXpn\na/UFWopIFgo7p8dxer8Jqi6wEVS0YKXqqe+MNqEZnuOLPdO3OhhE4BWwuAU5\nTObI\r\n=+AYu\r\n-----END PGP SIGNATURE-----\r\n"
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/@typescript-eslint%2fparser@8.72.0",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 16170
       }
     },
     "typescript": {
@@ -436,5 +445,15 @@
   "default_compiler_binary": "node_modules/.bin/tsc",
   "expected_default_compiler_version": "7.0.2",
   "native_TypeScript7_parser_API_acceptance": false,
-  "application_dependencies_activated": false
+  "application_dependencies_activated": false,
+  "deprecated_parser_replacement": {
+    "old_package": "typescript-eslint-parser",
+    "old_version": "22.0.0",
+    "publisher_deprecation": "Deprecated: Use @typescript-eslint/parser instead",
+    "install_alias": "typescript-eslint-parser",
+    "replacement_package": "@typescript-eslint/parser",
+    "replacement_version": "8.72.0",
+    "original_case_and_helper_files_changed": false,
+    "native_API_acceptance_replaced": false
+  }
 }
