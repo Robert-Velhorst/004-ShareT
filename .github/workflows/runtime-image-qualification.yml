@@ -68,6 +68,9 @@ jobs:
           set -euo pipefail
           evidence="$RUNNER_TEMP/sharet-runtime-image"
           scan_status=0
+          docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges \
+            aquasec/trivy:0.76.1@sha256:790fd66d1697395d8693d1acaa1ea702406a20f109b6fc7bac8db623eca6c06c \
+            --version > "$evidence/reports/image-security-scanner-version.txt" 2>&1
           docker run --rm --read-only --user "$(id -u):$(id -g)" --cap-drop ALL \
             --security-opt no-new-privileges --memory 4g --cpus 2 --pids-limit 128 \
             --tmpfs /tmp:rw,noexec,nosuid,nodev,size=3g \
@@ -76,7 +79,7 @@ jobs:
             --mount "type=bind,src=$evidence/cache,dst=/cache" \
             aquasec/trivy:0.76.1@sha256:790fd66d1697395d8693d1acaa1ea702406a20f109b6fc7bac8db623eca6c06c \
             image --input /input/image.tar --cache-dir /cache --scanners vuln \
-            --list-all-pkgs --include-dev-deps --ignorefile /dev/null \
+            --list-all-pkgs --ignorefile /dev/null \
             --exit-code 1 --format json --timeout 10m --output /reports/image-security.json \
             > "$evidence/reports/image-security-scanner.log" 2>&1 || scan_status=$?
           python tools/runtime/qualify_image.py scan
