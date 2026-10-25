@@ -1,0 +1,331 @@
+{
+  "upstream_source_head": "ae98c62586b6fea44114f72e249e246a2981de70",
+  "baseline_head": "8ecb3dab4d1975a7ebf143df3ff09de784e2eaaf",
+  "baseline_run": 40165286423,
+  "baseline_job": 121084961834,
+  "baseline_artifact": 12588012426,
+  "baseline_artifact_sha256": "7d6550f0386c4598a622d9d874faf1a0605d50d614fdd63b1d1c1b36da55fc96",
+  "raw_log_sha256": "f6d28eb9891672bae09be57efd4fc4b4ad38cd7f572bc2b86517786da7d9edd3",
+  "scope": "Original reported Linux case-file inventory; original suite and lint passed; not a count of unique assertions",
+  "workspaces": {
+    "npm@12.2.1": {
+      "directory": "",
+      "case_files": {
+        "test/index.js": "0fafa708a517937e88f769f9a121d821d7094ae12a7e06311e84d701f8fb9606",
+        "test/bin/npm-cli.js": "7d9d10e43a0cb7d672d53bbd2dc3d671d9cfe562026b8376aadbe6dbb720ba97",
+        "test/bin/windows-shims.js": "2955e413a492306feddf6663ef8e606099d7098852ff2a3663c680d1fe736990",
+        "test/bin/npx-cli.js": "15b9506f607e258e52fb43829988ed573aaa0426e67d110d96b3ec39c3b6eb9f",
+        "test/lib/arborist-cmd.js": "e048554f3b755b395aa3c55e95f230ef8e91e52ae978ee5145b04137fc22db11",
+        "test/lib/base-cmd.js": "0ca03291a6846447dec12e09f738d2d87dd741c3536c58985711a7954d77ceaa",
+        "test/lib/cli.js": "76711c250654eefe1b87172cb7eac17c1bc2651a69b696700d048ab03688855a",
+        "test/lib/docs.js": "c152779358a10d9fc6e558f1c2444470d3b3c488d0191458cee63c0293f6e309",
+        "test/lib/lifecycle-cmd.js": "8379e6fcbfef3574d1bf8771e314ceace9d31d00f15e6f3b5001a3cab47685bc",
+        "test/lib/load-all-commands.js": "2fb17e51333a6ac02e4a9a3b900d6ba57475452f6f8cc7c045de3853b89649f5",
+        "test/lib/npm.js": "4c9eef040aaf260bd73f1fa67ee4c4775bc5d0e5cbd8b715610560fe5940f059",
+        "test/lib/trust-cmd.js": "0ad30502727db64c14e48168749e1429b2717986925807516a6793c89d0cdcea",
+        "test/lib/cli/entry.js": "b63aab7fddaa56754c27c18228745c7f5650fcfc6ad1df13af9971189249e43e",
+        "test/lib/cli/exit-handler.js": "e9f9a549f8cf04bebd0aa2a123f95587cc618440d06ba13fa4b99d1cd298c0be",
+        "test/lib/cli/update-notifier.js": "67b9642469cf67b97fa9425d9e0a4d9dbffb4bdf324acbf2a982398b095a2e7c",
+        "test/lib/cli/validate-engines.js": "763bc00539aea0a8e0b9b8f0b9e5c451d24af1579b236d0ebbdf3b719f6170de",
+        "test/lib/commands/access.js": "af571d8c72f1a1dd863fe7d61c57d9ea8eaf8bb443cb2133429f46ce721737dd",
+        "test/lib/commands/approve-scripts.js": "5de5da7a779ae786aa015d493e9368e626d2de6db5f16ebb3a1da83803a5c6bd",
+        "test/lib/commands/audit.js": "d6febd2e4361eca51e11cf21657d77da3c74c587ff903c039465af3a0abaff22",
+        "test/lib/commands/bugs.js": "09ea0831ddf4c1868bf2635f8c71be4a1a503482e30e77edbc39eea2d1dfd215",
+        "test/lib/commands/cache.js": "3ed4a048e44c9e7dc2110851a616071b656eebb5c48375d17c5ba80e8ed22347",
+        "test/lib/commands/ci.js": "c39163a571fb26803da6539242860ccb585b9e031fc386c851e5032323eb0fb9",
+        "test/lib/commands/completion.js": "f2fbde478663ba738733c31fbd6af694473b4d7cd3da3c391912e5cb31b19b6d",
+        "test/lib/commands/dedupe.js": "d1323708249400427997ed5a24a265d507e25fb15b8d41ae88eabdb66864997a",
+        "test/lib/commands/config.js": "f9223bc56af976f76f724df83ecd51298791a00157fc54ddb013a2c0bbd1a37c",
+        "test/lib/commands/deny-scripts.js": "b65bd1b3545ad09b282a61e9e72028836341fd039d62ec0def213303d56c6301",
+        "test/lib/commands/deprecate.js": "b48fb35eea867b37709c000e4b3b851695993420b822b75ab9512b520488675e",
+        "test/lib/commands/dist-tag.js": "3c0a9ae52fff46a63fcb6829e1f4d6a719795bd42db953af2c2b41cefd4c1349",
+        "test/lib/commands/diff.js": "ead9a86b0155759a42a72684ca68781a1ba680095a7209aab619c9f13506432f",
+        "test/lib/commands/docs.js": "244225b7f215cab6487866d2e28585611bd117604337a71ab7099251afe4709c",
+        "test/lib/commands/doctor.js": "14a8208ba4d294cf54e6f6247173b53457c444170ddbd237bff8b1597cc16f0c",
+        "test/lib/commands/edit.js": "b8ef0749b51c686380e2e0fd1cc2f6906da7cff2052bea10be65ab0425fd1a6a",
+        "test/lib/commands/exec.js": "ea4cfa096bfb59b698eb488bfeed76a5b33d0789862952890b486df159d71a87",
+        "test/lib/commands/explore.js": "2d6cac5719c1ac20a6fcf61adc68a3227364bf4d2db027fe0790f19bf7f44dd9",
+        "test/lib/commands/explain.js": "78b755d1862df2c9e3a708a7c82b69205bfbe4804ccf9aea36c88a9c6bec1148",
+        "test/lib/commands/find-dupes.js": "fa47c1f038d9788eda6bc89797af9cff1e4dbf1ba4980992bee2169a51246201",
+        "test/lib/commands/fund.js": "5491b566c0b1ad0a97755fc9350f29d9d775d7c769a952f4a768e481ee92176e",
+        "test/lib/commands/get.js": "24c08141e1c7d4382b80bf4590b29020671ecce5565f6fdee3bd1fceb6f194b9",
+        "test/lib/commands/help-search.js": "0ad020721381571f3356d4418557cffaca582d58c423e242faca04791fc6d0b0",
+        "test/lib/commands/help.js": "3d5973a297efa6728af7c764a3845b835ff39443e4016fb95b4e6baf04c7d86e",
+        "test/lib/commands/init.js": "dbcf3ee0b14d2f501a56e753c101cc31663ff8d560e6d6d94b467f07443504e2",
+        "test/lib/commands/install-ci-test.js": "9e1ea3663b4cb344cb9effaa85be39833e9ad30f7175364aeb40d05d8bdd362a",
+        "test/lib/commands/install-scripts.js": "0ba58d06c3478e602f3752524ecd80a4f765e9ff7c1ec34ed8fc11787d389e61",
+        "test/lib/commands/install-test.js": "23e6ce5bfb64fa4f57304087db135c7d166923666680754cfb5a643704e9642a",
+        "test/lib/commands/install.js": "560b9e6bf03ac9166a4495a69beca673977fa43c838ed7cd57ebf81d69796d0b",
+        "test/lib/commands/link.js": "f8ab51a69e241887dbeaf090b4307e8cc1681521de9f06cd14960f3df91ce20c",
+        "test/lib/commands/ll.js": "f9ad5b82d39b16d923d6ca02a8471ef36aa9913c63b9caf6050b263de44231c5",
+        "test/lib/commands/login.js": "f79d8fe7a66d8570595d13a4481c8e06969862d4ea7a89ac9dd13273552e5b0a",
+        "test/lib/commands/logout.js": "7165aeba210f9325c592ba82f9e0d1b43af7f02dac869b163ebf7efe971ea099",
+        "test/lib/commands/ls.js": "a86de720ae37b42938c2bc3702ca0330929951a82b3a1964476b0458ec7f3caf",
+        "test/lib/commands/org.js": "6593454636187b1b686517408c83d7fe9cc3748155ca94c18f97ce7b2196518e",
+        "test/lib/commands/outdated.js": "cf5b822d352e9b1dfac88e273c5f357da68e35bc2a5e320f9a6372e2b4ccde20",
+        "test/lib/commands/owner.js": "e233acd674cb114d86adb616747abfe662c6146fbfab38180cc41dc8b62bf249",
+        "test/lib/commands/pack.js": "f66e071ae6732e929ba863b0dce2bb45e8d63883e9dc3261836011bc20447c41",
+        "test/lib/commands/patch.js": "b2f4d83751a832db24a0b61ff5249a07e1726affe4f4456af2f14368ba4aab09",
+        "test/lib/commands/pkg.js": "e2ee26cfe64006ed46beb3590dad01acb5c533695157047e97ed1adeb32ad3c3",
+        "test/lib/commands/prefix.js": "e56bc06c6c66deb51cf0312375602c943ec16d83d4c58ea861fb9106a9913383",
+        "test/lib/commands/profile.js": "091e773481f95169bc44aacfa1c6caff21e5932b53e80366ad6604687c54c3c3",
+        "test/lib/commands/prune.js": "477a9e4e99bc99c7e8c27698d418564d8008a01c1e9cd2536467dff8f866ab8e",
+        "test/lib/commands/query.js": "abe43a05ed20bf9c0bf49546394094f5611ad5237b275f07e42f33c4767ef837",
+        "test/lib/commands/publish.js": "72fd8ab32a9897fff1f5c55322755a3bd97abce0651808509c4396255c6528a2",
+        "test/lib/commands/rebuild.js": "fd462b6c51e2d64721908ea76af6697733d5b4a3ce32d6dc66eca5361ae956fb",
+        "test/lib/commands/repo.js": "80c364daffa77ba44d0d41bfba61dda5bfd6d58a6007f8130aa94f53d099e7fb",
+        "test/lib/commands/restart.js": "40f1c931963898f549c30b9d4a999db3cb953f4370779da6b8a985d9c5fa3ef6",
+        "test/lib/commands/root.js": "69b50ca6c072165ae6ec1de2fd8a3ca24890bb7e85f3d54c3656af7095489919",
+        "test/lib/commands/run.js": "bdf959e0d29d712fb43b7ec89459bd87b879f2ec58f3a26f1080ac7799ecf43c",
+        "test/lib/commands/sbom.js": "7d8934b985a48b3a23679c478c640953a603772b81371305a57af3155198300b",
+        "test/lib/commands/ping.js": "897baa457361f53f7f5655bfd77139616a62081f2b2e8e980241079f31780700",
+        "test/lib/commands/search.js": "81dc0433a40e3549ae04db03fe1a54a6d7b34bd3f23867ddc6592b21eca5384a",
+        "test/lib/commands/set.js": "9f64a67903d5f5db88de2e45012064035df154275c229859bcf8ea5907cf0dbd",
+        "test/lib/commands/stop.js": "df78c91ce79b54b5b8e0a3e7f28fd1a012b15e13ba25efa14fa560857ad6255f",
+        "test/lib/commands/start.js": "51619939d13a44388b548133e51c46857f25a4d0fb3d169fcb4f6041aee1bb73",
+        "test/lib/commands/team.js": "18620d11044d6b7f26a6ef03037758c375b1b1c13452d420076a3cb39e6fd0a6",
+        "test/lib/commands/test.js": "1a404b9c78f4daa3207edf2ff28ecb18a9c15b952df3431ebc61fb47ac1843b9",
+        "test/lib/commands/token.js": "72f5d559a9a64cb41eee3406174e40fa010db4b9b82913d588699ca339bc0c4f",
+        "test/lib/commands/undeprecate.js": "67b92703626ad7ce7cad5b2bd87a334761357eb0e37c173ab16d2f7a906b10fd",
+        "test/lib/commands/uninstall.js": "10a24c34a310ffa574cce191b15ccd90244f7a7a1d6f0d68f2932b06cb254d9c",
+        "test/lib/commands/unpublish.js": "39594eec16ed11b5fb12a9d49a18ea73301090c47ea961db9c2edc7473737f4c",
+        "test/lib/commands/version.js": "572d98871416471c75560621987edc761f9efdf67f099073a6e19d77ed11855d",
+        "test/lib/commands/update.js": "e9a330b47aecfafd965b6b39b65d75aa091b64ddbd88915c51fa836624fdfa9a",
+        "test/lib/commands/view.js": "ef55a435db97782ef6c23c9d2aba0b428a2e7aaca2645e21b1d0fbb835357507",
+        "test/lib/utils/allow-scripts-prune.js": "a203944b681ec601986acda54eadf36e491934603c1b7c30d50266f2cf9b321a",
+        "test/lib/utils/allow-scripts-writer.js": "be00c7ff2e7cae9cc7e132b54ea19696cbc34d036f87a6dafa1864cd20dad528",
+        "test/lib/utils/audit-error.js": "1641d611147852a1d6fd1e9387e7e4359e0e11f81c0f29b0f9de716b94a15bf4",
+        "test/lib/utils/auth.js": "476befabb965b24e19e6e15169fbdbca7ef9d6ce9af6927076653b18aee42b8a",
+        "test/lib/utils/check-allow-scripts.js": "5271b265a5d428772333d0db0e314e856c2388537219bd8e467f843bd16ccb67",
+        "test/lib/utils/cli-only-flag.js": "d956dbdebdca174d30c7f9401797786be85546730303c7586761367336eaf526",
+        "test/lib/utils/did-you-mean.js": "cf22d536369cc3cce0847abf8f6559ce3e0615e7d1aba3c2d3551a4c6d175e41",
+        "test/lib/commands/whoami.js": "85cd0d2f721f1edc249307281fcb8860a581fa7ec31d8a34a5973d026b24866f",
+        "test/lib/utils/display.js": "d336b248473b6bd20e25d2b28bc4696a15a0a0786dbf476891face5a9c31e772",
+        "test/lib/utils/explain-dep.js": "eb0d667c7322534fa6b6cc6fcba4b0ce70faf8756bc673a8ffd8d6531592df66",
+        "test/lib/utils/explain-eresolve.js": "2cc716fa8c5ad0c073ce9c4c508b8a8ea78529f0f78a3f3f4cae730b6281fcaa",
+        "test/lib/utils/get-workspaces.js": "b67f9b3c3f3a18ce9841e644e8057b71e94f3fed4287f35c168f23fc5ef095ce",
+        "test/lib/utils/installed-deep.js": "62bf6ba896874d8ae80472422080d2c79cfb41403a2e3d77ca5019a7e00ee53c",
+        "test/lib/utils/installed-shallow.js": "a9f85ccfff4a877e4431de00693a9da779e7d25a38e0d0d960a129d5e48e392e",
+        "test/lib/utils/key-values.js": "b120b0b3c92b3ed0528aab17057c55301cf525a17c3d0fd0e6a811bfd3a8c9cc",
+        "test/lib/utils/error-message.js": "aaec4bdfe27b2cbb3fb4ea4c20c6d07792921523d66118507e3fc69b545f01c6",
+        "test/lib/utils/log-file.js": "d2b8025f37d7915e87dde610b43bf5d34a216879291d7932d806a3e63c260abb",
+        "test/lib/utils/open-url.js": "c5b242d7884d144fa82c3d02a6ba837e267396b593d636ac8faca75820a7022c",
+        "test/lib/utils/queryable.js": "35a51565a255ab5ddf84d17a46ea41f9af78b781bc0c243fd50dc76b490454ae",
+        "test/lib/utils/patch-diff.js": "39d586d418780c9ec33e32f36259973058127815ed264d6b0c889db66cc84e33",
+        "test/lib/utils/read-user-info.js": "af76efa80f0b46e9848596c1eda90743044cf3e9a8e516965d124b8ddd1013d4",
+        "test/lib/utils/reify-output.js": "53a5fc34046f157af14e35389327acd45b2f4f23152564551ffbbac9aa8d2729",
+        "test/lib/utils/resolve-allow-scripts.js": "8d0adfd934648f04d126f6b9007381bfc652762e74f7e50e90a80ebef8907917",
+        "test/lib/utils/sbom-cyclonedx.js": "26afc1aced66af13fc07032bc870f916c3f3b49daa195afd2f219f87aa95168a",
+        "test/lib/utils/reify-finish.js": "f67c2065df7177774664f725deef97b1770a91224961e17463575a4f55bc73ed",
+        "test/lib/utils/sbom-spdx.js": "d10be3537f62cc1f64df1a30dbb22d0541c00deb09356c6770bd0ed330dc49cc",
+        "test/lib/utils/oidc.js": "34e5dda03ee95bdd41cce881fe3c15874eeb2e70899732cbb51dbf7930e3b1c7",
+        "test/lib/utils/strict-allow-scripts-preflight.js": "cb83bac1f7cab86ae86644efb49934dd784e524bcc814d039bacca8a8958504a",
+        "test/lib/utils/timers.js": "b0709de7fd0b6834eda8b159898d3d889b914e424d40644c3f26c7665fd19c05",
+        "test/lib/utils/tar.js": "63ba1abfa38fe507b91a7ce64612c3384aacc60659ef86473afe86a8b37d635d",
+        "test/lib/utils/validate-lockfile.js": "8a54591a9347b40989547c9c68a4f95ad0c93ab825958657dbdbd7148d05f83e",
+        "test/lib/utils/warn-workspace-allow-scripts.js": "5ad867167c9e376f693d9b3f049e1fab45297067a93ef6d063015995cd25fab0",
+        "test/lib/commands/stage/approve.js": "0a084040f980870e7249ba3de9be967470a8ab6cdcc95637e96107fefcefb61b",
+        "test/lib/commands/stage/download.js": "6cbb18c4530461d54500c7aeb2fd7596119ed6fc6a9103e8f5c6fe4347f85e75",
+        "test/lib/commands/stage/list.js": "36d0597095339e388c952201ea400a4dfefca05ec69f0fa183aabccbf622346d",
+        "test/lib/commands/stage/index.js": "9d548baefbf6f9a62f1ec204f5a715de5e5156b476f835cbce0d337fbb227506",
+        "test/lib/commands/stage/reject.js": "a1a0940e06310c07cd2b45374e56fcfe5cc654ce8f814f422a7353016a30eaba",
+        "test/lib/commands/stage/view.js": "b2d897e86ea73316161e4c8c86f78b5bd60d6b07239d5d023f758c09cd7db053",
+        "test/lib/commands/trust/circleci.js": "c2fc2d383a984acb1a5c8b954ff00e0ef4a091d0f717372fecb0e3e4f641ad1c",
+        "test/lib/commands/trust/github.js": "6564645ee2f2467ff8b19e27c39d752a3b7b6ec22daf552c1f43f9475bdf9691",
+        "test/lib/commands/trust/gitlab.js": "d6838d19f1afa5a39224d3f57efa8be663dd34ef45cab025a54b95811ca23beb",
+        "test/lib/commands/trust/revoke.js": "0d65a6d6bbb44389dd19430fc831d46510a5daac2c4369fc882c79f9746bde87",
+        "test/lib/commands/trust/list.js": "ab5a2d1ef9310842bf44dad16b145c08b317c734cb7cb81f969c4c592f96b627"
+      }
+    },
+    "@npmcli/docs@1.0.0": {
+      "directory": "docs",
+      "case_files": {
+        "test/index.js": "ece3b37a8114d0d0a04e4ea59e5f33dc2867fc60c6c229679f5d2ffc35fcffe8"
+      }
+    },
+    "@npmcli/smoke-tests@1.0.1": {
+      "directory": "smoke-tests",
+      "case_files": {
+        "test/install-links-package-lock-only.js": "50e2b5562f2f398599998e4bae8e588cbf23a115b89cd44ac9019186d704237e",
+        "test/index.js": "832f73e77bd0f3fc3214766583c5cfbc73aa420e4c3771f7602ce993c15d0efd",
+        "test/large-install.js": "1b8f6679af72e4aafed517e49e570a2e833d5155b5bb76945bc3e05a7f2d3ff1",
+        "test/npm-replace-global.js": "ea74175b1aed9e8a4c7228e3b9e03036f6e5a5eb293dcdc311f361718ed5da68",
+        "test/pack-json-output.js": "1df053dacd7b8ad157b492f270654e0d0ebbfe5df22a2bdd5241bf543f86ec06",
+        "test/proxy.js": "105d08528fde6c31e697a8a544ffeae7986e0506b642fba77e9f75b02e12895c",
+        "test/workspace-ua.js": "df4fb8a3ca4fc903b5aa287df43f45a895114d4ee43161fdc7e40ed5dd103332"
+      }
+    },
+    "@npmcli/mock-globals@1.0.0": {
+      "directory": "mock-globals",
+      "case_files": {
+        "test/index.js": "63a8c17577c07950d2e7e17dd86c42a01df1f4ed7327c56328cdb55da1532c83"
+      }
+    },
+    "@npmcli/mock-registry@1.0.0": {
+      "directory": "mock-registry",
+      "case_files": {
+        "test/index.js": "7c6c7369c51afea2fa5246c8521b35788f8994f9a43b786bff6e28d1c70e1c2f"
+      }
+    },
+    "@npmcli/arborist@10.0.4": {
+      "directory": "workspaces/arborist",
+      "case_files": {
+        "test/add-rm-pkg-deps.js": "35c021d6cd9771b737ad6305bbf657801bb5eddfee681a1aa8ba34d45a26d138",
+        "test/calc-dep-flags.js": "4ebbec88100b1de8162212da366385159332dd1ca5565db92c5a630b59fb182a",
+        "test/can-place-dep.js": "bf5040b52eb9d54c27358a09134bc3aecfdcc124070ec16d97ba600a355222c5",
+        "test/case-insensitive-map.js": "58cb3db1e68cfb29750d135f18e78ebbf8385bef0db6ef37191042e4cc5cf067",
+        "test/audit-report.js": "c7ff3a03de19dc6636d5300fdc58cc6db0f91ea2420af51ed4059573f2bef269",
+        "test/consistent-resolve.js": "c301808e1759f99943363c984ceda34fc8137302356eaebb77027af0be969fcf",
+        "test/debug.js": "31867479505d9e6fb590e81746015138b603557ae365f917ca6a769b76b2d0e5",
+        "test/deepest-nesting-target.js": "98c7afcf373f0ea2421c6db92679ec8dbf2363f29c9683954fef2419060341cb",
+        "test/diff.js": "065a158d0ecb06a2ddb54f6af0739a68d7eb1133c7317c83faaebd2b5d32a585",
+        "test/dep-valid.js": "c479214f6a8e414324d3992334a52880624838a093ba63a02853d3704090348a",
+        "test/edge.js": "1426083724ff56ca29bf7fdb4387ddb35071cad327abcf567cfb81233c6b04b2",
+        "test/gather-dep-set.js": "ffe5ea763554bed0813a5b50cc0032fc26817df61455050f469d132fe8e755db",
+        "test/get-workspace-nodes.js": "bd4e9a7efdc1bc07b496eac00d860e8fb2adffcc377d4a0678b49924d9bc9d70",
+        "test/from-path.js": "67e4deaf19092e4cef7d9b9685408be03bd56317782824ba64fc5f374ea418b5",
+        "test/index.js": "fc732454ff5767da09c7deff0d4794680c389e413c45cc349753448ee5df5d26",
+        "test/install-scripts.js": "7f375d766b5315992067291cdbcb220c42ef050a8bbe5aef0a388e024e3ffdbb",
+        "test/inventory.js": "abefdc7f10c6049ca994cc3cef913292b2618c0406a020fdd56b7a0865cc5845",
+        "test/isolated-mode.js": "cc23a4fa016905a1e7720109d65ca92de0775ae698e82768370e3e1820d8332a",
+        "test/node.js": "d62a2b14704fa8a52e55ee27f1254ddae9b86284a98cb4c4c63c5bcf0b66bc49",
+        "test/link.js": "6d225e3767525c7275e32f224235c1525c805fea37819d6fd19727a6114d4098",
+        "test/npm-extension.js": "cff129b780dc15865f8fafa94a9bd841f23aff76a29885aff269f927f23398a1",
+        "test/optional-set.js": "0f496c065e6893d6cbba9cc9a046682d2a32304c0f814c3ea2e1937b56b41e2e",
+        "test/override-set.js": "a1840a1322ec30d7a46694431f902b7ff664bd2c507412de8e8294bc37006405",
+        "test/package-extensions.js": "e09a75c2fb71aba4b761f27317a151e655ba34fbaea9e2b36c81b017498add6e",
+        "test/patch.js": "b9d971a0b4b6d61d1694fe992b1c846c1234ca197611d59b0b348d36d6eed040",
+        "test/patched-dependencies.js": "811628392375b39ca2b1bc7f25df7a5c7b707694b14b64f0009f105967f350b6",
+        "test/peer-entry-sets.js": "f47e8b0a44f8f96947c58c8796f730aa01dc435764f42f79c37df1826337176d",
+        "test/patched-dependencies-resolve.js": "c56ea4319b15bc08b76ef74e1e45bb5239db1b09d1f9c279f702100e023e4504",
+        "test/place-dep.js": "5ad2d779aac5bf63f50a05897d6733fa36285646a195d721949c9012c930a9e2",
+        "test/printable.js": "e7619b605d8eb77519aa866a103e6964d7df9b860c659e253460e788b2090830",
+        "test/query-selector-all.js": "bf329f24cf52568f0f09f92386fe694a833794726808e323f8a9ef0b107cdf0e",
+        "test/relpath.js": "3dd723bdf9dacc9f043079a54b2bf1901557fff9c334895633982b2a36d3d9a0",
+        "test/release-age-exclude.js": "45b1b553a285dffce328cafc97ee5b52ccfe4120ca7d1a2e60bb6f65902ed87e",
+        "test/retire-path.js": "32d94bc175dd96653fbef2987efa8f11ecb08d98b64a2f5027a191d811cd7a26",
+        "test/shrinkwrap.js": "496fbb8229b2f8c1b0d868be4d0677c1d99ac55c11fce01131f239d928698598",
+        "test/script-allowed.js": "d48d8bdd8616e6884d66c6d8d1aed6cbf2cc1ecd07fe31e031406b56a3fdb467",
+        "test/signal-handling.js": "ed378193d19d7c1f9867f85e43cdb1c13b67d3388f074619a75e705a2e086159",
+        "test/signals.js": "4eb87c871e1bcabe41f362370d6d973b04dc8d27ae36d073b4567b0080225978",
+        "test/spec-from-lock.js": "5bebe267a6874de5c92c44b7e63facc24d496c2b1009a995fa75eaf3fda471f7",
+        "test/tracker.js": "8ca798526cd0d68c3d9f2c2784f54b83534eeb9b07a145d4beec46200bf96660",
+        "test/tree-check.js": "80c699906c1e69535bf03ffd0ededebee913250359709aeb731276f173544386",
+        "test/unreviewed-scripts.js": "1329c640f711109252ea2c79fe31b1294f61eccf0e68964e5887e7f6b0a26f62",
+        "test/vuln.js": "daafe967def98ceeaaa5091f8b673cd9526df35736f2b41b96ba4a971c209c25",
+        "test/version-from-tgz.js": "898478fed9706fa2fddd320c44c0ea1be63d3409a717947919f66842cf4358d5",
+        "test/yarn-lock.js": "a3cf014d4c0274ff4ecf9a672edde9d982c76910ec448fa5e07e4b29d7ae0029",
+        "test/arborist/audit.js": "3040744f7fda2b1def4128275b5f2d4ef62d2217b8a62605ac9693c62dc2540d",
+        "test/arborist/build-ideal-tree.js": "271d1be9afd0ac6f1f87d6a0a69dbdaa957be1f213ae9196bc337291dc126b8f",
+        "test/arborist/deduper.js": "c4bf469175b523d9ca3fa5ed7bfdeff75d12a9da63b5f6e2e17f9486dea1da69",
+        "test/arborist/index.js": "b85f23ed6a63a21ac8d654ad3eb46f033a14db818e83956c7d0177f32b85f1e3",
+        "test/arborist/load-actual.js": "44f005078c9fafda08d73acbcb755da1673de7535bb38c4c8e2a9064af309bf3",
+        "test/arborist/load-virtual.js": "ffaa839cb5a3302acd0f440151e026047ac4e3d91d8f4558fd8ff9fcbe647d2b",
+        "test/arborist/package-extensions.js": "6e45c5f33976a1b0f87e97fc0280f2d7d2b84348357226a95b2c42a029f2dce9",
+        "test/arborist/pruner.js": "33d88397ecf56ef584fa3eca193d712b6f86e16f1039741b9e9bf7afe0734b05",
+        "test/arborist/rebuild.js": "d3b70ce41c29c042283ee7b6d34070d22aa03f034fcef78bc1f7d990ca28eb21",
+        "test/arborist/reify-npm-extension.js": "c5ff50749e80de9e1956a7fd28659ba36475e1c52bf004e0ce579b5793c8a4a7",
+        "test/arborist/reify-package-extensions.js": "865d9098fbde113ea1ab9a399304f18cece4f6c436fbfd70b6edab6f55548c78",
+        "test/arborist/reify-patch.js": "d96c87f789babdf68a8d1591346ffe05b6c2dd23f8f9938f2fc19d0e792d3a25",
+        "test/arborist/reify.js": "f95976764157f7f2e18a6cf6c86428a16cc992cdacaff5cc06de6da98ea3d82d",
+        "test/arborist/validate-path.js": "1f12d334a0fa186fc8b84c5904db01daaa53e69b2fdaacf31f1f8816abf547c5"
+      }
+    },
+    "@npmcli/config@11.2.0": {
+      "directory": "workspaces/config",
+      "case_files": {
+        "test/env-replace.js": "f47768226f61886b95846ca8f67d3117173da2a64bf5a201a0d7338b485dbaa8",
+        "test/extension-file.js": "d9f260d19874adf467e82fb4bc23da78dde7ae63a6dcd3c5b5d566261a105df6",
+        "test/index.js": "ce41a73d392fe3876f35bdc884fbad2b9559218ee8bb1ff4ac3b42fa875ee6cf",
+        "test/nerf-dart.js": "67603272656c51711489fe3ddf7e2c1f4a6b63b855f27badddebef67eca2cc4f",
+        "test/parse-field.js": "2468ce32e76c1e5b9d4e20e58a6a05f633db5a3ff27396c299ab75e99588d04d",
+        "test/set-envs.js": "18fd972037f5a663c475978a8a02561a7d0587c5966f96a0b384285028501dc7",
+        "test/type-defs.js": "ca210fece9476b386626bd9230390bfc46b51e9b464e21f360c4a16857b386ac",
+        "test/type-description.js": "f0ab260d1701a92f1ee33175c2159ac66c598a5badac3469ff22f40ebac30952",
+        "test/definitions/definition.js": "f73ef900453387bae637bd16c95d661015ea4abe34cb7009e487319500a3ac77",
+        "test/definitions/definitions.js": "abbc70483a84552e69110072cd4ced618590407d523f9fe8a973f627cc2cfa1b",
+        "test/definitions/index.js": "1f1cc83e29ca410c0b6b9e5e136d695f9a31ec8488b8fee77ea5b198b06d2449"
+      }
+    },
+    "libnpmaccess@11.0.0": {
+      "directory": "workspaces/libnpmaccess",
+      "case_files": {
+        "test/index.js": "d86aa4763b70f9183b6fe0bbfb48e752ab07d38e3b2c9fdceb2ff44772c9529a"
+      }
+    },
+    "libnpmdiff@9.0.4": {
+      "directory": "workspaces/libnpmdiff",
+      "case_files": {
+        "test/format-diff.js": "7a1360d9567b732426c5173ae5a55967b7d2e370f0461399cb09cd0296f06252",
+        "test/index.js": "16338a55bad9c18d4f95b9a343db1d0dbc9c2973254b69e029d0410b0bd471f3",
+        "test/should-print-patch.js": "a0f3927f4faa2a520b0aabc5d03c9f05bc114e430d8657ba4273b0a9c760dfed",
+        "test/tarball.js": "a59e4d3ad40d80d5561ba561ea368daabfd20f42d19e646848c8bd44671d9003",
+        "test/untar.js": "72d19802b00028d515630f13d31661310fde8dc707bc6d1ec89c24cd7d3acaa2"
+      }
+    },
+    "libnpmexec@11.0.4": {
+      "directory": "workspaces/libnpmexec",
+      "case_files": {
+        "test/file-exists.js": "91b3394981c60ef4c644c10e2b384cff94ceda78d16d01a59a18bdb967455f64",
+        "test/get-bin-from-manifest.js": "9136430e0f92e79c522bb66bd936089b50dab96b6ff30bb620c17826c0fdf86a",
+        "test/index.js": "5dc6e6f930c86052eb7ee8f0afccf5bc3442b0cd9e7e477cc4cde9f27335d077",
+        "test/local.js": "d555af6bc89ce70d371bcc77f409d5395ace05e9e4b70310b0f282ddabcfc318",
+        "test/prompt.js": "71b5480fb51f794c91690f3999930ea741edb70c7695d3f05402b431af1eca72",
+        "test/registry.js": "1ad9a8382bc81c16d8dd2eba3f9ee0ff72b8ad5243c53734cb613c42e199d9c4",
+        "test/run-script.js": "32aa286a72e9ab39aa4ea052076db1e7150257dd0165fc0ee2f22a4ba8c2c088",
+        "test/strict-allow-scripts-preflight.js": "f5d0f3a88e7a14809de8561c9c8dc007a137721363aee8d90b59587b90a81d49",
+        "test/with-lock.js": "a77064f6e7a9e997a3060a93b0bf58917bc8ef0ae975e4d52bf4f2c7cce60477"
+      }
+    },
+    "libnpmfund@8.0.4": {
+      "directory": "workspaces/libnpmfund",
+      "case_files": {
+        "test/index.js": "265aac334b509ce688b3db66146db6cbb162fd3a40da33d04068c924986a1463"
+      }
+    },
+    "libnpmorg@9.0.0": {
+      "directory": "workspaces/libnpmorg",
+      "case_files": {
+        "test/index.js": "098b4080af8df1de319332a87a71118df041d3bbfa314056050dc0b59d92b7e1"
+      }
+    },
+    "libnpmpack@10.0.4": {
+      "directory": "workspaces/libnpmpack",
+      "case_files": {
+        "test/index.js": "1495f475e9a0f692b7eac45f81f67c96eb6a97cf4e6da47df83ebd61dbb703be"
+      }
+    },
+    "libnpmpublish@12.0.1": {
+      "directory": "workspaces/libnpmpublish",
+      "case_files": {
+        "test/publish.js": "9a323d5b0fe5147acd534a27282395e68373b6ce78bc0c4617fcd110d0ca5339",
+        "test/unpublish.js": "3769fd8d2c49a232e41e34400a464ce0773bcc0a3e781d7794a15844e4d67c56"
+      }
+    },
+    "libnpmsearch@10.0.0": {
+      "directory": "workspaces/libnpmsearch",
+      "case_files": {
+        "test/index.js": "a0fe3451af9d27fc16e9c82d3b0bd4d98f945ebd8fd2d4236136dfa598985d44"
+      }
+    },
+    "libnpmteam@9.0.0": {
+      "directory": "workspaces/libnpmteam",
+      "case_files": {
+        "test/index.js": "ffb09ebdc8b752886c034826a9966e9b608a2ffe359a4ba8e2eb17084f0974d1"
+      }
+    },
+    "libnpmversion@9.0.0": {
+      "directory": "workspaces/libnpmversion",
+      "case_files": {
+        "test/commit.js": "7145ab110ec690a77450d0c22c79038d258d0681bc1fd05dd2e625b5ec6f3cc5",
+        "test/enforce-clean.js": "35c27c0b94cf60cb337ea03d7e5799b59d1b875bee54c759c44422cae5cc9781",
+        "test/read-json.js": "025a632f1a79067d4af0fee2326312c2b5ebc407fd3907b64878ea6649a22834",
+        "test/index.js": "2a13120a2e2fb6202ca6b64450b9bb780aadd805c50a6a16e49a66f08a7c68f2",
+        "test/retrieve-tag.js": "c506ea2eaa40ddc31e765c1adb26f52629e02e53cf6ceacf23d94633afe6cacc",
+        "test/tag.js": "6f4cc09587285b8dfff984e8f0662c03e0b3ece8129fd91d2085ee1989650eb5",
+        "test/version.js": "3c9de1bbbc1e9c481a5807165031cbf6edfa39110c3730b9f692b3d803cf8f88",
+        "test/write-json.js": "3ff9fa7bf78c5bf8d2d55caf27c32cc7fddc24a0a992dee6c03b8c1b63342c0a"
+      }
+    }
+  }
+}
