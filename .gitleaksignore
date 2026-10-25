@@ -1,0 +1,7 @@
+# Four verified public-source SHA-256 values from immutable commit fc0cacb7a21eed36cb6d1462573517dcded3639a.
+# Evidence: public-ports/eslint-plugin-react/public-checksum-findings.json
+# These are exact historical finding fingerprints; no path or rule is exempt.
+fc0cacb7a21eed36cb6d1462573517dcded3639a:public-ports/eslint-plugin-react/provenance.json:generic-api-key:1012
+fc0cacb7a21eed36cb6d1462573517dcded3639a:public-ports/eslint-plugin-react/provenance.json:generic-api-key:1040
+fc0cacb7a21eed36cb6d1462573517dcded3639a:public-ports/eslint-plugin-react/provenance.json:generic-api-key:1141
+fc0cacb7a21eed36cb6d1462573517dcded3639a:public-ports/eslint-plugin-react/provenance.json:generic-api-key:1175

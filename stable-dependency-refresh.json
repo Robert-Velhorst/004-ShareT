@@ -1,0 +1,756 @@
+{
+  "baseline_source": "f48deb0348985a4d5b6c52083a3309fe91aaaa05",
+  "npm": "12.2.1",
+  "scopes": {
+    "frontend": [
+      {
+        "group": "dependencies",
+        "name": "@hookform/resolvers",
+        "from": "^5.9.2",
+        "to": "^6.0.0",
+        "target": "6.0.0",
+        "publisher_integrity": "sha512-6iBzQnB+YwAveVc8HUi6QYLITn5X+xNKRMFIcNXHZlvp2aTI7yWbj4n/JodXxirMCcBc4VCjb2aYAJh4x07mVw=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@tanstack/react-query",
+        "from": "^5.104.4",
+        "to": "^5.104.5",
+        "target": "5.104.5",
+        "publisher_integrity": "sha512-RORgFe052U+93weaNuqg7qHq7vNVNzXN/VrXqD4bbAuQCWUqOl2lV5Ui9flWk5CVvMyL/Bh27QWhzwH0aaOx9g=="
+      },
+      {
+        "group": "dependencies",
+        "name": "framer-motion",
+        "from": "^14.3.0",
+        "to": "^14.6.0",
+        "target": "14.6.0",
+        "publisher_integrity": "sha512-MzBgZxGgoHPfSLEXmo4o5XlZvb+nVRFdHtGjVhm6LMIEJKTt/8hNO023euL5mYyzc8llV/hQTfjnN68tNRHalw=="
+      },
+      {
+        "group": "dependencies",
+        "name": "lucide-react",
+        "from": "^1.59.0",
+        "to": "^1.61.0",
+        "target": "1.61.0",
+        "publisher_integrity": "sha512-v2SQPPPNjnr+BlhL9Spuzmo5yR+hLkftfuE4E3jaxdNPgSH0hJKPcLJBP7yAta87jQNPsSERS59PJjCJ/CorBA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "react-hook-form",
+        "from": "^7.52.0",
+        "to": "^7.91.0",
+        "target": "7.91.0",
+        "publisher_integrity": "sha512-5BEBUnCBwa28AFXYTYmOaB/+CSpJ/+CWVASHEvIGUzFdHyUiPHeRhG7r5hOZ8nZi0yP7pbHdFNXO/p31EKTJFQ=="
+      },
+      {
+        "group": "dependencies",
+        "name": "react-resizable-panels",
+        "from": "^4.14.5",
+        "to": "^4.15.0",
+        "target": "4.15.0",
+        "publisher_integrity": "sha512-DRjF1E8QHg4j5n6RcpxDoeP0C15T0w+dlEE9eyooGCwOE8rPPxfXt4OfhJjEuezzCG/JjRwh5ZHLVkakUJF+dA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "react-router",
+        "from": "^7.18.4",
+        "to": "^8.5.0",
+        "target": "8.5.0",
+        "publisher_integrity": "sha512-9nEd/deifcTJIIcUaNIyQGkyXD0D6QVB9XD2O5GgHpP3xu3U5RXm87YQ8++Wn8JQWgMBM/5+PjWPM/7n7O7WHA=="
+      },
+      {
+        "group": "devDependencies",
+        "name": "@eslint/js",
+        "from": "^9.39.5",
+        "to": "^10.0.1",
+        "target": "10.0.1",
+        "publisher_integrity": "sha512-zeR9k5pd4gxjZ0abRoIaxdc7I3nDktoXZk2qOv9gCNWx3mVwEn32VRhyLaRsDiJjTs0xq/T8mfPtyuXu7GWBcA=="
+      },
+      {
+        "group": "devDependencies",
+        "name": "eslint",
+        "from": "^9.39.5",
+        "to": "^10.13.0",
+        "target": "10.13.0",
+        "publisher_integrity": "sha512-UohDjD4zSzEwhf58M3O7vc/ycc8O1I7dNlhtD0WxE8Px8EHNJKtUwzBqrzeGhisRuv2ag4sAYswszCJRgKXYUg=="
+      },
+      {
+        "group": "devDependencies",
+        "name": "postcss",
+        "from": "^8.5.19",
+        "to": "^8.5.31",
+        "target": "8.5.31",
+        "publisher_integrity": "sha512-YUbWYCgErwnMAVkjUnYa+KlMBzGpHwiIt/DE7f0G33AuX2LH9UcTk6KgWxd3zRU+pN3u/C+Xl3EnMLM4Hea7Sg=="
+      },
+      {
+        "group": "devDependencies",
+        "name": "vite",
+        "from": "^8.3.4",
+        "to": "^8.3.5",
+        "target": "8.3.5",
+        "publisher_integrity": "sha512-z1YpjieJ9g0ebTmQpLBv/oq9E3F9EIlOe+7LahW8SrE3LTiG3udBRUXQOlYXP9b+IC2q2phHeVxj9xGlw34OEQ=="
+      }
+    ],
+    "backend": [
+      {
+        "group": "dependencies",
+        "name": "dotenv",
+        "from": "^18.0.8",
+        "to": "^18.0.9",
+        "target": "18.0.9",
+        "publisher_integrity": "sha512-3fVOW4cB02R066PUSwn8O4TJyz9NckQl7F81blIbaq9jKBm2tSmOKky7ZHIXzGvkVPXCSn6jkpziBPZdGFs8Tw=="
+      },
+      {
+        "group": "dependencies",
+        "name": "fast-json-stringify",
+        "from": "^7.1.0",
+        "to": "^7.2.0",
+        "target": "7.2.0",
+        "publisher_integrity": "sha512-q18imgm9fEdQVfvJbRJALE9VP/A5HGme0+NUnWcmFYM9rbQbLkZZk20FyIp1LQ8gDOauQKwqMc52YozqFaQyOw=="
+      },
+      {
+        "group": "dependencies",
+        "name": "multer",
+        "from": "^2.4.0",
+        "to": "^2.5.0",
+        "target": "2.5.0",
+        "publisher_integrity": "sha512-BsqOzYGVq49JcW2IzoSAxeKYRevb+dGGPPWleOR8Lrlk4igwxu1/9pwSXlByhCb7MVZDrNJFC0IBP5/O5nLYRw=="
+      },
+      {
+        "group": "dependencies",
+        "name": "nodemailer",
+        "from": "^10.1.6",
+        "to": "^10.2.1",
+        "target": "10.2.1",
+        "publisher_integrity": "sha512-ZrDNsPFoDMwefNs7sJwrYiEJ/CG4ClJWDZv05iNJsEBWa8GRDry1QJHTJxsuTAY9eDDKjX4k+q3SxslXJOao7w=="
+      },
+      {
+        "group": "dependencies",
+        "name": "rate-limiter-flexible",
+        "from": "^4.0.1",
+        "to": "^11.2.3",
+        "target": "11.2.3",
+        "publisher_integrity": "sha512-w4HX4toAsEbu1VksOauZwI9d6URb6/4WqJJ5Hg1bESihMt2KJfQ2iTwvDkhIg+y2HetLh65DGu/8xIkUz/xNPA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "stripe",
+        "from": "^22.6.1",
+        "to": "^23.0.1",
+        "target": "23.0.1",
+        "publisher_integrity": "sha512-VFLs9IAzSZ8GIm6/vqhjqOL0fbYrSNYCpgZ3LS3YkSi/i5RnyMpu/Hf9YxPTOCYwc3mZKU3IJvuvKffQH2NLMg=="
+      }
+    ]
+  },
+  "direct_targets": {
+    "frontend": [
+      {
+        "group": "dependencies",
+        "name": "@daypicker/react",
+        "target": "10.0.2",
+        "publisher_integrity": "sha512-Z/gvGXnc/xjRr5Z6l9OhIey00C7kwbIyJ85Pff9B9EWDkjTlkTQztB3qeylmGJDQ9xmxRJUV1W+02rskqarUBw=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@hookform/resolvers",
+        "target": "6.0.0",
+        "publisher_integrity": "sha512-6iBzQnB+YwAveVc8HUi6QYLITn5X+xNKRMFIcNXHZlvp2aTI7yWbj4n/JodXxirMCcBc4VCjb2aYAJh4x07mVw=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-accordion",
+        "target": "1.3.1",
+        "publisher_integrity": "sha512-lCZ6sbGS/7WO0j84yx4srIgOf0MRJ/sZ13RonADXxvKBym8xrxNCq5f6DibGcr38sIlwPk8/52uYdXeOPsbEDw=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-alert-dialog",
+        "target": "1.2.1",
+        "publisher_integrity": "sha512-MWC4N7RY+qsbNrFNo7yQ9ZbdoZEW+B5DtpWxJfUnVCqcQxxqqg3qis3RMPTDbCNaTIdHJSn5XDkl9ZdVWXknLg=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-aspect-ratio",
+        "target": "1.2.0",
+        "publisher_integrity": "sha512-gHEU+Lx8DlT/FYIjZQvvBJrFSwUngXTjh7FeL9QvJaNALDLez6pgDj2axCUihBjtPBy82LN0gNb25+sTcSXNmA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-avatar",
+        "target": "1.3.1",
+        "publisher_integrity": "sha512-ssZOkfQNkFpYVmCPQlr978xSaU7moSrGXdwg4j2Xs2WlGl/1KsSZtfpK+WnLnx0Rwll1BAh6oUrAy/uR31SBvQ=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-checkbox",
+        "target": "1.4.1",
+        "publisher_integrity": "sha512-KWtwhh+98ML3seZ9vO9yRY2OwaQG90dCiDAxjpSNY2AaZ3Hik3B0dsk6m0ILywo/no3A9/SozadyPMNweVT8yw=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-collapsible",
+        "target": "1.2.1",
+        "publisher_integrity": "sha512-fSzLb/qy1wuZSxQBcxpW0hNXYHDMWiIXDGyJGdA4+FSLknOWZsNRrTCUavxb4PI8b8lvHo/CysO6NVi5zLpo5g=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-context-menu",
+        "target": "2.4.1",
+        "publisher_integrity": "sha512-Pddn3Z8lio3/ChxyXaEP3jHTTo1LTHCWwF8+mG1chQlWijP+ttVHBKwezrQTiV6Mj670ojvumqvuGh+mdv33iQ=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-dialog",
+        "target": "1.3.1",
+        "publisher_integrity": "sha512-+0E4qvVTwjAWra9sEhJ+9BTsvHE00zkUuNw1VGh7S+Gc13dfYk+S1PVQdchWDj+XYHhAai7Z7IpzXVDCGsDplg=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-dropdown-menu",
+        "target": "2.2.1",
+        "publisher_integrity": "sha512-XsHcmYG2AcqnvTqrOXXWcMrhquEIlqucizuDH1MV/qMRW+DndpBCMvNeTRXOxqmG1H5j89M/+I0/34Zdd+zDcQ=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-hover-card",
+        "target": "1.2.1",
+        "publisher_integrity": "sha512-4QooHxgmpCKRjj1Pft+hETKidYcrbPKcVwMGtk2Oa5DcWY2IH1fHuQt9LG6q5hUQBBV2MhQxSvtx6B/C1xfiTw=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-label",
+        "target": "2.1.17",
+        "publisher_integrity": "sha512-xmj7MN/drx1oUAXkfiFIvyDmGNUIN/omGobvA5oAoNqu9zO2MkISYGZOkBcqSzs/UZXXwV+/3ACRE7q7mGcmkA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-menubar",
+        "target": "1.2.1",
+        "publisher_integrity": "sha512-bRTYtS9JITV2dUYqYZb7+N5SooQBkZrNRejfmyrSKe3Y57aXhKgx//kBUP0kY7pEpsWR/U1AHsAJRzjwCrK3PA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-navigation-menu",
+        "target": "1.4.1",
+        "publisher_integrity": "sha512-XPPZjkeyCSMNNvt0FyDv/PUauG7Ow4GwHQ/XZSwW36F/TS7rR4HFTsXH8ewLnXTOLn3x96/pmTPNQIVoTX/86g=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-popover",
+        "target": "1.3.1",
+        "publisher_integrity": "sha512-ZNxvXRx5W2Wos4fXCXb5lpdqN0Z5chf+mStOUOTr4ik7d+62MRvoe9rzCA/eGNg36lxXqSrKEKmwuZEcUrIstw=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-progress",
+        "target": "1.2.1",
+        "publisher_integrity": "sha512-yQBiM6J3YM8Ums1orkEFpbznK47geKxa0igikzcaS1xHgdba3DdAQBsGbCTt5BVfR8zhEvgxQ0poGcINaD3lvw=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-radio-group",
+        "target": "1.5.1",
+        "publisher_integrity": "sha512-QbyVT1ddnjqB9H+CUYKkNWdU9fIK3QHCYtjf7mS6ekSqiuXkWtWn5UZW9mhA8qtl3vrVyIsmR9gePstAtKrqkw=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-scroll-area",
+        "target": "1.4.0",
+        "publisher_integrity": "sha512-CFrLqHNejWq5FhKAcj9V/WPGRsol76HBQto81NdOBVFEOqIEkJkKIJt0Z824A/9hHLCtoiR/Kw3euRgzXP2pxg=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-select",
+        "target": "2.4.1",
+        "publisher_integrity": "sha512-888ZwW0Md6GyptuqYABRX9nLKgoYfcooCyBBvVaX5Jp3e+8Jp2i4Zo/Uy50Hm+Ysn2JfloQXstW4U36w8teVtg=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-separator",
+        "target": "1.2.0",
+        "publisher_integrity": "sha512-1jUAap0wZEqVP05Ou7kJgRxe/W+Qftng+rUNWGa0qkKbv9r5pWTG3E7a3ELKo2eJoHKMECnzuYrZpSyO1YgcYQ=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-slider",
+        "target": "1.6.1",
+        "publisher_integrity": "sha512-IRNRR90moPqxfwCJ0XbMJIxo70W0/1ZExT/sNCxEHMaPx0SF9HoQrcPEC75+H28cFKa0b+KH63anfLYJmwKacw=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-slot",
+        "target": "1.5.0",
+        "publisher_integrity": "sha512-tyYd9ddPXAysAbdbD9eYxgwpCSv6f3PncqVSNKQFSR5lcJVLz3cb/pANDoYrLiHBpXv7skortyUgGUWsYuPPFQ=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-switch",
+        "target": "1.4.1",
+        "publisher_integrity": "sha512-NpBGwc40rY02ZmSvuyeKk0Bvc8ZsNeTMi4qHvJ+ZH4EiYCv0zIXEgdCW4bVdzgIUeP9xxbLJSxKOUfqITYNmkA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-tabs",
+        "target": "1.2.1",
+        "publisher_integrity": "sha512-hRoJlode+hg5ZNlR+3tkfkUliIybdTpD5lkAvHQ9yaXseGf7XVO9Ib2GPEIOuaJJbo7YWYbNpDDRfo8Dhf6/xA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-toast",
+        "target": "1.3.1",
+        "publisher_integrity": "sha512-iQvL0J7XK4HtJNGkkWMyYrboNseI7vtotFeUkIno8YNxVA9oM7B6//fh0Mc6TSKI96+zioLWi98lQLso88yJmQ=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-toggle",
+        "target": "1.2.1",
+        "publisher_integrity": "sha512-+3MUq+WyiBplXYqQ0EIYlq8R4sLQ0T5NbOK7DMdDLCKO93pe2uE0DUJTWWfTBprpJJXxfoF3eMW0xpakVZrYsg=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-toggle-group",
+        "target": "1.2.1",
+        "publisher_integrity": "sha512-O8Ldx5ao4p4KoW+DO8/PmkOe5mdKNi3F2SseqjVj88wvDGDHe60cUmO0Zm/uHsKrvNgQGV8Efpuh95Tht/h4vw=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@radix-ui/react-tooltip",
+        "target": "1.4.1",
+        "publisher_integrity": "sha512-NxLFGSFtZ78zVfcoOhTwR1xwqo5qx1Jh8Pw6FMZ9McCaqfRzz7/gIRahs2Oy5XlPgQ+8QkUcKbN5B0U44J/kCg=="
+      },
+      {
+        "group": "dependencies",
+        "name": "@tanstack/react-query",
+        "target": "5.104.5",
+        "publisher_integrity": "sha512-RORgFe052U+93weaNuqg7qHq7vNVNzXN/VrXqD4bbAuQCWUqOl2lV5Ui9flWk5CVvMyL/Bh27QWhzwH0aaOx9g=="
+      },
+      {
+        "group": "dependencies",
+        "name": "axios",
+        "target": "1.20.0",
+        "publisher_integrity": "sha512-r8aOh8j9cGKpgQAqpzrUHnSIc6a59Y3Xf/cv8sy1DrHCkZHzQGEuoq1tARk6qSyDdtQGSDgpb9kFlruzPvrgwg=="
+      },
+      {
+        "group": "dependencies",
+        "name": "class-variance-authority",
+        "target": "0.7.1",
+        "publisher_integrity": "sha512-Ka+9Trutv7G8M6WT6SeiRWz792K5qEqIGEGzXKhAE6xOWAY6pPH8U+9IY3oCMv6kqTmLsv7Xh/2w2RigkePMsg=="
+      },
+      {
+        "group": "dependencies",
+        "name": "clsx",
+        "target": "2.1.1",
+        "publisher_integrity": "sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "cmdk",
+        "target": "1.1.1",
+        "publisher_integrity": "sha512-Vsv7kFaXm+ptHDMZ7izaRsP70GgrW9NBNGswt9OZaVBLlE0SNpDq8eu/VGXyF9r7M0azK3Wy7OlYXsuyYLFzHg=="
+      },
+      {
+        "group": "dependencies",
+        "name": "date-fns",
+        "target": "4.4.0",
+        "publisher_integrity": "sha512-+1UMbeh68lH1SegH83CGWwpb6OHHbpSgr3+s5Eww5M4CAgswBpoWS0AjTOfEJ33HiYKz1hdj/KTFprzXHmq/6w=="
+      },
+      {
+        "group": "dependencies",
+        "name": "embla-carousel-react",
+        "target": "8.6.0",
+        "publisher_integrity": "sha512-0/PjqU7geVmo6F734pmPqpyHqiM99olvyecY7zdweCw+6tKEXnrE90pBiBbMMU8s5tICemzpQ3hi5EpxzGW+JA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "framer-motion",
+        "target": "14.6.0",
+        "publisher_integrity": "sha512-MzBgZxGgoHPfSLEXmo4o5XlZvb+nVRFdHtGjVhm6LMIEJKTt/8hNO023euL5mYyzc8llV/hQTfjnN68tNRHalw=="
+      },
+      {
+        "group": "dependencies",
+        "name": "html-to-image",
+        "target": "1.11.13",
+        "publisher_integrity": "sha512-cuOPoI7WApyhBElTTb9oqsawRvZ0rHhaHwghRLlTuffoD1B2aDemlCruLeZrUIIdvG7gs9xeELEPm6PhuASqrg=="
+      },
+      {
+        "group": "dependencies",
+        "name": "input-otp",
+        "target": "1.5.0",
+        "publisher_integrity": "sha512-3AcfdW1sNG0FmSA5hHMBXG7jNW5CdcdKs8ln8JOmn6S2SRkoXoJx+2UwC+ZvjflfnOdHJx0SfQ9/YjlxVYLtGQ=="
+      },
+      {
+        "group": "dependencies",
+        "name": "lucide-react",
+        "target": "1.61.0",
+        "publisher_integrity": "sha512-v2SQPPPNjnr+BlhL9Spuzmo5yR+hLkftfuE4E3jaxdNPgSH0hJKPcLJBP7yAta87jQNPsSERS59PJjCJ/CorBA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "next-themes",
+        "target": "0.4.6",
+        "publisher_integrity": "sha512-pZvgD5L0IEvX5/9GWyHMf3m8BKiVQwsCMHfoFosXtXBMnaS0ZnIJ9ST4b4NqLVKDEm8QBxoNNGNaBv2JNF6XNA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "qrcode.react",
+        "target": "4.2.0",
+        "publisher_integrity": "sha512-QpgqWi8rD9DsS9EP3z7BT+5lY5SFhsqGjpgW5DY/i3mK4M9DTBNz3ErMi8BWYEfI3L0d8GIbGmcdFAS1uIRGjA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "react",
+        "target": "19.3.1",
+        "publisher_integrity": "sha512-QNhWdt7nrgVWWQG58QuGsAR3jv3Hbe4mb4vz7w2csnHavciZJgda1CPNaldF6eVxv90ud3jUXpKlHL69gO38yw=="
+      },
+      {
+        "group": "dependencies",
+        "name": "react-dom",
+        "target": "19.3.1",
+        "publisher_integrity": "sha512-Y0bARz53lhEC1NMCASs0/j+faB/zqt3R8hpvg1e8+61ZVJ4UL0UdC4cBbXfZMcIuhrfgeILTLe+ZeBCavQPtKQ=="
+      },
+      {
+        "group": "dependencies",
+        "name": "react-hook-form",
+        "target": "7.91.0",
+        "publisher_integrity": "sha512-5BEBUnCBwa28AFXYTYmOaB/+CSpJ/+CWVASHEvIGUzFdHyUiPHeRhG7r5hOZ8nZi0yP7pbHdFNXO/p31EKTJFQ=="
+      },
+      {
+        "group": "dependencies",
+        "name": "react-markdown",
+        "target": "10.1.0",
+        "publisher_integrity": "sha512-qKxVopLT/TyA6BX3Ue5NwabOsAzm0Q7kAPwq6L+wWDwisYs7R8vZ0nRXqq6rkueboxpkjvLGU9fWifiX/ZZFxQ=="
+      },
+      {
+        "group": "dependencies",
+        "name": "react-resizable-panels",
+        "target": "4.15.0",
+        "publisher_integrity": "sha512-DRjF1E8QHg4j5n6RcpxDoeP0C15T0w+dlEE9eyooGCwOE8rPPxfXt4OfhJjEuezzCG/JjRwh5ZHLVkakUJF+dA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "react-router",
+        "target": "8.5.0",
+        "publisher_integrity": "sha512-9nEd/deifcTJIIcUaNIyQGkyXD0D6QVB9XD2O5GgHpP3xu3U5RXm87YQ8++Wn8JQWgMBM/5+PjWPM/7n7O7WHA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "recharts",
+        "target": "3.10.1",
+        "publisher_integrity": "sha512-QXFrvt6IVcw7eeZCoyXTwkIJAX3Dv1nyVhMicXJ47GsGDDpcN8z6o644DibE9XjpBTThtsomLKnTV6lc+cVFUA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "remark-breaks",
+        "target": "4.0.0",
+        "publisher_integrity": "sha512-IjEjJOkH4FuJvHZVIW0QCDWxcG96kCq7An/KVH2NfJe6rKZU2AsHeB3OEjPNRxi4QC34Xdx7I2KGYn6IpT7gxQ=="
+      },
+      {
+        "group": "dependencies",
+        "name": "remark-gfm",
+        "target": "4.0.1",
+        "publisher_integrity": "sha512-1quofZ2RQ9EWdeN34S79+KExV1764+wCUGop5CPL1WGdD0ocPpu91lzPGbwWMECpEpd42kJGQwzRfyov9j4yNg=="
+      },
+      {
+        "group": "dependencies",
+        "name": "sonner",
+        "target": "2.0.8",
+        "publisher_integrity": "sha512-UM/ByIoFra8yzV75n1o0Puu0bw5U/9UNnDacrJNspekBewIfsQ3D6ez1nvlWpt7aTsO6rujQtifBpycwIivqlg=="
+      },
+      {
+        "group": "dependencies",
+        "name": "tailwind-merge",
+        "target": "3.7.0",
+        "publisher_integrity": "sha512-XPPUyAc+cvspz3lHTcR/QgPfW2A0lv/xQNIjX3HGhLR+Nq2lHaLq5MtTesHn8GUr3W3DguT2KT5x3NVgRtYwmA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "tailwindcss-animate",
+        "target": "1.0.7",
+        "publisher_integrity": "sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "vaul",
+        "target": "1.1.2",
+        "publisher_integrity": "sha512-ZFkClGpWyI2WUQjdLJ/BaGuV6AVQiJ3uELGk3OYtP+B6yCO7Cmn9vPFXVJkRaGkOJu3m8bQMgtyzNHixULceQA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "zod",
+        "target": "4.6.7",
+        "publisher_integrity": "sha512-g8W2D2kU6a8untc053fX1uVBKzM7yqAxW/3zwk83+6RyF2+SKOuV+c0wBDhUwzV1PaGapmZH+rmcUzPf+3CGwg=="
+      },
+      {
+        "group": "devDependencies",
+        "name": "@eslint/js",
+        "target": "10.0.1",
+        "publisher_integrity": "sha512-zeR9k5pd4gxjZ0abRoIaxdc7I3nDktoXZk2qOv9gCNWx3mVwEn32VRhyLaRsDiJjTs0xq/T8mfPtyuXu7GWBcA=="
+      },
+      {
+        "group": "devDependencies",
+        "name": "@tailwindcss/vite",
+        "target": "4.3.3",
+        "publisher_integrity": "sha512-yYU8cogLeSh/ms2jh8Fj7jaba/EWa7Ja6GoUqYZaraEuCI5YS6ms6ObZgjjedm+jm6XZjdNRWBpPP6Z86oOxcw=="
+      },
+      {
+        "group": "devDependencies",
+        "name": "@testing-library/react",
+        "target": "16.3.3",
+        "publisher_integrity": "sha512-Uo193NgQbPMz6lrrhtRQQFcMC6Re/ELLFbbuVL30WDlZxlpZf9/lMHTAVxPRLw1q1iu9OJmR1c2BLiENRstdBg=="
+      },
+      {
+        "group": "devDependencies",
+        "name": "@types/react",
+        "target": "19.3.0",
+        "publisher_integrity": "sha512-N0rFCuH9YoxG9/m61l9MfpJKfmLOVU0em7ipIz6TRgSSkvReLB9vL85GB+yr8Bs5leqpvg96JSwF4ZS1s4viQg=="
+      },
+      {
+        "group": "devDependencies",
+        "name": "@types/react-dom",
+        "target": "19.3.0",
+        "publisher_integrity": "sha512-ZI7bU42mZXXKHn/qNLEw2IrbiINU7X5+vfgdixBHkCNpYWXjKgfQ/P+uyGb5CjOLB9UcnTeg3rylQtV2hym44Q=="
+      },
+      {
+        "group": "devDependencies",
+        "name": "@vitejs/plugin-react",
+        "target": "6.1.2",
+        "publisher_integrity": "sha512-fhJNGUdscQa4HkI0xFxwonWyhnVReCPDbXI7FH7jmzpnVCrFQI7PRrhWecO263610vOrs9tr2Y4xcf8uAdFxbw=="
+      },
+      {
+        "group": "devDependencies",
+        "name": "autoprefixer",
+        "target": "10.6.1",
+        "publisher_integrity": "sha512-cL1Qz6ADZhcEbny/8HPfe99J6HhNoYtpX2LFLIbhgGE7Q1hlQVkYFdetDN7Id3KiQxhDrHwzlHr/YQCnZ8+xSA=="
+      },
+      {
+        "group": "devDependencies",
+        "name": "eslint",
+        "target": "10.13.0",
+        "publisher_integrity": "sha512-UohDjD4zSzEwhf58M3O7vc/ycc8O1I7dNlhtD0WxE8Px8EHNJKtUwzBqrzeGhisRuv2ag4sAYswszCJRgKXYUg=="
+      },
+      {
+        "group": "devDependencies",
+        "name": "eslint-plugin-react",
+        "target": "7.37.5",
+        "publisher_integrity": "sha512-Qteup0SqU15kdocexFNAJMvCJEfa2xUKNV4CC1xsVMrIIqEy3SQ/rqyxCWNzfrd3/ldy6HMlD2e0JDVpDg2qIA=="
+      },
+      {
+        "group": "devDependencies",
+        "name": "eslint-plugin-react-hooks",
+        "target": "7.1.1",
+        "publisher_integrity": "sha512-f2I7Gw6JbvCexzIInuSbZpfdQ44D7iqdWX01FKLvrPgqxoE7oMj8clOfto8U6vYiz4yd5oKu39rRSVOe1zRu0g=="
+      },
+      {
+        "group": "devDependencies",
+        "name": "eslint-plugin-react-refresh",
+        "target": "0.5.7",
+        "publisher_integrity": "sha512-XhJSzLljuYD4UjNuFGJu2v7aD3sqNVK12w5/DCUfrNfHWegZo2+TsavNx8MuxMwEquuFAzNbNfXKU0WoZ+YUIg=="
+      },
+      {
+        "group": "devDependencies",
+        "name": "globals",
+        "target": "17.13.0",
+        "publisher_integrity": "sha512-RwMTC61u7hrG3ZJMkZQOK4JLJrKS8QtoTii63EmWvFXHqycY9FObBJQCbsLxSO8kjKhWE5kV1GC+Vb1g3RI0Zg=="
+      },
+      {
+        "group": "devDependencies",
+        "name": "jsdom",
+        "target": "30.1.3",
+        "publisher_integrity": "sha512-hQMUPvRgN7KxsfIytDQji7bimuJeRQa6Qo5+iuiZQk5CafeRxLIA10/cG5YCBFNpD9RO3oqIiN4CO1Y44kxqXg=="
+      },
+      {
+        "group": "devDependencies",
+        "name": "postcss",
+        "target": "8.5.31",
+        "publisher_integrity": "sha512-YUbWYCgErwnMAVkjUnYa+KlMBzGpHwiIt/DE7f0G33AuX2LH9UcTk6KgWxd3zRU+pN3u/C+Xl3EnMLM4Hea7Sg=="
+      },
+      {
+        "group": "devDependencies",
+        "name": "tailwindcss",
+        "target": "4.3.3",
+        "publisher_integrity": "sha512-gOhV3P7ufE62QDGg1zVaTgCR+EtPv92k2nIhVcVKcLmxT1sUBsQGhnZj175j+MqRt4zLF7ic+sCYjfhxMxj7YQ=="
+      },
+      {
+        "group": "devDependencies",
+        "name": "vite",
+        "target": "8.3.5",
+        "publisher_integrity": "sha512-z1YpjieJ9g0ebTmQpLBv/oq9E3F9EIlOe+7LahW8SrE3LTiG3udBRUXQOlYXP9b+IC2q2phHeVxj9xGlw34OEQ=="
+      },
+      {
+        "group": "devDependencies",
+        "name": "vitest",
+        "target": "5.0.5",
+        "publisher_integrity": "sha512-cPODOMF8YnkiiYtDdHo6n4wWmBrOBBbOIYH2d33M4l3CdNn72h+qMmO6uXffUN6A5AZFXNND/d+krS9mgkXRfg=="
+      },
+      {
+        "group": "optionalDependencies",
+        "name": "@emnapi/core",
+        "target": "1.11.3",
+        "publisher_integrity": "sha512-zLpS5asjEb7lq8jYLq37N6XKaE41DIexlY1rF/z4/tIl3wo13Sqm28fRyfIsKZD+NZ8mM5RoKkpW/rBcuoSZSg=="
+      },
+      {
+        "group": "optionalDependencies",
+        "name": "@emnapi/runtime",
+        "target": "1.11.3",
+        "publisher_integrity": "sha512-Xz4Tpyki7XyrpbUK1jR1AhdAdaXyhhY4lZ3neLodmhpuWfy2PAQN5B46sAiU4liOXGLkHypn/qU+jvfWSCYYLA=="
+      },
+      {
+        "group": "optionalDependencies",
+        "name": "@emnapi/wasi-threads",
+        "target": "2.2.0",
+        "publisher_integrity": "sha512-JP7OYH38Q7+pyTAe14raZHLQIK7BDKbdwji+Xi3pcd/6QkJYQH3SX4wu6EplGrGJWRepoNzedfm0G3B9Z4e9Rw=="
+      }
+    ],
+    "backend": [
+      {
+        "group": "dependencies",
+        "name": "bcryptjs",
+        "target": "3.0.3",
+        "publisher_integrity": "sha512-GlF5wPWnSa/X5LKM1o0wz0suXIINz1iHRLvTS+sLyi7XPbe5ycmYI3DlZqVGZZtDgl4DmasFg7gOB3JYbphV5g=="
+      },
+      {
+        "group": "dependencies",
+        "name": "compression",
+        "target": "1.8.2",
+        "publisher_integrity": "sha512-o8vI5RE5A6EVVOd9o41jKp41aJom+QTEO/Bx8MYNjexMo/Bv2WOjUfZr+aL0WnYSgymUy6zeguqLTsIhV0gMvQ=="
+      },
+      {
+        "group": "dependencies",
+        "name": "cors",
+        "target": "2.8.6",
+        "publisher_integrity": "sha512-tJtZBBHA6vjIAaF6EnIaq6laBBP9aq/Y3ouVJjEfoHbRBcHBAHYcMh/w8LDrk2PvIMMq8gmopa5D4V8RmbrxGw=="
+      },
+      {
+        "group": "dependencies",
+        "name": "dotenv",
+        "target": "18.0.9",
+        "publisher_integrity": "sha512-3fVOW4cB02R066PUSwn8O4TJyz9NckQl7F81blIbaq9jKBm2tSmOKky7ZHIXzGvkVPXCSn6jkpziBPZdGFs8Tw=="
+      },
+      {
+        "group": "dependencies",
+        "name": "express",
+        "target": "5.3.0",
+        "publisher_integrity": "sha512-qCqy1xSoaugxOD4IVHb1ZWdkvCF2W3aE2okKouWj8VwJ+ztskSiXoBnCSJqfKT+cVPJhuJqe9YLbY425+Zh00g=="
+      },
+      {
+        "group": "dependencies",
+        "name": "express-rate-limit",
+        "target": "8.7.1",
+        "publisher_integrity": "sha512-2FXbqkygil3mZiXzEtM0IjE/UBmBNot0J1GEVrJT4JbrvwOSoEtqtO+wHbiMQELWe1eNvHoYRg2dkjOid+6JkA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "express-session",
+        "target": "1.19.0",
+        "publisher_integrity": "sha512-0csaMkGq+vaiZTmSMMGkfdCOabYv192VbytFypcvI0MANrp+4i/7yEkJ0sbAEhycQjntaKGzYfjfXQyVb7BHMA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "fast-json-stringify",
+        "target": "7.2.0",
+        "publisher_integrity": "sha512-q18imgm9fEdQVfvJbRJALE9VP/A5HGme0+NUnWcmFYM9rbQbLkZZk20FyIp1LQ8gDOauQKwqMc52YozqFaQyOw=="
+      },
+      {
+        "group": "dependencies",
+        "name": "form-data",
+        "target": "4.0.6",
+        "publisher_integrity": "sha512-vKatAh4SlVfgbv+YtmhiRjhEMJsYpsG1Y2rMQtR+SVSbytsSD1YGzDIcrAJmdFec88u/+VoGmxnl+80gL1tRCQ=="
+      },
+      {
+        "group": "dependencies",
+        "name": "helmet",
+        "target": "8.3.0",
+        "publisher_integrity": "sha512-Qgpiaws3Sm30Av8Eah6sjMCZZwjlBu+E68rhpCWBshY1lb09HtLwj5GviX0OyQIn+ulUS0iX0AxN5n3tLZzz1w=="
+      },
+      {
+        "group": "dependencies",
+        "name": "jsonwebtoken",
+        "target": "9.0.3",
+        "publisher_integrity": "sha512-MT/xP0CrubFRNLNKvxJ2BYfy53Zkm++5bX9dtuPbqAeQpTVe0MQTFhao8+Cp//EmJp244xt6Drw/GVEGCUj40g=="
+      },
+      {
+        "group": "dependencies",
+        "name": "lru-cache",
+        "target": "11.5.3",
+        "publisher_integrity": "sha512-U4N8FgzmWxc8k1VH8Kr6lQg18U7Fjvby6wXHVRX/ZZ7IwWbRMgrRbP0Wrb5q5NVinryp4SQampHKdvtecItxUg=="
+      },
+      {
+        "group": "dependencies",
+        "name": "multer",
+        "target": "2.5.0",
+        "publisher_integrity": "sha512-BsqOzYGVq49JcW2IzoSAxeKYRevb+dGGPPWleOR8Lrlk4igwxu1/9pwSXlByhCb7MVZDrNJFC0IBP5/O5nLYRw=="
+      },
+      {
+        "group": "dependencies",
+        "name": "nodemailer",
+        "target": "10.2.1",
+        "publisher_integrity": "sha512-ZrDNsPFoDMwefNs7sJwrYiEJ/CG4ClJWDZv05iNJsEBWa8GRDry1QJHTJxsuTAY9eDDKjX4k+q3SxslXJOao7w=="
+      },
+      {
+        "group": "dependencies",
+        "name": "pino",
+        "target": "10.4.0",
+        "publisher_integrity": "sha512-bk1ZMTwG/Vymx+zPoa28MhNzucFvXJWp3csrSuxuHPSMeUettaCoQ5Jvg07mtC4JGNpcfTwz41oVCnNgBK9+vA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "pino-http",
+        "target": "11.0.0",
+        "publisher_integrity": "sha512-wqg5XIAGRRIWtTk8qPGxkbrfiwEWz1lgedVLvhLALudKXvg1/L2lTFgTGPJ4Z2e3qcRmxoFxDuSdMdMGNM6I1g=="
+      },
+      {
+        "group": "dependencies",
+        "name": "pino-pretty",
+        "target": "13.2.0",
+        "publisher_integrity": "sha512-jjghD1ML+Di/WxjJDz6j6Y4FT7hIXOlb8h27AyJ+ohtAXJXH4PS/xkv7si+RCCIW59HMgZsMKTDgzdr0RhuRrg=="
+      },
+      {
+        "group": "dependencies",
+        "name": "pouchdb",
+        "target": "9.0.0",
+        "publisher_integrity": "sha512-6wjFc/PzwaWz86rmMXoqdBlR/fBSkNoWO1mEJO7RZNS6n3xf+fhhXWAWtws741KpLKx84IkmmJ48tp+fhFzj4A=="
+      },
+      {
+        "group": "dependencies",
+        "name": "pouchdb-find",
+        "target": "9.0.0",
+        "publisher_integrity": "sha512-vvVhq4eEOmSkwSRwf2NBYtdhURB7ryJ7sUI4WDN00GuLUj2g8jAXBJuZIryVgdYt/5S5cfn70iRL6Eow+LFhpA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "rate-limiter-flexible",
+        "target": "11.2.3",
+        "publisher_integrity": "sha512-w4HX4toAsEbu1VksOauZwI9d6URb6/4WqJJ5Hg1bESihMt2KJfQ2iTwvDkhIg+y2HetLh65DGu/8xIkUz/xNPA=="
+      },
+      {
+        "group": "dependencies",
+        "name": "sirv",
+        "target": "3.0.2",
+        "publisher_integrity": "sha512-2wcC/oGxHis/BoHkkPwldgiPSYcpZK3JU28WoMVv55yHJgcZ8rlXvuG9iZggz+sU1d4bRgIGASwyWqjxu3FM0g=="
+      },
+      {
+        "group": "dependencies",
+        "name": "stripe",
+        "target": "23.0.1",
+        "publisher_integrity": "sha512-VFLs9IAzSZ8GIm6/vqhjqOL0fbYrSNYCpgZ3LS3YkSi/i5RnyMpu/Hf9YxPTOCYwc3mZKU3IJvuvKffQH2NLMg=="
+      },
+      {
+        "group": "dependencies",
+        "name": "validator",
+        "target": "13.15.35",
+        "publisher_integrity": "sha512-TQ5pAGhd5whStmqWvYF4OjQROlmv9SMFVt37qoCBdqRffuuklWYQlCNnEs2ZaIBD1kZRNnikiZOS1eqgkar0iw=="
+      }
+    ]
+  },
+  "known_security_packages": [
+    "body-parser",
+    "fast-uri",
+    "multer"
+  ],
+  "existing_uuid_override": {
+    "selected": "11.1.1",
+    "publisher_latest": "14.0.3",
+    "latest_major_compatibility_unqualified": true
+  }
+}

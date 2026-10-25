@@ -1,0 +1,284 @@
+--- a/package.json
++++ b/package.json
+@@ -3 +3 @@
+-  "version": "7.37.5",
++  "version": "7.37.5+sharet.eslint10.1",
+@@ -39,18 +39,18 @@
+-    "array-includes": "^3.1.8",
+-    "array.prototype.findlast": "^1.2.5",
+-    "array.prototype.flatmap": "^1.3.3",
+-    "array.prototype.tosorted": "^1.1.4",
+-    "doctrine": "^2.1.0",
+-    "es-iterator-helpers": "^1.2.1",
+-    "estraverse": "^5.3.0",
+-    "hasown": "^2.0.2",
+-    "jsx-ast-utils": "^2.4.1 || ^3.0.0",
+-    "minimatch": "^3.1.2",
+-    "object.entries": "^1.1.9",
+-    "object.fromentries": "^2.0.8",
+-    "object.values": "^1.2.1",
+-    "prop-types": "^15.8.1",
+-    "resolve": "^2.0.0-next.5",
+-    "semver": "^6.3.1",
+-    "string.prototype.matchall": "^4.0.12",
+-    "string.prototype.repeat": "^1.0.0"
++    "array-includes": "3.2.0",
++    "array.prototype.findlast": "1.2.5",
++    "array.prototype.flatmap": "1.3.3",
++    "array.prototype.tosorted": "1.1.4",
++    "doctrine": "3.0.0",
++    "es-iterator-helpers": "1.4.0",
++    "estraverse": "5.3.0",
++    "hasown": "2.0.4",
++    "jsx-ast-utils": "3.3.5",
++    "minimatch": "10.2.6",
++    "object.entries": "1.1.9",
++    "object.fromentries": "2.0.8",
++    "object.values": "1.2.1",
++    "prop-types": "15.8.1",
++    "resolve": "1.22.13",
++    "semver": "7.8.5",
++    "string.prototype.matchall": "4.1.0",
++    "string.prototype.repeat": "1.0.0"
+@@ -92 +92 @@
+-    "eslint": "^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7"
++    "eslint": "^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7 || ^10.0.0"
+@@ -95 +95 @@
+-    "node": ">=4"
++    "node": "^22.23.4 || ^24.22.1 || >=26.12.1"
+--- a/lib/rules/forbid-component-props.js
++++ b/lib/rules/forbid-component-props.js
+@@ -8 +8 @@
+-const minimatch = require('minimatch');
++const { minimatch } = require('minimatch');
+--- a/lib/rules/forward-ref-uses-ref.js
++++ b/lib/rules/forward-ref-uses-ref.js
+@@ -60 +60 @@
+-    const sourceCode = context.getSourceCode();
++    const sourceCode = context.sourceCode || context.getSourceCode();
+--- a/lib/rules/jsx-curly-spacing.js
++++ b/lib/rules/jsx-curly-spacing.js
+@@ -12,0 +13,2 @@
++
++const isSpaceBetween = require('../util/eslint').isSpaceBetween;
+@@ -395 +397 @@
+-        if (!sourceCode.isSpaceBetweenTokens(first, second)) {
++        if (!isSpaceBetween(sourceCode, first, second)) {
+@@ -400 +402 @@
+-        if (!sourceCode.isSpaceBetweenTokens(penultimate, last)) {
++        if (!isSpaceBetween(sourceCode, penultimate, last)) {
+@@ -410 +412 @@
+-        } else if (sourceCode.isSpaceBetweenTokens(first, second)) {
++        } else if (isSpaceBetween(sourceCode, first, second)) {
+@@ -417 +419 @@
+-        } else if (sourceCode.isSpaceBetweenTokens(penultimate, last)) {
++        } else if (isSpaceBetween(sourceCode, penultimate, last)) {
+--- a/lib/rules/jsx-equals-spacing.js
++++ b/lib/rules/jsx-equals-spacing.js
+@@ -6,0 +7,2 @@
++
++const isSpaceBetween = require('../util/eslint').isSpaceBetween;
+@@ -66,2 +68,2 @@
+-          const spacedBefore = sourceCode.isSpaceBetweenTokens(attrNode.name, equalToken);
+-          const spacedAfter = sourceCode.isSpaceBetweenTokens(equalToken, attrNode.value);
++          const spacedBefore = isSpaceBetween(sourceCode, attrNode.name, equalToken);
++          const spacedAfter = isSpaceBetween(sourceCode, equalToken, attrNode.value);
+--- a/lib/rules/jsx-filename-extension.js
++++ b/lib/rules/jsx-filename-extension.js
+@@ -64 +64 @@
+-    const filename = context.getFilename();
++    const filename = typeof context.filename === 'string' ? context.filename : context.getFilename();
+--- a/lib/rules/jsx-handler-names.js
++++ b/lib/rules/jsx-handler-names.js
+@@ -8 +8 @@
+-const minimatch = require('minimatch');
++const { minimatch } = require('minimatch');
+--- a/lib/rules/jsx-one-expression-per-line.js
++++ b/lib/rules/jsx-one-expression-per-line.js
+@@ -6,0 +7,2 @@
++
++const isSpaceBetween = require('../util/eslint').isSpaceBetween;
+@@ -174 +176 @@
+-              || getSourceCode(context).isSpaceBetweenTokens(prevChild, child);
++              || isSpaceBetween(getSourceCode(context), prevChild, child);
+@@ -180 +182 @@
+-              || getSourceCode(context).isSpaceBetweenTokens(child, nextChild);
++              || isSpaceBetween(getSourceCode(context), child, nextChild);
+--- a/lib/rules/jsx-pascal-case.js
++++ b/lib/rules/jsx-pascal-case.js
+@@ -9 +9 @@
+-const minimatch = require('minimatch');
++const { minimatch } = require('minimatch');
+--- a/lib/rules/jsx-space-before-closing.js
++++ b/lib/rules/jsx-space-before-closing.js
+@@ -7,0 +8,2 @@
++
++const isSpaceBetween = require('../util/eslint').isSpaceBetween;
+@@ -68 +70 @@
+-        if (configuration === 'always' && !sourceCode.isSpaceBetweenTokens(leftToken, closingSlash)) {
++        if (configuration === 'always' && !isSpaceBetween(sourceCode, leftToken, closingSlash)) {
+@@ -75 +77 @@
+-        } else if (configuration === 'never' && sourceCode.isSpaceBetweenTokens(leftToken, closingSlash)) {
++        } else if (configuration === 'never' && isSpaceBetween(sourceCode, leftToken, closingSlash)) {
+--- a/lib/rules/jsx-tag-spacing.js
++++ b/lib/rules/jsx-tag-spacing.js
+@@ -6,0 +7,2 @@
++
++const isSpaceBetween = require('../util/eslint').isSpaceBetween;
+@@ -43 +45 @@
+-    adjacent = !sourceCode.isSpaceBetweenTokens(lastTokens[0], lastTokens[1]);
++    adjacent = !isSpaceBetween(sourceCode, lastTokens[0], lastTokens[1]);
+@@ -73 +75 @@
+-    adjacent = !sourceCode.isSpaceBetweenTokens(firstTokens[0], firstTokens[1]);
++    adjacent = !isSpaceBetween(sourceCode, firstTokens[0], firstTokens[1]);
+@@ -125 +127 @@
+-  const adjacent = !sourceCode.isSpaceBetweenTokens(leftToken, closingSlash);
++  const adjacent = !isSpaceBetween(sourceCode, leftToken, closingSlash);
+@@ -157 +159 @@
+-  const adjacent = !sourceCode.isSpaceBetweenTokens(openingToken, node.name);
++  const adjacent = !isSpaceBetween(sourceCode, openingToken, node.name);
+@@ -212 +214 @@
+-    const adjacent = !sourceCode.isSpaceBetweenTokens(leftToken, closingToken);
++    const adjacent = !isSpaceBetween(sourceCode, leftToken, closingToken);
+--- a/lib/rules/no-danger.js
++++ b/lib/rules/no-danger.js
+@@ -10 +10 @@
+-const minimatch = require('minimatch');
++const { minimatch } = require('minimatch');
+--- a/lib/rules/no-unstable-nested-components.js
++++ b/lib/rules/no-unstable-nested-components.js
+@@ -8 +8 @@
+-const minimatch = require('minimatch');
++const { minimatch } = require('minimatch');
+--- a/lib/util/componentUtil.js
++++ b/lib/util/componentUtil.js
+@@ -72 +72 @@
+-    comment = sourceCode.getJSDocComment(node);
++    comment = eslintUtil.getJSDocComment(sourceCode, node);
+--- a/lib/util/eslint.js
++++ b/lib/util/eslint.js
+@@ -38,0 +39,93 @@
++// Adapted from ESLint v9.39.4 SourceCode; retain LICENSE.eslint.
++function getJSDocComment(sourceCode, node) {
++  if (typeof sourceCode.getJSDocComment === 'function') {
++    return sourceCode.getJSDocComment(node);
++  }
++
++  /**
++   * Checks for the presence of a JSDoc comment for the given node and returns it.
++   * @param {ASTNode} astNode The AST node to get the comment for.
++   * @returns {Token|null} The Block comment token containing the JSDoc comment
++   *      for the given node or null if not found.
++   * @private
++   */
++  const findJSDocComment = (astNode) => {
++    const tokenBefore = sourceCode.getTokenBefore(astNode, {
++      includeComments: true,
++    });
++
++    if (
++      tokenBefore &&
++      tokenBefore.type === 'Block' &&
++      tokenBefore.value.charAt(0) === '*' &&
++      astNode.loc.start.line - tokenBefore.loc.end.line <= 1
++    ) {
++      return tokenBefore;
++    }
++
++    return null;
++  };
++  let parent = node.parent;
++
++  switch (node.type) {
++    case 'ClassDeclaration':
++    case 'FunctionDeclaration':
++      return findJSDocComment(
++        ['ExportDefaultDeclaration', 'ExportNamedDeclaration', 'ExportAllDeclaration', 'ExportSpecifier'].includes(parent.type) ? parent : node,
++      );
++
++    case 'ClassExpression':
++      return findJSDocComment(parent.parent);
++
++    case 'ArrowFunctionExpression':
++    case 'FunctionExpression':
++      if (
++        parent.type !== 'CallExpression' &&
++        parent.type !== 'NewExpression'
++      ) {
++        while (
++          !sourceCode.getCommentsBefore(parent).length &&
++          !/Function/u.test(parent.type) &&
++          parent.type !== 'MethodDefinition' &&
++          parent.type !== 'Property'
++        ) {
++          parent = parent.parent;
++
++          if (!parent) {
++            break;
++          }
++        }
++
++        if (
++          parent &&
++          parent.type !== 'FunctionDeclaration' &&
++          parent.type !== 'Program'
++        ) {
++          return findJSDocComment(parent);
++        }
++      }
++
++      return findJSDocComment(node);
++
++    // falls through
++    default:
++      return null;
++  }
++}
++
++function isSpaceBetween(sourceCode, first, second) {
++  if (sourceCode.isSpaceBetweenTokens) {
++    return sourceCode.isSpaceBetweenTokens(first, second);
++  }
++  if (sourceCode.isSpaceBetween(first, second)) {
++    return true;
++  }
++  const ordered = first.range[0] <= second.range[0] ? [first, second] : [second, first];
++  if (ordered[0].range[1] >= ordered[1].range[0]) {
++    return false;
++  }
++  // The removed method also counted whitespace inside intervening JSXText.
++  return sourceCode.getTokensBetween(ordered[0], ordered[1], { includeComments: true })
++    .some((token) => token.type === 'JSXText' && /\s/u.test(token.value));
++}
++
+@@ -39,0 +133,2 @@
++  getJSDocComment,
++  isSpaceBetween,
+--- a/lib/util/version.js
++++ b/lib/util/version.js
+@@ -31 +31,2 @@
+-    const filename = typeof contextOrFilename === 'string' ? contextOrFilename : contextOrFilename.getFilename();
++    const filename = typeof contextOrFilename === 'string' ? contextOrFilename
++      : (typeof contextOrFilename.filename === 'string' ? contextOrFilename.filename : contextOrFilename.getFilename());
+--- /dev/null
++++ b/LICENSE.eslint
+@@ -0,0 +1,19 @@
++Copyright OpenJS Foundation and other contributors, <www.openjsf.org>
++
++Permission is hereby granted, free of charge, to any person obtaining a copy
++of this software and associated documentation files (the "Software"), to deal
++in the Software without restriction, including without limitation the rights
++to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++copies of the Software, and to permit persons to whom the Software is
++furnished to do so, subject to the following conditions:
++
++The above copyright notice and this permission notice shall be included in
++all copies or substantial portions of the Software.
++
++THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++THE SOFTWARE.

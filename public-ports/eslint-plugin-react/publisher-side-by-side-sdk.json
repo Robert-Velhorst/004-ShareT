@@ -1,0 +1,459 @@
+{
+  "scope": "Supplemental original-rule-case diagnosis; does not replace native TypeScript 7 parser acceptance",
+  "guidance": "https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/#running-side-by-side-with-typescript-6.0",
+  "unit_source_archive": {
+    "file": "eslint-plugin-react-7.37.5+sharet.eslint10.1-publisher-side-by-side-sdk.tgz",
+    "bytes": 454853,
+    "sha256": "22c88b6a9e679ab19496ea67e920ca6093c8dc98cc32517b769fc58b9017a790",
+    "integrity": "sha512-nG4W4yEo6Ql5Qadd8rz3VPbiXnU2PEkS/1keYtMX6JT3kYQcDtIcq77ZXx9PkNIvTP8WYrzuKdSu4DmCvgwkMQ=="
+  },
+  "unit_sdk_dependency_targets": {
+    "@babel/core": "8.0.9",
+    "@babel/eslint-parser": "8.0.7",
+    "@babel/preset-react": "8.0.1",
+    "@babel/plugin-syntax-decorators": "8.0.1",
+    "@babel/plugin-syntax-function-bind": "8.0.1",
+    "@babel/plugin-syntax-do-expressions": "8.0.1",
+    "@typescript-eslint/parser": "8.72.0",
+    "babel-eslint": "10.1.0",
+    "eslint": "10.13.0",
+    "eslint-scope": "9.1.2",
+    "espree": "11.2.0",
+    "glob": "13.0.6",
+    "istanbul": "0.4.5",
+    "mocha": "12.0.3",
+    "sinon": "22.1.0",
+    "typescript": "npm:@typescript/typescript6@6.0.2",
+    "typescript-eslint-parser": "npm:@typescript-eslint/parser@8.72.0",
+    "@typescript/native": "npm:typescript@7.0.2"
+  },
+  "direct_package_identities": {
+    "@babel/core": {
+      "name": "@babel/core",
+      "version": "8.0.9",
+      "dist": {
+        "shasum": "4d597c512a119d16ffab53a71b967b3a48088cbf",
+        "tarball": "https://registry.npmjs.org/@babel/core/-/core-8.0.9.tgz",
+        "fileCount": 18,
+        "integrity": "sha512-wXtyKlpR/pXf/u0vmib+OBakQaIzLglLcRoKpWxCHW/whqq7YfQYPD0IAAl9H/evi40MyLIjYYdvb6N+9DI2yA==",
+        "signatures": [
+          {
+            "sig": "MEYCIQCCHXL/kBqWAZkypH8ETpFnCv39Aj9qUGv4MBWQNQF6KAIhAIeTfLmctGc6HTZmXS/NOlMVpvFWCJw4lnACG4xZZQcG",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          },
+          {
+            "sig": "MEUCIQCJdVhM6zk6U4aDdOE8eg4r0AcsDKH5nOnU2vER5TRB1wIgX4T11kLbXhjKT1yNxQI7mh2U3/CQUZ2tASHs9Jvx6v0=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/@babel%2fcore@8.0.9",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 167878
+      }
+    },
+    "@babel/eslint-parser": {
+      "name": "@babel/eslint-parser",
+      "version": "8.0.7",
+      "dist": {
+        "shasum": "ae5b9f9bf09dae608fd6e696a6a7018c4a74650d",
+        "tarball": "https://registry.npmjs.org/@babel/eslint-parser/-/eslint-parser-8.0.7.tgz",
+        "fileCount": 7,
+        "integrity": "sha512-ik5I+U64QuQQPohw0A1wVWPR+vTRYVfWBDLOLc1KwZQ2SKayQLD52DgoB3W/kmwc4MP1E37qh7nZuDD9xsKYcA==",
+        "signatures": [
+          {
+            "sig": "MEUCIQCCMxsRn193MITSMJdBaxJ+cFYdViSyiuZeGiTyaBcFRQIgW+n4enmDn7fVPiFRUx4bCdo4qHOvhSCQ+X9Qv9z0hJk=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          },
+          {
+            "sig": "MEUCICQGXZQRBOSIO8UEerum94/z4fKH4KO/Pz6c1Wvum/UeAiEA2mY70oLY967MTKfqIR7LS3bcEMpx0ggAZ4FU8BMpHyw=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/@babel%2feslint-parser@8.0.7",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 28114
+      }
+    },
+    "@babel/preset-react": {
+      "name": "@babel/preset-react",
+      "version": "8.0.1",
+      "dist": {
+        "shasum": "0cb1802ff37a96faf983b5e781270f2752bb3476",
+        "tarball": "https://registry.npmjs.org/@babel/preset-react/-/preset-react-8.0.1.tgz",
+        "fileCount": 6,
+        "integrity": "sha512-jrFuPp/pTddFZbtmWhdLNAYc6UMcpboeUPnw0BBrm4nOmcAko/1TRcFi1PzWCeOFRU+VaSiKmat87W1HvR7mIg==",
+        "signatures": [
+          {
+            "sig": "MEUCIQDM3Pb2mw2TeazSzavsHTWf0DDpim402YqPsNnugUksFQIgHokENNfZeiUjlSt7gTZh5fGrYkCRl2YqwgG9FZ9XqT0=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/@babel%2fpreset-react@8.0.1",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 14587
+      }
+    },
+    "@babel/plugin-syntax-decorators": {
+      "name": "@babel/plugin-syntax-decorators",
+      "version": "8.0.1",
+      "dist": {
+        "shasum": "e32484d8b60b7b1fdf588ecde6e8e605d355ae52",
+        "tarball": "https://registry.npmjs.org/@babel/plugin-syntax-decorators/-/plugin-syntax-decorators-8.0.1.tgz",
+        "fileCount": 6,
+        "integrity": "sha512-NI+0S/6MvR6GlcQFwjDZ+WIc2qvG6TXN534lYs9llNldwW4b7Dh6KTtk030FA0xWdYGs4t1lWo+OEWN8wGB+Nw==",
+        "signatures": [
+          {
+            "sig": "MEUCIEehlJzyYykrtbfQe0U6JeIG5Dw4Y0C+Rpmz/I1s89e9AiEA6A3S/XcbkSBNWgRX4hK4ZvffOqm92QIt6RHVfEinL14=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/@babel%2fplugin-syntax-decorators@8.0.1",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 6147
+      }
+    },
+    "@babel/plugin-syntax-function-bind": {
+      "name": "@babel/plugin-syntax-function-bind",
+      "version": "8.0.1",
+      "dist": {
+        "shasum": "1b10eae7d95179da854c35ae7c33ab6c306300ba",
+        "tarball": "https://registry.npmjs.org/@babel/plugin-syntax-function-bind/-/plugin-syntax-function-bind-8.0.1.tgz",
+        "fileCount": 6,
+        "integrity": "sha512-9NoZBP4VJNei2OukMDZa0IcUIhPQmKkweCI5MXpJHEcHB2IJOSIsQooLda+mvNiZis7b8+0FT6BDO47yFnMBVA==",
+        "signatures": [
+          {
+            "sig": "MEUCIEFy8wau4nxWIBNujF6Nfupu1Fq3qyknI0RxH5XmyvKgAiEAoV3zaqQVIfCXKKKVBd/6FxDEjfT/Ubm7WFpHpNSUxXs=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/@babel%2fplugin-syntax-function-bind@8.0.1",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 3713
+      }
+    },
+    "@babel/plugin-syntax-do-expressions": {
+      "name": "@babel/plugin-syntax-do-expressions",
+      "version": "8.0.1",
+      "dist": {
+        "shasum": "286aaabefea4a4a55e278c72727ce51fb781d082",
+        "tarball": "https://registry.npmjs.org/@babel/plugin-syntax-do-expressions/-/plugin-syntax-do-expressions-8.0.1.tgz",
+        "fileCount": 6,
+        "integrity": "sha512-pmOZCQSXCXEtiW9iRZTBZp9ysIk+NoxIyNhMvNK7wpRUEKZh8XAY0m3t4Bs/uFqDKB8fNKe15SCLhG2qpxOTUQ==",
+        "signatures": [
+          {
+            "sig": "MEQCIH9g8BQEN1sm9F4ynNk2aKNHFQHLNSwtcTEMR32pezbFAiAH85v3FpA5DekBiNtxjDIDP22U1M+vJkrmjXHymT9lFw==",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/@babel%2fplugin-syntax-do-expressions@8.0.1",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 3727
+      }
+    },
+    "@typescript-eslint/parser": {
+      "name": "@typescript-eslint/parser",
+      "version": "8.72.0",
+      "dist": {
+        "shasum": "e90d951ba97c6e2d8f1032f048292b7e39d8a019",
+        "tarball": "https://registry.npmjs.org/@typescript-eslint/parser/-/parser-8.72.0.tgz",
+        "fileCount": 7,
+        "integrity": "sha512-0O+x3ynciD6zuXb1CKSu165haQV6ey53DKhHHUnujP7U+XlltJG+/keT0Xhd1HXCze+IHf7Tvt39ovyepX/LNw==",
+        "signatures": [
+          {
+            "sig": "MEYCIQCRcXeOQME37c6qRD331oxnNDpVcOd8NLGV1cOmC9xc/QIhAJTkYF7jOhM5ywGMBfUC6CdGejqg330TaSTDKNmzMHNP",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          },
+          {
+            "sig": "MEUCIQCh34ZrY2PohpEVelHLQLduHy4eCxWa0aVdx3jyzk/9rgIgD13TTjDuVtNiAlGWR7oM65JKvCINiAstU/fO8CIewEg=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/@typescript-eslint%2fparser@8.72.0",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 16170
+      }
+    },
+    "babel-eslint": {
+      "name": "babel-eslint",
+      "version": "10.1.0",
+      "dist": {
+        "shasum": "6968e568a910b78fb3779cdd8b6ac2f479943232",
+        "tarball": "https://registry.npmjs.org/babel-eslint/-/babel-eslint-10.1.0.tgz",
+        "fileCount": 16,
+        "integrity": "sha512-ifWaTHQ0ce+448CYop8AdrQiBsGrnC+bMgfyKFdi6EsPLTAWG+QfyDeM6OH+FmWnKvEq5NnBMLvlBUPKQZoDSg==",
+        "signatures": [
+          {
+            "sig": "MEQCIBYXIQAopbGpbNRXN8OfftWyQCeuBL3iAlviix3LrJriAiBVB3S6gCNsCAYj5BeWwtczO4FtxNpvpYQF6s5m1zkIIA==",
+            "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+          }
+        ],
+        "unpackedSize": 30390,
+        "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJeVbgkCRA9TVsSAnZWagAApggP/A1cGZW0mHkcn5N6PEMf\nZu0FVDRqTyaiNsLU149m4tVSd+GT3WDyWHs5/4X7Ih9x7tXIPqOV8rG1EcKI\ncSw+lZz6yaKe7a+OuN0SdnxR5LwrnKxGH3KALPpaAGY7UKW6+2lBSo3+10oy\n4lzTwQMTl9U/Wv10ktLLIizRVi19ZACk+HFLRFd5FChcykqJnmKee84GxKwW\nxUSWenNwDbbkGMfOr94Hm9y1ulHDgkx1BTxLbm/3F19JaBrHOJw6ZCVyFwPP\nclTamxSTOp7o3dkWtO5lRnNfBdqylK2yV1ySaNCbzWKjjn0ZBO4imOOMPDws\ntwAZksaoJqc775cZzrJsiRmhuEE6isdrEixM7lFbp965/nl2a1wmd9REDbs7\nTTxQ0l5LWX49y8zhQQnfLYrM6F59T7mdOkOFI4wAiPuDRlK4ihLabTmFpfOi\n3ul0ehkGEtoJTALjEObrTz8dDJhfVEXYFP8yUJoXWng44nt8MwPPG40p5q2c\nuR5S/MA/OPEzJrc+l3IZJqi0wWMBu2twItOJ1HiqIZjTlTF34ViLnLfQf6A3\nE/lNFPLMlvAeVvn7scCJKaSkucKC7P6AgYFjnrFbNdUCewZ619tPrOkwYTKI\nD/rk1wI1QG7bm3NRyviyM3/uNuAWiaTo4S/5mCWmX3TPQsjQgKzoB5eXsu8M\ncrvY\r\n=p34W\r\n-----END PGP SIGNATURE-----\r\n"
+      }
+    },
+    "eslint": {
+      "name": "eslint",
+      "version": "10.13.0",
+      "dist": {
+        "shasum": "a8a4742648c0fa9131f429b509de5407682d4864",
+        "tarball": "https://registry.npmjs.org/eslint/-/eslint-10.13.0.tgz",
+        "fileCount": 421,
+        "integrity": "sha512-UohDjD4zSzEwhf58M3O7vc/ycc8O1I7dNlhtD0WxE8Px8EHNJKtUwzBqrzeGhisRuv2ag4sAYswszCJRgKXYUg==",
+        "signatures": [
+          {
+            "sig": "MEUCIQDutjgxYLZqtIun3DFVcWxPyMo9ojiddOPK3TwtujUWjQIgakjqrpUWrhXflf7tPXD0pIMBj1CIGD7DbkRbXZJs4B8=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          },
+          {
+            "sig": "MEUCIFUTPg62nwv58a1UR/mGBrlCtgXsqeNpmbPXulRp0tPmAiEApozW22AumvLTz6QJbGvldiJuvBtMLTzP1KX/P66V3II=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "unpackedSize": 2950609
+      }
+    },
+    "eslint-scope": {
+      "name": "eslint-scope",
+      "version": "9.1.2",
+      "dist": {
+        "shasum": "b9de6ace2fab1cff24d2e58d85b74c8fcea39802",
+        "tarball": "https://registry.npmjs.org/eslint-scope/-/eslint-scope-9.1.2.tgz",
+        "fileCount": 15,
+        "integrity": "sha512-xS90H51cKw0jltxmvmHy2Iai1LIqrfbw57b79w/J7MfvDfkIkFZ+kj6zC3BjtUwh150HsSSdxXZcsuv72miDFQ==",
+        "signatures": [
+          {
+            "sig": "MEUCICOUTAHWKrJRy9z6nyVknCxHRS6JVlnHOJVsW0/xRz0kAiEAnAisrMOkXRirdFwEnJMm5mUyDnOaKe1bdjIdqqvGidg=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/eslint-scope@9.1.2",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 173495
+      }
+    },
+    "espree": {
+      "name": "espree",
+      "version": "11.2.0",
+      "dist": {
+        "shasum": "01d5e47dc332aaba3059008362454a8cc34ccaa5",
+        "tarball": "https://registry.npmjs.org/espree/-/espree-11.2.0.tgz",
+        "fileCount": 13,
+        "integrity": "sha512-7p3DrVEIopW1B1avAGLuCSh1jubc01H2JHc8B4qqGblmg5gI9yumBgACjWo4JlIc04ufug4xJ3SQI8HkS/Rgzw==",
+        "signatures": [
+          {
+            "sig": "MEYCIQDl6L1LCOc/d9LzPSQXQKB5n41XO4u4N0/tCX5yajUuAwIhAN0j3Dz97txuqdSFWei5HvmUrT31gl8tHYKoYH9sYMzQ",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/espree@11.2.0",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 95658
+      }
+    },
+    "glob": {
+      "name": "glob",
+      "version": "13.0.6",
+      "dist": {
+        "shasum": "078666566a425147ccacfbd2e332deb66a2be71d",
+        "tarball": "https://registry.npmjs.org/glob/-/glob-13.0.6.tgz",
+        "fileCount": 65,
+        "integrity": "sha512-Wjlyrolmm8uDpm/ogGyXZXb1Z+Ca2B8NbJwqBVg0axK9GbBeoS7yGV6vjXnYdGm6X53iehEuxxbyiKp8QmN4Vw==",
+        "signatures": [
+          {
+            "sig": "MEUCIFeZQ+6Wn9wYFbt/Wbnc8ax04O7dS1yNrFsrc7yW+oCVAiEA6/HzFWBMVK4axRis4zC3eFJJxZbgiHv4lCQ2x+rSh9Y=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "unpackedSize": 1607230
+      }
+    },
+    "istanbul": {
+      "name": "istanbul",
+      "version": "0.4.5",
+      "dist": {
+        "shasum": "65c7d73d4c4da84d4f3ac310b918fb0b8033733b",
+        "tarball": "https://registry.npmjs.org/istanbul/-/istanbul-0.4.5.tgz",
+        "integrity": "sha512-nMtdn4hvK0HjUlzr1DrKSUY8ychprt8dzHOgY2KXsIhHu5PuQQEOTM27gV9Xblyon7aUH/TSFIjRHEODF/FRPg==",
+        "signatures": [
+          {
+            "sig": "MEUCIQDemEu8TgdLFCwUpUiZP0++IXYr+5h3L1ykZv+yAbOCVAIgWPuspgB3A/yadtuT3OU6T2/ZG4e3N7bQjXw+0NlfOts=",
+            "keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA"
+          }
+        ]
+      }
+    },
+    "mocha": {
+      "name": "mocha",
+      "version": "12.0.3",
+      "dist": {
+        "shasum": "f3022f5684f5a8306323dd5ab4d0f881a90cd031",
+        "tarball": "https://registry.npmjs.org/mocha/-/mocha-12.0.3.tgz",
+        "fileCount": 74,
+        "integrity": "sha512-beammieDdiWdkjANWeWPpkxUROYGi5FN88fPOkLiticz7HTg3Y+Pho3EYE6SUdcuWnZ3h2WD8EXCA55JF4o6wg==",
+        "signatures": [
+          {
+            "sig": "MEQCIAaQkNGImKKp1VplUWATtSM6C7+Pvk2pQ87PJ7PbhyXhAiAtzzZG/taZzA0jSnjf7s82+68YULt9iQ/RmVF7C/35WQ==",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          },
+          {
+            "sig": "MEYCIQDHov78NllzJhgbRutx30C1EfzjWM4NmlsvWEUpA4PDOwIhAKe7vgWODZkoauwexi7QAJzbSBZLFyGNXuTvN1NQmLUl",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/mocha@12.0.3",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 1443342
+      }
+    },
+    "sinon": {
+      "name": "sinon",
+      "version": "22.1.0",
+      "dist": {
+        "shasum": "df5a9308d1818166d1370795a4953ceadc5ff706",
+        "tarball": "https://registry.npmjs.org/sinon/-/sinon-22.1.0.tgz",
+        "fileCount": 48,
+        "integrity": "sha512-n1ajF2rBWMTtEwbKcw4UdFg4nCnDdq/U6RDoxtOd7oapOlRoJ5ynwFx60owROyhDpA9QhMZi0pCO/xtmwFjG7w==",
+        "signatures": [
+          {
+            "sig": "MEUCIQD9hRiBWHcCbSpYLiK24qpcRbIcla9dULLgdif5H9fEpQIgSV7wOIIk1VrLAxBwkT0fn6WYz4D/2brfSxuyRZjd0G0=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "unpackedSize": 2520767
+      }
+    },
+    "typescript-eslint-parser": {
+      "name": "@typescript-eslint/parser",
+      "version": "8.72.0",
+      "dist": {
+        "shasum": "e90d951ba97c6e2d8f1032f048292b7e39d8a019",
+        "tarball": "https://registry.npmjs.org/@typescript-eslint/parser/-/parser-8.72.0.tgz",
+        "fileCount": 7,
+        "integrity": "sha512-0O+x3ynciD6zuXb1CKSu165haQV6ey53DKhHHUnujP7U+XlltJG+/keT0Xhd1HXCze+IHf7Tvt39ovyepX/LNw==",
+        "signatures": [
+          {
+            "sig": "MEYCIQCRcXeOQME37c6qRD331oxnNDpVcOd8NLGV1cOmC9xc/QIhAJTkYF7jOhM5ywGMBfUC6CdGejqg330TaSTDKNmzMHNP",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          },
+          {
+            "sig": "MEUCIQCh34ZrY2PohpEVelHLQLduHy4eCxWa0aVdx3jyzk/9rgIgD13TTjDuVtNiAlGWR7oM65JKvCINiAstU/fO8CIewEg=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/@typescript-eslint%2fparser@8.72.0",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 16170
+      }
+    },
+    "typescript": {
+      "name": "@typescript/typescript6",
+      "version": "6.0.2",
+      "dist": {
+        "shasum": "79e0e47492564c83f8602013d7dd10d5ebc51a8c",
+        "tarball": "https://registry.npmjs.org/@typescript/typescript6/-/typescript6-6.0.2.tgz",
+        "fileCount": 9,
+        "integrity": "sha512-mbCddXd+jm7hfx7w2YU64/Av4/NqqeG3GoRZgxPcgoTxYjhrcfJRw9ULch71SS4G+Q3bOXFhRvPqjguN0Hyp5w==",
+        "signatures": [
+          {
+            "sig": "MEUCIQCikc4atEhRHPN4LOn3KvjPwa+LYyGODYwsTGJFK9CMYwIgeGAkOvW01TF29U/y/xGs1iENpfibKkCnPAoi70zBgQs=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "unpackedSize": 10548
+      }
+    },
+    "@typescript/native": {
+      "name": "typescript",
+      "version": "7.0.2",
+      "dist": {
+        "shasum": "9ec773d7954a8c182c17cc5bbd575aa28bc51582",
+        "tarball": "https://registry.npmjs.org/typescript/-/typescript-7.0.2.tgz",
+        "fileCount": 416,
+        "integrity": "sha512-8FYau96o3NKOhbjKi/qNvG/W5jhzxkbdm5sj9AbZ/5T5sWqn3hJgLfGx27sRKZWTvyzCP8dLRBTf5tBTSRVUNA==",
+        "signatures": [
+          {
+            "sig": "MEUCIHn8lVrLBbTJToaOcV3IJ0oVPREmFT5BhqmO2niVNCaSAiEAjbubGExGAYMSJN39iEgX/eDYhwBGnh/iyyGTRigXGjY=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "unpackedSize": 2497498
+      }
+    }
+  },
+  "compatibility_API_delegate": {
+    "install_path": "@typescript/old",
+    "name": "typescript",
+    "version": "6.0.3",
+    "dist": {
+      "shasum": "90251dc007916e972786cb94d74d15b185577d21",
+      "tarball": "https://registry.npmjs.org/typescript/-/typescript-6.0.3.tgz",
+      "fileCount": 140,
+      "integrity": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
+      "signatures": [
+        {
+          "sig": "MEYCIQDv8tVB8x5z1EeS+UHLgSqOywErEEFERRmMNef6kTXsPQIhAMO+L+ktR6FwCDSc+z0KD68md8mvKukeVzgjuBhoie9i",
+          "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+        }
+      ],
+      "unpackedSize": 24346827
+    }
+  },
+  "default_compiler_binary": "node_modules/.bin/tsc",
+  "expected_default_compiler_version": "7.0.2",
+  "native_TypeScript7_parser_API_acceptance": false,
+  "application_dependencies_activated": false,
+  "deprecated_parser_replacement": {
+    "old_package": "typescript-eslint-parser",
+    "old_version": "22.0.0",
+    "publisher_deprecation": "Deprecated: Use @typescript-eslint/parser instead",
+    "install_alias": "typescript-eslint-parser",
+    "replacement_package": "@typescript-eslint/parser",
+    "replacement_version": "8.72.0",
+    "original_case_and_helper_files_changed": false,
+    "native_API_acceptance_replaced": false
+  }
+}

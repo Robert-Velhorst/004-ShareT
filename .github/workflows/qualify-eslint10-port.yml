@@ -1,0 +1,93 @@
+name: Qualify public React ESLint 10 port
+
+on:
+  pull_request:
+    paths:
+      - public-ports/eslint-plugin-react/**
+      - scripts/qualify-eslint10-port.cjs
+      - .github/workflows/qualify-eslint10-port.yml
+      - tools/stable-lock/Dockerfile
+
+permissions:
+  contents: read
+
+jobs:
+  original-unit-cases:
+    name: Original unit entry (${{ matrix.profile }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        profile: [native-api, publisher-side-by-side]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.15.1'
+      - name: Prepare reviewed public source archives
+        env:
+          SHARET_ESLINT10_PROFILE: ${{ matrix.profile }}
+        run: |
+          test "$RUNNER_ENVIRONMENT" = github-hosted
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json,os,shutil
+          repository=Path(os.environ['GITHUB_WORKSPACE'])
+          public=repository/'public-ports/eslint-plugin-react'
+          root=Path(os.environ['RUNNER_TEMP'])/'sharet-eslint10-port'
+          inputs=root/'inputs';inputs.mkdir(parents=True)
+          for name in ['outputs','work']:(root/name).mkdir()
+          spec=json.loads((public/'provenance.json').read_text())
+          profile=os.environ['SHARET_ESLINT10_PROFILE']
+          assert profile in {'native-api','publisher-side-by-side'}
+          unit=spec['unit_source_archive']
+          if profile=='publisher-side-by-side':
+              supplement=json.loads((public/'publisher-side-by-side-sdk.json').read_text())
+              unit=supplement['unit_source_archive']
+              shutil.copyfile(public/'publisher-side-by-side-sdk.json',inputs/'publisher-side-by-side-sdk.json')
+          for item in [spec['candidate_archive'],unit]:
+              assert Path(item['file']).name==item['file']
+              raw=(public/item['file']).read_bytes()
+              assert len(raw)==item['bytes'] and hashlib.sha256(raw).hexdigest()==item['sha256']
+              (inputs/item['file']).write_bytes(raw)
+          shutil.copyfile(public/'provenance.json',inputs/'provenance.json')
+          for name in ['mocha-legacy-entry.mjs','mocha-entry-provenance.json']:
+              shutil.copyfile(public/name,inputs/name)
+          shutil.copyfile(repository/'scripts/qualify-eslint10-port.cjs',inputs/'qualify-eslint10-port.cjs')
+          with Path(os.environ['GITHUB_ENV']).open('a') as handle:handle.write('SHARET_ESLINT10_ROOT='+str(root)+'\n')
+          PY
+          sudo chown 1000:1000 "$RUNNER_TEMP/sharet-eslint10-port/outputs" "$RUNNER_TEMP/sharet-eslint10-port/work"
+      - name: Build pinned disposable Node and npm SDK
+        run: docker build --file tools/stable-lock/Dockerfile --tag sharet-eslint10-sdk:ci tools/stable-lock
+      - name: Resolve the reviewed current stable unit SDK normally
+        run: |
+          docker run --rm --read-only --user 1000:1000 --cap-drop ALL \
+            --security-opt no-new-privileges --memory 4g --cpus 2 --pids-limit 256 \
+            --tmpfs /tmp:rw,noexec,nosuid,nodev,size=1g,mode=1777 \
+            --mount type=bind,src="$SHARET_ESLINT10_ROOT/inputs",dst=/inputs,readonly \
+            --mount type=bind,src="$SHARET_ESLINT10_ROOT/outputs",dst=/outputs \
+            --mount type=bind,src="$SHARET_ESLINT10_ROOT/work",dst=/build \
+            --env SHARET_ESLINT10_CASE_SDK=github-hosted --entrypoint node \
+            sharet-eslint10-sdk:ci /inputs/qualify-eslint10-port.cjs install "${{ matrix.profile }}"
+      - name: Run the full original unit entry without network or case changes
+        run: |
+          docker run --rm --network none --read-only --user 1000:1000 --cap-drop ALL \
+            --security-opt no-new-privileges --memory 4g --cpus 2 --pids-limit 256 \
+            --tmpfs /tmp:rw,noexec,nosuid,nodev,size=1g,mode=1777 \
+            --mount type=bind,src="$SHARET_ESLINT10_ROOT/inputs",dst=/inputs,readonly \
+            --mount type=bind,src="$SHARET_ESLINT10_ROOT/outputs",dst=/outputs \
+            --mount type=bind,src="$SHARET_ESLINT10_ROOT/work",dst=/build \
+            --env SHARET_ESLINT10_CASE_SDK=github-hosted --entrypoint node \
+            sharet-eslint10-sdk:ci /inputs/qualify-eslint10-port.cjs test "${{ matrix.profile }}"
+      - name: Retain source identities and normal qualification diagnostics
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: public-eslint10-port-qualification-${{ matrix.profile }}
+          path: |
+            ${{ runner.temp }}/sharet-eslint10-port/inputs
+            ${{ runner.temp }}/sharet-eslint10-port/outputs
+          if-no-files-found: error
