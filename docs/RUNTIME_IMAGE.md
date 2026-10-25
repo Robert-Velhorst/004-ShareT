@@ -29,3 +29,16 @@ backup, and prepare an approved ownership migration and rollback for the real
 volume. Do not recursively change ownership or replace existing operator data
 as part of an image build. Provider behavior, backups/restoration, TLS, live
 Trello/billing and operator data require separate acceptance.
+
+## Updating the runtime
+
+Check the public stable [Node release feed](https://nodejs.org/dist/index.json)
+and [Alpine release branches](https://alpinelinux.org/releases/) before changing
+image versions. Pin the verified registry descriptor, retain executable/component
+identity receipts, and qualify the complete final image again.
+
+Before integration, verify the current source against all main-target workflows:
+root quality, billing, homepage, informational pages, default CodeQL, complete
+source extraction/security analysis, and exact-image qualification. Changing a
+pull request's base alone can leave main-only workflows unstarted; verify actual
+current-head runs rather than inferring coverage from the visible green subset.
