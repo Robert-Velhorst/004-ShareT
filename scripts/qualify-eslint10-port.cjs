@@ -37,6 +37,8 @@ const environment = { PATH: '/usr/local/bin:/usr/bin:/bin', HOME: '/tmp/home',
   npm_config_engine_strict: 'true', npm_config_strict_peer_deps: 'true',
   npm_config_legacy_peer_deps: 'false', npm_config_force: 'false',
   npm_config_ignore_scripts: 'true', CI: 'true', LANG: 'C.UTF-8' };
+// The publisher source disables lock output in .npmrc; the SDK must retain it.
+environment.npm_config_package_lock = 'true';
 fs.mkdirSync('/tmp/home', { recursive: true });
 
 function run(name, executable, args, cwd, timeout) {
