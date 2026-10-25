@@ -93,7 +93,11 @@ jobs:
         run: |
           set -euo pipefail
           cd "$RUNNER_TEMP/npm-source"
-          node . run test-all 2>&1 | tee "$RUNNER_TEMP/sharet-build-toolchain/reports/npm-source-all-original-cases.log"
+          TAP_REPORTER=tap node . run test-all 2>&1 | tee "$RUNNER_TEMP/sharet-build-toolchain/reports/npm-source-all-original-cases.log"
+      - name: Require every original reported case file with no selection drift
+        id: original_case_inventory
+        if: ${{ !cancelled() && steps.source_gate.outcome == 'success' }}
+        run: python tools/runtime/verify_original_npm_case_inventory.py
       - name: Run all original upstream lint commands
         id: upstream_lint
         if: ${{ !cancelled() && steps.source_gate.outcome == 'success' }}
@@ -108,7 +112,7 @@ jobs:
         run: python tools/runtime/npm_source_workspace_evidence.py after-cases
       - name: Build the normal distributable through its original prepack lifecycle
         id: pack
-        if: ${{ !cancelled() && steps.source_audit.outcome == 'success' && steps.graph_stability.outcome == 'success' && steps.upstream_cases.outcome == 'success' && steps.upstream_lint.outcome == 'success' && steps.after_cases.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.source_audit.outcome == 'success' && steps.graph_stability.outcome == 'success' && steps.upstream_cases.outcome == 'success' && steps.original_case_inventory.outcome == 'success' && steps.upstream_lint.outcome == 'success' && steps.after_cases.outcome == 'success' }}
         shell: bash
         run: |
           set -euo pipefail

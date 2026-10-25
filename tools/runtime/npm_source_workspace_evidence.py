@@ -6,6 +6,7 @@ import os
 import re
 import subprocess
 import sys
+from npm_tap21_manifest_migration import migrate
 
 if sys.platform != 'linux' or os.environ.get('RUNNER_ENVIRONMENT') != 'github-hosted':
     raise RuntimeError('Use a disposable GitHub-hosted Linux worker')
@@ -34,12 +35,12 @@ if mode == 'prepare-tap21':
         if 'tap' not in package.get('devDependencies', {}):
             continue
         previous = raw.decode()
-        package['devDependencies']['tap'] = '21.8.0'
+        package = migrate(package)
         updated = (json.dumps(package, indent=2, ensure_ascii=False) + '\n').encode()
         path.write_bytes(updated)
         planned[name] = {'original_json': previous,
                          'expected_sha256': hashlib.sha256(updated).hexdigest(),
-                         'only_declared_change': 'devDependencies.tap -> public stable 21.8.0'}
+                         'declared_changes': 'public stable Tap21 and reviewed configuration translation; original scripts/cases/assertions unchanged'}
     assert planned and 'package.json' in planned
     (reports / 'npm-source-planned-manifest-changes.json').write_text(json.dumps(planned, indent=2) + '\n')
     print(json.dumps({'public_stable_tap': '21.8.0', 'declared_workspace_manifests': sorted(planned),
@@ -77,8 +78,7 @@ else:
     for name, change in planned.items():
         old = change['original_json'].encode()
         assert hashlib.sha256(old).hexdigest() == before[name]
-        expected = json.loads(old)
-        expected['devDependencies']['tap'] = '21.8.0'
+        expected = migrate(json.loads(old))
         assert json.loads((source / name).read_text()) == expected
         assert hashes[name] == change['expected_sha256']
     protected = {p: h for p, h in before.items()
