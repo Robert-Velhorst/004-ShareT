@@ -39,9 +39,14 @@ if mode == 'before':
     assert not receipt['git_status'], 'The upstream checkout must start clean'
 else:
     before = json.loads((reports / 'npm-source-before.json').read_text())['tracked_payload_sha256']
+    # The unchanged upstream `dependencies` lifecycle regenerates these graph
+    # documents through scripts/dependency-graph.js after a normal update.
+    # Preserve their actual bytes; application/vendor source and cases remain
+    # protected, and the complete dependency audit still gates the candidate.
+    generated = {'DEPENDENCIES.md', 'DEPENDENCIES.json'}
     protected = {p: h for p, h in before.items()
-                 if not p.startswith('node_modules/') and p != 'package-lock.json'}
-    assert all(hashes.get(p) == h for p, h in protected.items()), 'Original source/cases/assertions changed'
+                 if not p.startswith('node_modules/') and p != 'package-lock.json' and p not in generated}
+    changed = [p for p, h in protected.items() if hashes.get(p) != h]
     lock = json.loads((source / 'package-lock.json').read_text())
     packages = lock['packages']
     unstable = {p: row.get('version') for p, row in packages.items()
@@ -51,6 +56,13 @@ else:
         'lock_sha256': hashlib.sha256((source / 'package-lock.json').read_bytes()).hexdigest(),
         'package_records': len(packages), 'unstable_versions': unstable,
         'protected_original_payloads': len(protected),
-        'original_case_or_source_changes': False}, indent=2) + '\n')
+        'changed_protected_payloads': changed,
+        'original_case_or_source_changes': bool(changed),
+        'upstream_generated_graph_documents': {p: hashes.get(p) for p in generated}}, indent=2) + '\n')
     (reports / 'npm-source-package-lock.json').write_bytes((source / 'package-lock.json').read_bytes())
+    for name in generated:
+        if (source / name).is_file():
+            (reports / ('npm-source-generated-' + name)).write_bytes((source / name).read_bytes())
+    assert not changed, 'Original source/cases/assertions changed: ' + repr(changed)
+    assert (source / 'DEPENDENCIES.md').read_text().startswith('<!-- This file is automatically added by `scripts/dependency-graph.js`. Do not edit. -->')
     assert not unstable, 'Prerelease/non-stable dependency versions remain in the actual resolved graph'
