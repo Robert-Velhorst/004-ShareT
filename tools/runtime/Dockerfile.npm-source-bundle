@@ -1,0 +1,7 @@
+# Disposable compatibility candidate, never the production Dockerfile.
+FROM sharet-npm-bundle-baseline:ci
+COPY --from=npm-pack /npm-12.2.1.tgz /tmp/npm-source-bundle.tgz
+# Preserve normal engine, integrity, dependency and lifecycle behavior.
+RUN npm install --global /tmp/npm-source-bundle.tgz && npm --version
+WORKDIR /app
+RUN npm ci && npm ci --prefix backend --omit=dev && npm run build
