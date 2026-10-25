@@ -37,12 +37,12 @@ jobs:
           }
           (Path(os.environ['RUNNER_TEMP']) / 'sharet-build-toolchain/reports/source-identity.json').write_text(json.dumps(record, indent=2) + '\n')
           PY
-      - name: Build the npm 12 backend qualification target
+      - name: Build the npm 12 frontend and backend qualification target
         id: build
         shell: bash
         run: |
           set -euo pipefail
-          docker build --progress=plain --target backend-qualification --tag sharet-build-toolchain:ci . 2>&1 | tee "$RUNNER_TEMP/sharet-build-toolchain/reports/build.log"
+          docker build --progress=plain --target build-qualification --tag sharet-build-toolchain:ci . 2>&1 | tee "$RUNNER_TEMP/sharet-build-toolchain/reports/build.log"
       - name: Preserve exact image identity and archive
         if: ${{ !cancelled() && steps.build.outcome == 'success' }}
         shell: bash
@@ -55,7 +55,7 @@ jobs:
       - name: Inspect actual npm version, full installed metadata and original case hashes
         if: ${{ !cancelled() && steps.build.outcome == 'success' }}
         run: python tools/runtime/qualify_build_toolchain.py inventory
-      - name: Run the original npm test command with every existing backend case
+      - name: Run every original backend and frontend case command plus full lint
         if: ${{ !cancelled() && steps.build.outcome == 'success' }}
         run: python tools/runtime/qualify_build_toolchain.py cases
       - name: Scan the complete saved image without advisory exclusions

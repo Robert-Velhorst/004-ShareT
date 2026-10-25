@@ -13,7 +13,9 @@ image = 'sharet-build-toolchain:ci'
 common = ['docker', 'run', '--rm', '--network', 'none', '--read-only', '--user', '10001:10001',
     '--cap-drop', 'ALL', '--security-opt', 'no-new-privileges', '--memory', '1g', '--cpus', '1.5',
     '--pids-limit', '256', '--tmpfs', '/tmp:rw,noexec,nosuid,nodev,size=256m,mode=1777',
-    '--tmpfs', '/app/backend/data:rw,noexec,nosuid,nodev,size=128m,mode=1777', '-e', 'HOME=/tmp']
+    '--tmpfs', '/app/backend/data:rw,noexec,nosuid,nodev,size=128m,mode=1777',
+    '--tmpfs', '/app/node_modules/.vite:rw,noexec,nosuid,nodev,size=128m,mode=1777',
+    '--tmpfs', '/app/node_modules/.vite-temp:rw,noexec,nosuid,nodev,size=128m,mode=1777', '-e', 'HOME=/tmp']
 
 if mode == 'inventory':
     script = str(Path('tools/runtime/image_inventory.mjs').resolve())
@@ -24,6 +26,8 @@ if mode == 'inventory':
     sha = lambda raw: hashlib.sha256(raw).hexdigest()
     assert data['backend_manifest_sha256'] == sha(Path('backend/package.json').read_bytes())
     assert data['backend_lock_sha256'] == sha(Path('backend/package-lock.json').read_bytes())
+    assert data['frontend_manifest_sha256'] == sha(Path('package.json').read_bytes())
+    assert data['frontend_lock_sha256'] == sha(Path('package-lock.json').read_bytes())
     cases = {str(p).replace('\\', '/'): sha(p.read_bytes()) for p in Path('backend/test').glob('*') if p.is_file()}
     assert data['original_case_sha256'] == cases
     npm = [entry for entry in data['manifests'] if entry['path'] == '/usr/local/lib/node_modules/npm/package.json']
@@ -34,6 +38,11 @@ if mode == 'inventory':
     for name in manifest['dependencies']:
         key = 'node_modules/' + name
         assert installed['/app/backend/' + key + '/package.json']['version'] == lock[key]['version']
+    frontend = json.loads(Path('package.json').read_text())
+    frontend_lock = json.loads(Path('package-lock.json').read_text())['packages']
+    for name in {**frontend['dependencies'], **frontend['devDependencies']}:
+        key = 'node_modules/' + name
+        assert installed['/app/' + key + '/package.json']['version'] == frontend_lock[key]['version']
     version = subprocess.check_output([*common, image, 'npm', '--version'], text=True).strip()
     (folder / 'actual-npm-version.txt').write_text(version + '\n')
     assert version == '12.2.1'
@@ -41,6 +50,7 @@ if mode == 'inventory':
         'actual_npm': version, 'original_case_files_verified': len(cases),
         'all_manifest_records_retained': len(data['manifests']),
         'direct_backend_locked_versions_verified': len(manifest['dependencies']),
+        'direct_frontend_locked_versions_verified': len({**frontend['dependencies'], **frontend['devDependencies']}),
         'every_build_dependency_current_or_advisory_free': False}, indent=2) + '\n')
 elif mode == 'cases':
     fixtures = {'NODE_ENV': 'test',
@@ -49,9 +59,22 @@ elif mode == 'cases':
         'SESSION_SECRET': 'ci-session-secret-0123456789-abcdefghijklmnopqrstuvwxyz',
         'ENCRYPTION_KEY': 'ci-encryption-secret-0123456789-abcdefghijklmnopqrstuvwxyz'}
     environment = [part for key, value in fixtures.items() for part in ['-e', key + '=' + value]]
-    with (folder / 'original-npm12-backend-cases.log').open('wb') as out:
-        result = subprocess.run([*common, *environment, image, 'npm', 'test'], stdout=out, stderr=subprocess.STDOUT, timeout=600)
-    assert result.returncode == 0, 'Original npm test command failed; retain the complete output'
+    commands = [
+        ('backend-cases', '/app/backend', ['npm', 'test']),
+        ('lint', '/app', ['npm', 'run', 'lint']),
+        ('homepage', '/app', ['npm', 'run', 'test:homepage']),
+        ('billing-ui', '/app', ['npm', 'run', 'test:billing-ui']),
+        ('informational-pages', '/app', ['node', '--test', 'test/informational-pages.test.mjs']),
+    ]
+    outcomes = []
+    for name, workdir, command in commands:
+        with (folder / ('original-npm12-' + name + '.log')).open('wb') as out:
+            result = subprocess.run([*common, *environment, '--workdir', workdir, image, *command],
+                stdout=out, stderr=subprocess.STDOUT, timeout=600)
+        outcomes.append({'original_command': command, 'working_directory': workdir,
+            'returncode': result.returncode, 'unmodified_raw_log': 'original-npm12-' + name + '.log'})
+    (folder / 'original-command-results.json').write_text(json.dumps(outcomes, indent=2) + '\n')
+    assert all(row['returncode'] == 0 for row in outcomes), 'An original command failed; all raw outcomes retained'
 else:
     report = json.loads((folder / 'image-security.json').read_text())
     identity = json.loads((folder / 'image-identity.json').read_text())

@@ -23,9 +23,10 @@ RUN cd backend && npm ci --omit=dev
 
 # Disposable hosted qualification target; the production image copies only the
 # locked dependency tree from backend-dependencies, never this SDK filesystem.
-FROM backend-dependencies AS backend-qualification
-COPY backend/ ./backend/
-WORKDIR /app/backend
+FROM frontend-build AS build-qualification
+COPY --from=backend-dependencies /app/backend/ ./backend/
+COPY . ./
+WORKDIR /app
 
 # Production uses the same stable Alpine release as the pinned Node source.
 FROM alpine:3.24.3@sha256:be2656061b536c1883c4034790e21d0a09c5aaaf51968b89368a3c0371ea2c9a AS production
