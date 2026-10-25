@@ -1,0 +1,9 @@
+{
+  "source_repository": "Robert-Velhorst/018-HAI",
+  "source_revision": "b3c6802a6a5fa9f1b1341c5c69f81f89360fdaed",
+  "source_path": "scripts/runner_image_archive_identity.py",
+  "copied_bytes_sha256": "a1ba27cf3f8f1d9b8236db5b322af333ab4efb1600e9d2e8a0429a0bf0344c7a",
+  "original_helper_bytes_unchanged": true,
+  "purpose": "Verify Docker descriptor/config identities for the retained exact ShareT image archive",
+  "identity_basis": "Git source blobs; Windows checkout line endings are not the source identity"
+}
