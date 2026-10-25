@@ -1,5 +1,7 @@
 """Translate reviewed Tap metadata; preserve scripts, cases and coverage targets."""
 from copy import deepcopy
+import json
+from pathlib import Path
 
 
 def migrate(original):
@@ -24,15 +26,20 @@ def migrate(original):
         config['disable-coverage'] = config.pop('no-coverage')
     if isinstance(config.get('timeout'), str):
         config['timeout'] = int(config['timeout'])
-    if isinstance(config.get('files'), str):
-        config['files'] = [config['files']]
     if 'test-ignore' in config:
         previous = config.pop('test-ignore')
         if previous == '^(docs|smoke-tests|mock-globals|mock-registry|workspaces)/':
             config['exclude'] = [name + '/**' for name in
                                  ['docs', 'smoke-tests', 'mock-globals', 'mock-registry', 'workspaces']]
         else:
-            # The original fixtures rule is covered by Tap's default fixture
-            # discovery rule; the exact 234-file comparison must still pass.
+            # These legacy selection forms are replaced by the complete,
+            # independently observed original case list below.
             assert previous == 'fixtures/*', previous
+    reference = json.loads(Path(__file__).with_name('npm-original-case-file-inventory.json').read_text())
+    workspace = reference['workspaces'][package['name'] + '@' + package['version']]
+    # Tap21's expanded defaults can otherwise treat lib/commands/test.js as a
+    # test. Select every original observed file, rather than dropping a failure
+    # or relying on a changed discovery pattern. The separate execution gate
+    # must still verify exactly all 234 files across all 17 original workspaces.
+    config['files'] = [row['path'] for row in workspace['case_files']]
     return package
