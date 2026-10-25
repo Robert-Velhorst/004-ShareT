@@ -7,8 +7,10 @@ const express = require('express');
 const router = express.Router();
 const notificationController = require('../controllers/notificationController');
 const { protect } = require('../middleware/auth');
+const { standardApiRateLimit } = require('../utils/rateLimiter');
 
 // All notification routes are protected
+router.use(standardApiRateLimit);
 router.use(protect);
 
 router.get('/', notificationController.getNotifications);

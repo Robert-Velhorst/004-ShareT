@@ -29,7 +29,7 @@ const { initDatabases, setupSync, closeAll, getStats, getMigrationState, pruneEx
 // Import optimized utilities (GitHub Gems)
 const { logger, httpLogger, loggers } = require('./utils/logger');
 const { getStats: getCacheStats, clearAll: clearCache } = require('./utils/cache');
-const { apiRateLimit } = require('./utils/rateLimiter');
+const { apiRateLimit, standardApiRateLimit } = require('./utils/rateLimiter');
 const { errorResponseSchema, sendFastJSON } = require('./utils/jsonSerializer');
 
 // Import routes
@@ -254,7 +254,7 @@ app.use('/api/connector', apiRateLimit, connectorRoutes);
 
 // Maintenance page
 const maintenancePath = path.join(__dirname, 'public', 'maintenance.html');
-app.get('/maintenance', (req, res) => {
+app.get('/maintenance', standardApiRateLimit, (req, res) => {
   res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'");
   res.sendFile(maintenancePath, (err) => {
     if (err) {

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const os = require('os');
 const { protect, adminOnly } = require('../middleware/auth');
+const { standardApiRateLimit } = require('../utils/rateLimiter');
 const { getStats, User, SharedLink, CommentThread, ReplyEvent, TrelloWebhook } = require('../db/pouchdb');
 const { getStats: getCacheStats, clearAll: clearCache } = require('../utils/cache');
 const { getNotificationStatus } = require('../controllers/sharedCommentController');
@@ -10,6 +11,7 @@ const { getWebhookReadiness } = require('../services/trelloWebhookService');
 const { resolveAmbiguousReply } = require('../services/replyNotificationService');
 const { presentSharedLink } = require('../utils/sharePresentation');
 
+router.use(standardApiRateLimit);
 router.use(protect);
 router.use(adminOnly);
 

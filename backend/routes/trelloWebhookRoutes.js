@@ -1,4 +1,5 @@
 const express = require('express');
+const { standardApiRateLimit } = require('../utils/rateLimiter');
 const { ReplyEvent } = require('../db/pouchdb');
 const {
   getWebhookCallbackUrl,
@@ -11,7 +12,7 @@ const router = express.Router();
 // Trello validates callback URLs with a HEAD request before creating a webhook.
 router.head('/callback', (req, res) => res.sendStatus(200));
 
-router.post('/callback', async (req, res) => {
+router.post('/callback', standardApiRateLimit, async (req, res) => {
   const signature = req.get('x-trello-webhook');
   if (!verifyWebhookSignature(req.rawBody, signature, getWebhookCallbackUrl())) {
     return res.status(401).json({ success: false, message: 'Invalid Trello webhook signature' });
