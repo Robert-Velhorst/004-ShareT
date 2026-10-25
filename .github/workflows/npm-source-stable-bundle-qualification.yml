@@ -177,3 +177,101 @@ jobs:
           path: ${{ runner.temp }}/sharet-build-toolchain/reports/
           retention-days: 7
           if-no-files-found: error
+
+  npm-original-source-baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.15.1'
+      - name: Record exact source and original case identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$RUNNER_ENVIRONMENT" = github-hosted
+          mkdir -p "$RUNNER_TEMP/sharet-build-toolchain/"{input,reports,cache}
+          python - <<'PY'
+          from pathlib import Path
+          import subprocess, hashlib, json, os
+          paths = subprocess.check_output(['git', 'ls-files', '-z']).decode().split('\0')
+          record = {
+              'tested_head': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+              'tested_tree': subprocess.check_output(['git', 'rev-parse', 'HEAD^{tree}'], text=True).strip(),
+              'tracked_file_sha256': {p: hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in paths if p and Path(p).is_file()},
+              'deployment_or_live_data_changes': False,
+          }
+          (Path(os.environ['RUNNER_TEMP']) / 'sharet-build-toolchain/reports/source-identity.json').write_text(json.dumps(record, indent=2) + '\n')
+          PY
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '26.12.1'
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: npm/cli
+          ref: ae98c62586b6fea44114f72e249e246a2981de70 # public stable v12.2.1
+          path: .npm-source
+          persist-credentials: false
+      - name: Isolate vendor configuration ancestry from ShareT
+        shell: bash
+        run: |
+          set -euo pipefail
+          test ! -e "$RUNNER_TEMP/npm-source"
+          mv .npm-source "$RUNNER_TEMP/npm-source"
+      - name: Preserve every original upstream tracked payload
+        run: python tools/runtime/npm_source_workspace_evidence.py before
+      - name: Install and refresh the original declared workspace ranges
+        id: dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          evidence="$RUNNER_TEMP/sharet-build-toolchain/reports"
+          npm install --global npm@12.2.1 2>&1 | tee "$evidence/npm-source-bootstrap.log"
+          cd "$RUNNER_TEMP/npm-source"
+          npm install 2>&1 | tee "$evidence/npm-source-install.log"
+          node . update 2>&1 | tee "$evidence/npm-source-update.log"
+      - name: Audit the original resolved graph without waivers
+        id: source_audit
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/npm-source"
+          audit_status=0
+          node . audit --json > "$RUNNER_TEMP/sharet-build-toolchain/reports/npm-source-full-audit.json" 2> "$RUNNER_TEMP/sharet-build-toolchain/reports/npm-source-full-audit.stderr" || audit_status=$?
+          printf '%s\n' "$audit_status" > "$RUNNER_TEMP/sharet-build-toolchain/reports/npm-source-full-audit.exit-status"
+          test "$audit_status" -eq 0
+      - name: Verify every original manifest, source file, case and assertion
+        id: source_gate
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        run: python tools/runtime/npm_source_workspace_evidence.py integrity
+      - name: Record the original prerelease graph without exceptions
+        if: ${{ !cancelled() && steps.source_gate.outcome == 'success' }}
+        run: python tools/runtime/npm_source_workspace_evidence.py resolved
+      - name: Run every original workspace suite with its original configuration
+        if: ${{ !cancelled() && steps.source_gate.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/npm-source"
+          node . run test-all 2>&1 | tee "$RUNNER_TEMP/sharet-build-toolchain/reports/npm-source-all-original-cases.log"
+      - name: Run all original workspace lint and template checks
+        if: ${{ !cancelled() && steps.source_gate.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/npm-source"
+          node . run lint-all 2>&1 | tee "$RUNNER_TEMP/sharet-build-toolchain/reports/npm-source-all-original-lint.log"
+      - name: Recheck the original source and cases after baseline execution
+        if: ${{ !cancelled() && steps.source_gate.outcome == 'success' }}
+        run: python tools/runtime/npm_source_workspace_evidence.py after-cases
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: npm-original-source-baseline-evidence
+          path: ${{ runner.temp }}/sharet-build-toolchain/reports/
+          retention-days: 7
+          if-no-files-found: error
