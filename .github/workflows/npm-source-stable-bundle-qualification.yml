@@ -98,6 +98,20 @@ jobs:
         id: original_case_inventory
         if: ${{ !cancelled() && steps.source_gate.outcome == 'success' }}
         run: python tools/runtime/verify_original_npm_case_inventory.py
+      - name: Diagnose root spawn limit failure without recording values
+        if: ${{ !cancelled() && steps.upstream_cases.outcome == 'failure' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          evidence="$RUNNER_TEMP/sharet-build-toolchain/reports"
+          if grep -q 'spawn E2BIG' "$evidence/npm-source-all-original-cases.log"; then
+            hook="$GITHUB_WORKSPACE/tools/runtime/diagnose_spawn_limits.cjs"
+            cd "$RUNNER_TEMP/npm-source"
+            diagnostic_status=0
+            NODE_OPTIONS="${NODE_OPTIONS:-} --require=$hook" TAP_REPORTER=tap node . run test > "$evidence/npm-source-spawn-limit-reproduction.log" 2>&1 || diagnostic_status=$?
+            printf '%s\n' "$diagnostic_status" > "$evidence/npm-source-spawn-limit-reproduction.exit-status"
+            test -s "$evidence/npm-source-spawn-limit-diagnostics.jsonl"
+          fi
       - name: Run all original upstream lint commands
         id: upstream_lint
         if: ${{ !cancelled() && steps.source_gate.outcome == 'success' }}
