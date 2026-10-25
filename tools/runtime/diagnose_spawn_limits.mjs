@@ -1,10 +1,10 @@
-'use strict'
-
 // Disposable hosted-worker diagnostic. Record sizes only, never values, and
 // preserve the original spawn implementation, return value and thrown error.
-const fs = require('node:fs')
-const path = require('node:path')
-const { ChildProcess } = require('node:child_process')
+import fs from 'node:fs'
+import path from 'node:path'
+import process from 'node:process'
+import { Buffer } from 'node:buffer'
+import { ChildProcess } from 'node:child_process'
 
 if (process.env.RUNNER_ENVIRONMENT !== 'github-hosted' || process.platform !== 'linux') {
   throw new Error('Spawn diagnostics require the disposable hosted Linux worker')

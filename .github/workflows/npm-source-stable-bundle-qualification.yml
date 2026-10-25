@@ -105,10 +105,10 @@ jobs:
           set -euo pipefail
           evidence="$RUNNER_TEMP/sharet-build-toolchain/reports"
           if grep -q 'spawn E2BIG' "$evidence/npm-source-all-original-cases.log"; then
-            hook="$GITHUB_WORKSPACE/tools/runtime/diagnose_spawn_limits.cjs"
+            hook="$GITHUB_WORKSPACE/tools/runtime/diagnose_spawn_limits.mjs"
             cd "$RUNNER_TEMP/npm-source"
             diagnostic_status=0
-            NODE_OPTIONS="${NODE_OPTIONS:-} --require=$hook" TAP_REPORTER=tap node . run test > "$evidence/npm-source-spawn-limit-reproduction.log" 2>&1 || diagnostic_status=$?
+            NODE_OPTIONS="${NODE_OPTIONS:-} --import=$hook" TAP_REPORTER=tap node . run test > "$evidence/npm-source-spawn-limit-reproduction.log" 2>&1 || diagnostic_status=$?
             printf '%s\n' "$diagnostic_status" > "$evidence/npm-source-spawn-limit-reproduction.exit-status"
             test -s "$evidence/npm-source-spawn-limit-diagnostics.jsonl"
           fi
