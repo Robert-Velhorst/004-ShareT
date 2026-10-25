@@ -11,15 +11,15 @@
   "upstream_source_sha256": "368fbbad2895ea2b93fcb2ca064b9f9cbd7c47e25bfd9fdc170348083d42e6c5",
   "candidate_archive": {
     "file": "eslint-plugin-react-7.37.5+sharet.eslint10.1.tgz",
-    "bytes": 185292,
-    "sha256": "f748199461fe0a1d3a89176e89521143b64001ceb6e6571e883003a3a0a53162",
-    "integrity": "sha512-B1kef/pitDu2vvP+1JRMCy8sf7eojFDxcSzYeaux7BZYwfUNxi0fqqRQ5Z/dF/uZJcen1oNei9/jjgp5pNZqQQ=="
+    "bytes": 185469,
+    "sha256": "a9c66cafe09a2acceb2bad2561f51ef32214de06372f78b762e63eb70e65ee14",
+    "integrity": "sha512-fT+QOZhrJqzj5eU/OX8ZOIWiX2CeZUc9dmmpcZxuIcD5btErQaIaMvK8y9bLU5xrlacijfeUwkcvBsSppwlMvw=="
   },
   "unit_source_archive": {
     "file": "eslint-plugin-react-7.37.5+sharet.eslint10.1-unit-source.tgz",
-    "bytes": 454076,
-    "sha256": "56dff3cbd33b4d649c145500234cd2effa1cfdd1c0633572d72c7dc74ba6bb52",
-    "integrity": "sha512-kTbNo0ACmD8PBf4z8DRe0po7IQ4f6MmOVJzZoCSphvlkwivRFcjMrtazGiRqADGR0UOVqrsAva85CiM3Tv6rPg=="
+    "bytes": 454210,
+    "sha256": "f5f86ee13397035a3c64f49237649b3587fa7d511545145147f95f6efcdde553",
+    "integrity": "sha512-q0wQ5Cy+wb+mrsjHnQb+RMqruSwFRIhIfysI8Dxp/xGjk3hkeqtGu0yT4pHWPcLYkfLVhGhtgZ6o6aSNXdOUGQ=="
   },
   "changed_library_files": [
     "lib/rules/forbid-component-props.js",
@@ -1218,7 +1218,7 @@
     "lib/util/defaultProps.js": "2cb67db97b1b14071bb369ae49769771f4af794155f6e6ddae3dadd32f8486df",
     "lib/util/docsUrl.js": "3a9f36f88197252f066ce63d9a560f043533d2355d59601bd657a9706b65ccdc",
     "lib/util/error.js": "667d5313fe51611223c3be1e3b5f624b8cc0ce81e7cd67d96cca8c55bbe15f69",
-    "lib/util/eslint.js": "0b434a5fd1d23d6bbf9850dc6d629e5b82f516dddf24d5f4542242234cab3629",
+    "lib/util/eslint.js": "1fc203a9070c86c5c0401dd6798e8b4e1ec2cee689b6b34a25d12cb09ad115a9",
     "lib/util/getTokenBeforeClosingBracket.js": "f8bc247742a2edc2933cdfda008df8914309b1570d201f15500a9684663ac2e2",
     "lib/util/isCreateContext.js": "47c12e82b5173b31a2785299201a7f156b586e96381795e12f1bd5ae78615335",
     "lib/util/isCreateElement.js": "f05ddb642f7b72d6e4b3895fa8f24e07463b58483f1abb2fe711dafece788ec1",

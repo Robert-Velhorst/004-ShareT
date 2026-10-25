@@ -104,14 +104,24 @@
 +const { minimatch } = require('minimatch');
 --- a/lib/util/eslint.js
 +++ b/lib/util/eslint.js
-@@ -38,0 +39,6 @@
+@@ -38,0 +39,16 @@
 +function isSpaceBetween(sourceCode, first, second) {
-+  return sourceCode.isSpaceBetween
-+    ? sourceCode.isSpaceBetween(first, second)
-+    : sourceCode.isSpaceBetweenTokens(first, second);
++  if (sourceCode.isSpaceBetweenTokens) {
++    return sourceCode.isSpaceBetweenTokens(first, second);
++  }
++  if (sourceCode.isSpaceBetween(first, second)) {
++    return true;
++  }
++  const ordered = first.range[0] <= second.range[0] ? [first, second] : [second, first];
++  if (ordered[0].range[1] >= ordered[1].range[0]) {
++    return false;
++  }
++  // The removed method also counted whitespace inside intervening JSXText.
++  return sourceCode.getTokensBetween(ordered[0], ordered[1], { includeComments: true })
++    .some((token) => token.type === 'JSXText' && /\s/u.test(token.value));
 +}
 +
-@@ -39,0 +46 @@
+@@ -39,0 +56 @@
 +  isSpaceBetween,
 --- a/lib/util/version.js
 +++ b/lib/util/version.js
