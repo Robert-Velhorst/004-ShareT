@@ -56,7 +56,7 @@ jobs:
           evidence="$RUNNER_TEMP/sharet-build-toolchain/reports"
           npm install --global npm@12.2.1 2>&1 | tee "$evidence/npm-source-bootstrap.log"
           cd .npm-source
-          node . install 2>&1 | tee "$evidence/npm-source-install.log"
+          npm install 2>&1 | tee "$evidence/npm-source-install.log"
           node . update undici ip-address 2>&1 | tee "$evidence/npm-source-update.log"
       - name: Require stable dependencies and unchanged original source and cases
         id: source_gate
