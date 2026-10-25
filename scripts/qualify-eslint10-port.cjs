@@ -7,10 +7,12 @@ const crypto = require('node:crypto');
 const { spawnSync } = require('node:child_process');
 
 const phase = process.argv[2];
+const profile = process.argv[3] || 'native-api';
 if (process.platform !== 'linux' || os.userInfo().uid !== 1000
     || process.versions.node !== '26.12.1'
     || process.env.SHARET_ESLINT10_CASE_SDK !== 'github-hosted'
-    || !['install', 'test'].includes(phase)) {
+    || !['install', 'test'].includes(phase)
+    || !['native-api', 'publisher-side-by-side'].includes(profile)) {
   throw new Error('Use the disposable hosted public-source SDK');
 }
 const input = '/inputs';
@@ -18,7 +20,12 @@ const output = '/outputs';
 const source = '/build/package';
 const digest = raw => crypto.createHash('sha256').update(raw).digest('hex');
 const spec = JSON.parse(fs.readFileSync(path.join(input, 'provenance.json'), 'utf8'));
-const report = { phase, node: process.versions.node, commands: [],
+const supplement = profile === 'publisher-side-by-side'
+  ? JSON.parse(fs.readFileSync(path.join(input, 'publisher-side-by-side-sdk.json'), 'utf8')) : null;
+const unitArchive = supplement ? supplement.unit_source_archive : spec.unit_source_archive;
+const unitTargets = supplement ? supplement.unit_sdk_dependency_targets : spec.unit_sdk_dependency_targets;
+const report = { phase, profile, node: process.versions.node, commands: [],
+  supplemental_profile_replaces_native_API_acceptance: false,
   original_unit_test_script: spec.original_unit_test_script,
   original_case_and_helper_files_unchanged: false,
   normal_dependency_graph_qualified: false, original_unit_command_executed: false,
@@ -67,28 +74,28 @@ function verifyCases() {
 let qualificationError;
 let protectedFileError;
 try {
-  for (const item of [spec.candidate_archive, spec.unit_source_archive]) {
+  for (const item of [spec.candidate_archive, unitArchive]) {
     if (path.basename(item.file) !== item.file) throw new Error('Unexpected public input filename');
     const raw = fs.readFileSync(path.join(input, item.file));
     if (raw.length !== item.bytes || digest(raw) !== item.sha256) throw new Error('Public source archive changed');
   }
   report.candidate_archive_sha256 = spec.candidate_archive.sha256;
-  report.unit_source_archive_sha256 = spec.unit_source_archive.sha256;
+  report.unit_source_archive_sha256 = unitArchive.sha256;
   const npm = run('npm-version', '/usr/local/bin/npm', ['--version'], '/build', 30000).trim();
   if (npm !== '12.2.1') throw new Error('Unexpected package manager');
   report.npm = npm;
   if (phase === 'install') {
-    const entries = run('archive-paths', '/bin/tar', ['-tzf', path.join(input, spec.unit_source_archive.file)], '/build', 30000);
+    const entries = run('archive-paths', '/bin/tar', ['-tzf', path.join(input, unitArchive.file)], '/build', 30000);
     if (entries.trim().split('\n').some(name => !name.startsWith('package/') || name.split('/').includes('..'))) {
       throw new Error('Source archive escapes its public working directory');
     }
-    run('source-extraction', '/bin/tar', ['-xzf', path.join(input, spec.unit_source_archive.file), '-C', '/build'], '/build', 30000);
+    run('source-extraction', '/bin/tar', ['-xzf', path.join(input, unitArchive.file), '-C', '/build'], '/build', 30000);
   }
   verifyCases();
   const manifest = JSON.parse(fs.readFileSync(path.join(source, 'package.json'), 'utf8'));
   if (manifest.version !== spec.version || manifest.scripts['unit-test'] !== spec.original_unit_test_script
       || JSON.stringify(manifest.dependencies) !== JSON.stringify(spec.production_runtime_dependency_targets)
-      || JSON.stringify(manifest.devDependencies) !== JSON.stringify(spec.unit_sdk_dependency_targets)) {
+      || JSON.stringify(manifest.devDependencies) !== JSON.stringify(unitTargets)) {
     throw new Error('Published unit entry or reviewed SDK dependency targets changed');
   }
   if (phase === 'install') {
@@ -96,15 +103,42 @@ try {
     const lock = JSON.parse(fs.readFileSync(path.join(source, 'package-lock.json'), 'utf8'));
     for (const [name, version] of Object.entries({ ...manifest.dependencies, ...manifest.devDependencies })) {
       const actual = JSON.parse(fs.readFileSync(path.join(source, 'node_modules', name, 'package.json'), 'utf8'));
-      if (actual.version !== version) throw new Error('Installed SDK selection differs from its reviewed target');
-      if (lock.packages['node_modules/' + name]?.integrity !== spec.dependency_publisher_metadata[name].dist.integrity) {
+      const identity = supplement?.direct_package_identities[name]
+        || { name, version, dist: spec.dependency_publisher_metadata[name].dist };
+      if (actual.name !== identity.name || actual.version !== identity.version) {
+        throw new Error('Installed SDK identity differs from its reviewed target');
+      }
+      if (lock.packages['node_modules/' + name]?.integrity !== identity.dist.integrity) {
         throw new Error('Installed direct dependency differs from inspected publisher integrity');
       }
+    }
+    if (supplement) {
+      const delegate = supplement.compatibility_API_delegate;
+      const delegateManifest = require.resolve(delegate.install_path + '/package.json', {
+        paths: [path.join(source, 'node_modules/typescript')],
+      });
+      if (!delegateManifest.startsWith(source + '/node_modules/')) throw new Error('API delegate escaped SDK');
+      const actual = JSON.parse(fs.readFileSync(delegateManifest, 'utf8'));
+      const location = path.relative(source, path.dirname(delegateManifest)).split(path.sep).join('/');
+      if (actual.name !== delegate.name || actual.version !== delegate.version
+          || lock.packages[location]?.integrity !== delegate.dist.integrity) {
+        throw new Error('Official compatibility API delegate differs from latest reviewed stable identity');
+      }
+      const compiler = path.join(source, 'node_modules/.bin/tsc');
+      if (fs.realpathSync(compiler) !== fs.realpathSync(path.join(source, 'node_modules/@typescript/native/bin/tsc'))) {
+        throw new Error('The default tsc must remain the native TypeScript 7 compiler');
+      }
+      const compilerVersion = run('native-compiler-version', compiler, ['--version'], source, 30000).trim();
+      if (compilerVersion !== 'Version 7.0.2') throw new Error('Unexpected native compiler version');
+      report.native_compiler_version = '7.0.2';
+      report.compatibility_API_package = '6.0.2';
+      report.compatibility_API_delegate_version = actual.version;
+      report.native_TypeScript7_parser_API_qualified = false;
     }
     report.normal_dependency_graph_qualified = true;
   } else {
     const installed = JSON.parse(fs.readFileSync(path.join(output, 'install-receipt.json'), 'utf8'));
-    if (!installed.normal_dependency_graph_qualified
+    if (!installed.normal_dependency_graph_qualified || installed.profile !== profile
         || installed.unit_source_archive_sha256 !== report.unit_source_archive_sha256
         || installed.candidate_archive_sha256 !== report.candidate_archive_sha256) {
       throw new Error('Require the exact normally installed source SDK first');

@@ -13,8 +13,13 @@ permissions:
 
 jobs:
   original-unit-cases:
+    name: Original unit entry (${{ matrix.profile }})
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        profile: [native-api, publisher-side-by-side]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -23,6 +28,8 @@ jobs:
         with:
           python-version: '3.15.1'
       - name: Prepare reviewed public source archives
+        env:
+          SHARET_ESLINT10_PROFILE: ${{ matrix.profile }}
         run: |
           test "$RUNNER_ENVIRONMENT" = github-hosted
           python - <<'PY'
@@ -34,7 +41,14 @@ jobs:
           inputs=root/'inputs';inputs.mkdir(parents=True)
           for name in ['outputs','work']:(root/name).mkdir()
           spec=json.loads((public/'provenance.json').read_text())
-          for item in [spec['candidate_archive'],spec['unit_source_archive']]:
+          profile=os.environ['SHARET_ESLINT10_PROFILE']
+          assert profile in {'native-api','publisher-side-by-side'}
+          unit=spec['unit_source_archive']
+          if profile=='publisher-side-by-side':
+              supplement=json.loads((public/'publisher-side-by-side-sdk.json').read_text())
+              unit=supplement['unit_source_archive']
+              shutil.copyfile(public/'publisher-side-by-side-sdk.json',inputs/'publisher-side-by-side-sdk.json')
+          for item in [spec['candidate_archive'],unit]:
               assert Path(item['file']).name==item['file']
               raw=(public/item['file']).read_bytes()
               assert len(raw)==item['bytes'] and hashlib.sha256(raw).hexdigest()==item['sha256']
@@ -55,7 +69,7 @@ jobs:
             --mount type=bind,src="$SHARET_ESLINT10_ROOT/outputs",dst=/outputs \
             --mount type=bind,src="$SHARET_ESLINT10_ROOT/work",dst=/build \
             --env SHARET_ESLINT10_CASE_SDK=github-hosted --entrypoint node \
-            sharet-eslint10-sdk:ci /inputs/qualify-eslint10-port.cjs install
+            sharet-eslint10-sdk:ci /inputs/qualify-eslint10-port.cjs install "${{ matrix.profile }}"
       - name: Run the full original unit entry without network or case changes
         run: |
           docker run --rm --network none --read-only --user 1000:1000 --cap-drop ALL \
@@ -65,12 +79,12 @@ jobs:
             --mount type=bind,src="$SHARET_ESLINT10_ROOT/outputs",dst=/outputs \
             --mount type=bind,src="$SHARET_ESLINT10_ROOT/work",dst=/build \
             --env SHARET_ESLINT10_CASE_SDK=github-hosted --entrypoint node \
-            sharet-eslint10-sdk:ci /inputs/qualify-eslint10-port.cjs test
+            sharet-eslint10-sdk:ci /inputs/qualify-eslint10-port.cjs test "${{ matrix.profile }}"
       - name: Retain source identities and normal qualification diagnostics
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
-          name: public-eslint10-port-qualification
+          name: public-eslint10-port-qualification-${{ matrix.profile }}
           path: |
             ${{ runner.temp }}/sharet-eslint10-port/inputs
             ${{ runner.temp }}/sharet-eslint10-port/outputs
