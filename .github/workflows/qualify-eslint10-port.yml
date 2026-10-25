@@ -54,6 +54,8 @@ jobs:
               assert len(raw)==item['bytes'] and hashlib.sha256(raw).hexdigest()==item['sha256']
               (inputs/item['file']).write_bytes(raw)
           shutil.copyfile(public/'provenance.json',inputs/'provenance.json')
+          for name in ['mocha-legacy-entry.mjs','mocha-entry-provenance.json']:
+              shutil.copyfile(public/name,inputs/name)
           shutil.copyfile(repository/'scripts/qualify-eslint10-port.cjs',inputs/'qualify-eslint10-port.cjs')
           with Path(os.environ['GITHUB_ENV']).open('a') as handle:handle.write('SHARET_ESLINT10_ROOT='+str(root)+'\n')
           PY

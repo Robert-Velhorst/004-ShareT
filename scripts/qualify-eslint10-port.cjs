@@ -20,6 +20,7 @@ const output = '/outputs';
 const source = '/build/package';
 const digest = raw => crypto.createHash('sha256').update(raw).digest('hex');
 const spec = JSON.parse(fs.readFileSync(path.join(input, 'provenance.json'), 'utf8'));
+const mochaEntry = JSON.parse(fs.readFileSync(path.join(input, 'mocha-entry-provenance.json'), 'utf8'));
 const supplement = profile === 'publisher-side-by-side'
   ? JSON.parse(fs.readFileSync(path.join(input, 'publisher-side-by-side-sdk.json'), 'utf8')) : null;
 const unitArchive = supplement ? supplement.unit_source_archive : spec.unit_source_archive;
@@ -72,6 +73,36 @@ function verifyCases() {
   }
   report.original_case_and_helper_files_unchanged = true;
   report.protected_case_helper_files = Object.keys(spec.original_case_and_helper_file_sha256).length;
+}
+function verifyMochaPublisher() {
+  const folder = path.join(source, 'node_modules/mocha');
+  const manifest = JSON.parse(fs.readFileSync(path.join(folder, 'package.json'), 'utf8'));
+  if (manifest.name !== 'mocha' || manifest.version !== mochaEntry.publisher_version || manifest.type !== 'module') {
+    throw new Error('Unexpected publisher CLI identity or module format');
+  }
+  for (const [name, hash] of Object.entries(mochaEntry.publisher_file_SHA256)) {
+    const filename = path.resolve(folder, name);
+    if (!filename.startsWith(folder + '/') || !fs.realpathSync(filename).startsWith(folder + '/')
+        || digest(fs.readFileSync(filename)) !== hash) {
+      throw new Error('An original Mocha publisher file differs');
+    }
+  }
+  report.original_Mocha_publisher_files_unchanged = true;
+  report.protected_Mocha_publisher_files = Object.keys(mochaEntry.publisher_file_SHA256).length;
+}
+function verifyMochaEntry(prepare = false) {
+  if (mochaEntry.added_entry_path !== 'bin/_mocha' || mochaEntry.adapter_file !== 'mocha-legacy-entry.mjs'
+      || mochaEntry.delegated_entry !== 'lib/cli/cli.js' || mochaEntry.delegated_function !== 'main') {
+    throw new Error('Unexpected executable-path adapter scope');
+  }
+  verifyMochaPublisher();
+  const raw = fs.readFileSync(path.join(input, mochaEntry.adapter_file));
+  const destination = path.join(source, 'node_modules/mocha', mochaEntry.added_entry_path);
+  if (digest(raw) !== mochaEntry.adapter_sha256) throw new Error('Reviewed CLI adapter differs');
+  if (prepare) fs.writeFileSync(destination, raw, { flag: 'wx', mode: 0o644 });
+  if (digest(fs.readFileSync(destination)) !== mochaEntry.adapter_sha256) throw new Error('SDK CLI adapter changed');
+  report.additional_Mocha_executable_path_adapter_sha256 = mochaEntry.adapter_sha256;
+  report.original_Mocha_entry_implementation_or_case_selection_changed = false;
 }
 let qualificationError;
 let protectedFileError;
@@ -137,6 +168,7 @@ try {
       report.compatibility_API_delegate_version = actual.version;
       report.native_TypeScript7_parser_API_qualified = false;
     }
+    verifyMochaEntry(true);
     report.normal_dependency_graph_qualified = true;
   } else {
     const installed = JSON.parse(fs.readFileSync(path.join(output, 'install-receipt.json'), 'utf8'));
@@ -146,6 +178,7 @@ try {
       throw new Error('Require the exact normally installed source SDK first');
     }
     report.normal_dependency_graph_qualified = true;
+    verifyMochaEntry();
     report.original_unit_command_executed = true;
     const log = run('all-original-unit-cases', '/usr/local/bin/npm', ['run', 'unit-test', '--ignore-scripts'], source, 900000);
     const passing = [...log.matchAll(/(\d+) passing\b/g)];
@@ -162,6 +195,16 @@ try {
       report.original_case_and_helper_files_unchanged = false;
       report.protected_file_error = error.message;
       protectedFileError = error;
+    }
+  }
+  if (fs.existsSync(path.join(source, 'node_modules/mocha/package.json'))) {
+    try {
+      verifyMochaPublisher();
+      if (report.additional_Mocha_executable_path_adapter_sha256) verifyMochaEntry();
+    } catch (error) {
+      report.original_Mocha_publisher_files_unchanged = false;
+      report.protected_Mocha_file_error = error.message;
+      protectedFileError = protectedFileError || error;
     }
   }
   if (fs.existsSync(path.join(source, 'package-lock.json'))) {
