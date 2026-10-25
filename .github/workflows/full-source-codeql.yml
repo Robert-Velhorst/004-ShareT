@@ -1,0 +1,78 @@
+name: Full source CodeQL
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  complete-source:
+    name: Complete source and every reported finding
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CODEQL_VERSION: 2.27.3
+      CODEQL_BUNDLE_SHA256: 95a1de65ac7f234ebbc49786eda82135819e2b0ac3b2c5d3263277ec5c020711
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Record source and verify the official stable CLI bundle
+        run: |
+          set -euo pipefail
+          test "$RUNNER_ENVIRONMENT" = github-hosted
+          mkdir -p "$RUNNER_TEMP/sharet-codeql/evidence"
+          git rev-parse HEAD > "$RUNNER_TEMP/sharet-codeql/evidence/tested-head.txt"
+          git rev-parse HEAD^{tree} > "$RUNNER_TEMP/sharet-codeql/evidence/tested-tree.txt"
+          git ls-files -z | xargs -0 sha256sum > "$RUNNER_TEMP/sharet-codeql/evidence/source-sha256.txt"
+          curl --fail --location --retry 3 --output "$RUNNER_TEMP/sharet-codeql/bundle.tar.zst" \
+            "https://github.com/github/codeql-action/releases/download/codeql-bundle-v${CODEQL_VERSION}/codeql-bundle-javascript-linux64.tar.zst"
+          printf '%s  %s\n' "$CODEQL_BUNDLE_SHA256" "$RUNNER_TEMP/sharet-codeql/bundle.tar.zst" | sha256sum --check
+          tar --zstd -xf "$RUNNER_TEMP/sharet-codeql/bundle.tar.zst" -C "$RUNNER_TEMP/sharet-codeql"
+          "$RUNNER_TEMP/sharet-codeql/codeql/codeql" version --format=json > "$RUNNER_TEMP/sharet-codeql/evidence/cli-version.json"
+      - name: Create a fresh database from the complete source tree
+        run: |
+          set -euo pipefail
+          "$RUNNER_TEMP/sharet-codeql/codeql/codeql" database create "$RUNNER_TEMP/sharet-codeql/database" \
+            --language=javascript-typescript --build-mode=none --source-root="$GITHUB_WORKSPACE" \
+            --threads=2 --ram=6000 2>&1 | tee "$RUNNER_TEMP/sharet-codeql/evidence/create.log"
+          cp "$RUNNER_TEMP/sharet-codeql/database/src.zip" "$RUNNER_TEMP/sharet-codeql/evidence/extracted-source.zip"
+      - name: Analyze the complete standard security suite without PR diff extensions
+        run: |
+          set -euo pipefail
+          "$RUNNER_TEMP/sharet-codeql/codeql/codeql" database analyze "$RUNNER_TEMP/sharet-codeql/database" \
+            codeql/javascript-queries:codeql-suites/javascript-code-scanning.qls \
+            --format=sarifv2.1.0 --output="$RUNNER_TEMP/sharet-codeql/evidence/full-source.sarif" \
+            --threads=2 --ram=6000 2>&1 | tee "$RUNNER_TEMP/sharet-codeql/evidence/analyze.log"
+      - name: Require the full suite and zero findings at every severity
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          folder = Path(os.environ['RUNNER_TEMP']) / 'sharet-codeql/evidence'
+          sarif = json.loads((folder / 'full-source.sarif').read_text())
+          assert sarif['version'] == '2.1.0' and len(sarif['runs']) == 1
+          run = sarif['runs'][0]
+          components = [run['tool']['driver'], *run['tool'].get('extensions', [])]
+          assert not any('pr-diff-range' in item.get('name', '') for item in components)
+          rules = {rule['id'] for item in components for rule in item.get('rules', [])}
+          assert len(rules) >= 87
+          assert {'js/request-forgery', 'js/missing-rate-limiting'} <= rules
+          findings = run.get('results', [])
+          summary = {'scope': 'complete source; no PR diff restriction', 'rules': sorted(rules),
+                     'finding_count': len(findings), 'all_results_retained': True,
+                     'zero_findings_required_at_every_severity': True}
+          (folder / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n')
+          print(json.dumps(summary))
+          assert not findings, 'Full-source CodeQL findings remain; inspect the complete retained SARIF'
+          PY
+      - name: Retain complete source, extraction, scanner and finding evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: complete-source-codeql
+          path: ${{ runner.temp }}/sharet-codeql/evidence/
+          if-no-files-found: error
