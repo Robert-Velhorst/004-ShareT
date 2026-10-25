@@ -40,7 +40,7 @@ if mode == 'prepare-tap21':
         path.write_bytes(updated)
         planned[name] = {'original_json': previous,
                          'expected_sha256': hashlib.sha256(updated).hexdigest(),
-                         'declared_changes': 'public stable Tap21 and reviewed configuration translation; original scripts/cases/assertions unchanged'}
+                         'declared_changes': 'public stable Tap21/configuration translation; smoke-tests proxy4.1.0 parent declaration; original scripts/cases/assertions unchanged'}
     assert planned and 'package.json' in planned
     (reports / 'npm-source-planned-manifest-changes.json').write_text(json.dumps(planned, indent=2) + '\n')
     print(json.dumps({'public_stable_tap': '21.8.0', 'declared_workspace_manifests': sorted(planned),

@@ -8,6 +8,11 @@ def migrate(original):
     package = deepcopy(original)
     assert 'tap' in package['devDependencies']
     package['devDependencies']['tap'] = '21.8.0'
+    if package['name'] == '@npmcli/smoke-tests':
+        assert package['devDependencies']['proxy'] == '^2.1.1'
+        # The original fixture already uses the named createProxy(server) API.
+        # Upgrade the parent itself; do not override its prerelease child.
+        package['devDependencies']['proxy'] = '4.1.0'
     config = package.setdefault('tap', {})
     nyc_args = config.pop('nyc-arg', [])
     assert len(nyc_args) % 2 == 0
