@@ -64,6 +64,8 @@ function verifyCases() {
   report.original_case_and_helper_files_unchanged = true;
   report.protected_case_helper_files = Object.keys(spec.original_case_and_helper_file_sha256).length;
 }
+let qualificationError;
+let protectedFileError;
 try {
   for (const item of [spec.candidate_archive, spec.unit_source_archive]) {
     if (path.basename(item.file) !== item.file) throw new Error('Unexpected public input filename');
@@ -116,8 +118,9 @@ try {
     report.pending_case_markers = [...log.matchAll(/(\d+) pending\b/g)].map(match => Number(match[1]));
     report.original_unit_command_passed = true;
   }
+} catch (error) {
+  qualificationError = error;
 } finally {
-  let protectedFileError;
   if (fs.existsSync(path.join(source, 'tests'))) {
     try { verifyCases(); } catch (error) {
       report.original_case_and_helper_files_unchanged = false;
@@ -129,5 +132,6 @@ try {
     fs.copyFileSync(path.join(source, 'package-lock.json'), path.join(output, phase + '-package-lock.json'));
   }
   fs.writeFileSync(path.join(output, phase + '-receipt.json'), JSON.stringify(report, null, 2) + '\n');
-  if (protectedFileError) throw protectedFileError;
 }
+if (qualificationError) throw qualificationError;
+if (protectedFileError) throw protectedFileError;

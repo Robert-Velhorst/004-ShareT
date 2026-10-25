@@ -1,0 +1,43 @@
+{
+  "reviewed_at": "2026-10-24T23:57:29.662949+00:00",
+  "source_commit": "fc0cacb7a21eed36cb6d1462573517dcded3639a",
+  "scanner_artifact": 12580003478,
+  "findings": [
+    {
+      "fingerprint": "fc0cacb7a21eed36cb6d1462573517dcded3639a:public-ports/eslint-plugin-react/provenance.json:generic-api-key:1012",
+      "upstream_file": "tests/lib/rules/jsx-key.js",
+      "classification": "SHA-256 checksum of an unchanged public upstream source file",
+      "matches_public_file_bytes": true,
+      "public_file_SHA256": "54110c0620f5a176ddb105b6a9d34c5d4b2e96a60c7d5d560df9f04a46dbfa00",
+      "public_source_URL": "https://raw.githubusercontent.com/jsx-eslint/eslint-plugin-react/2c98b83c451a4297edf1787d9a616e50687e27e8/tests/lib/rules/jsx-key.js"
+    },
+    {
+      "fingerprint": "fc0cacb7a21eed36cb6d1462573517dcded3639a:public-ports/eslint-plugin-react/provenance.json:generic-api-key:1040",
+      "upstream_file": "tests/lib/rules/no-array-index-key.js",
+      "classification": "SHA-256 checksum of an unchanged public upstream source file",
+      "matches_public_file_bytes": true,
+      "public_file_SHA256": "fd5d98602c356d86e5a97b9bcd31489dc00894fc5d9732e062f69e91021894fb",
+      "public_source_URL": "https://raw.githubusercontent.com/jsx-eslint/eslint-plugin-react/2c98b83c451a4297edf1787d9a616e50687e27e8/tests/lib/rules/no-array-index-key.js"
+    },
+    {
+      "fingerprint": "fc0cacb7a21eed36cb6d1462573517dcded3639a:public-ports/eslint-plugin-react/provenance.json:generic-api-key:1141",
+      "upstream_file": "lib/rules/jsx-key.js",
+      "classification": "SHA-256 checksum of an unchanged public upstream source file",
+      "matches_public_file_bytes": true,
+      "public_file_SHA256": "bf70f5a9241f0843a297ae09623d8cd24c6bcd1dac6f360f149749b9b72b36eb",
+      "public_source_URL": "https://raw.githubusercontent.com/jsx-eslint/eslint-plugin-react/2c98b83c451a4297edf1787d9a616e50687e27e8/lib/rules/jsx-key.js"
+    },
+    {
+      "fingerprint": "fc0cacb7a21eed36cb6d1462573517dcded3639a:public-ports/eslint-plugin-react/provenance.json:generic-api-key:1175",
+      "upstream_file": "lib/rules/no-array-index-key.js",
+      "classification": "SHA-256 checksum of an unchanged public upstream source file",
+      "matches_public_file_bytes": true,
+      "public_file_SHA256": "51516b948d1d2df7bfcc67c14fd7fccd8b2c43d75171660cc08d9c4c4e065f95",
+      "public_source_URL": "https://raw.githubusercontent.com/jsx-eslint/eslint-plugin-react/2c98b83c451a4297edf1787d9a616e50687e27e8/lib/rules/no-array-index-key.js"
+    }
+  ],
+  "scope": "Only four exact immutable historical finding fingerprints",
+  "file_path_rule_regex_or_source_module_scan_exemption": false,
+  "future_findings_in_same_file_still_block": true,
+  "application_credential_or_private_key_values_present": false
+}
