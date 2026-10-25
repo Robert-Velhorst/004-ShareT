@@ -3,9 +3,9 @@
   "guidance": "https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/#running-side-by-side-with-typescript-6.0",
   "unit_source_archive": {
     "file": "eslint-plugin-react-7.37.5+sharet.eslint10.1-publisher-side-by-side-sdk.tgz",
-    "bytes": 454004,
-    "sha256": "2308d1da931407baf103e9464ab2e64908f99ae39fa954eb6502d2c5246265a9",
-    "integrity": "sha512-AfYxwSFL0GprHaiU+P5FzvgZ5d1JCSEakFbwZagAFjfziKhR3vRPgeOkpOs63ywxfzf9ksy2jam+GITd4uxg/g=="
+    "bytes": 454107,
+    "sha256": "8e88eedd240f636a69e826a0baa381526c7918b9c5434fca01c289f5e183d0d6",
+    "integrity": "sha512-GPwqdvl5ohk8l48a1KdS+0IqaTdFrB4mZ5jh5Sn6YFDxM4BkMRuP6sAUpBUPuVeLW7awxezAH58zXzkFVa/MlA=="
   },
   "unit_sdk_dependency_targets": {
     "@babel/core": "8.0.9",

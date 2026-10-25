@@ -18,3 +18,10 @@ The original unit command also names Mocha's removed bin/_mocha executable. A fi
 ### Maintained TypeScript parser in the diagnostic SDK
 
 Actual source 72d04f4 enters the unchanged original unit command, then fails because deprecated typescript-eslint-parser 22.0.0 imports a removed private ESLint traverser. The publisher metadata explicitly says to use @typescript-eslint/parser instead. The supplemental SDK now installs current @typescript-eslint/parser 8.72.0 under the original package import name through a normal npm alias, with its actual publisher identity and integrity required. All 148 original case/helper files, candidate library files, assertions and unit-command arguments are unchanged. The original strict native-api profile still requires direct TypeScript 7 parser support and remains unqualified. No peer override, private-export bypass, new source port or application manifest change is added. Fresh full-case hosted evidence is required; the alias is not a passing-case claim.
+
+
+### Original-case-driven public API migration
+
+At source 449e4c8, actual artifact 12581895662 runs the complete original unit entry: 15,084 cases pass and 2,324 fail, with zero skipped/pending cases reported. Original files remain unchanged. The maintained parser removes the earlier private-import startup failure. The actual failing families identify removed filename/whitespace methods and Minimatch's changed function export. This follow-up uses context.filename (retaining the old accessor fallback), the public SourceCode.isSpaceBetween API through a helper retaining old-version fallback, and Minimatch's documented named export. Fourteen total library files now differ from the publisher, including the original two context updates. Regenerate the readable patch and all three archives together and bind every library/case hash. No original helper, assertion, case selection, strict native-api row or application dependency is changed. Fresh full original-case acceptance remains required.
+
+Sources: [ESLint 10 migration](https://eslint.org/docs/latest/use/migrate-to-10.0.0), [Minimatch usage](https://github.com/isaacs/minimatch#usage).

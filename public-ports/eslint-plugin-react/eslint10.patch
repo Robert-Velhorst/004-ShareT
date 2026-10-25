@@ -1,3 +1,124 @@
+--- a/lib/rules/forbid-component-props.js
++++ b/lib/rules/forbid-component-props.js
+@@ -8 +8 @@
+-const minimatch = require('minimatch');
++const { minimatch } = require('minimatch');
+--- a/lib/rules/forward-ref-uses-ref.js
++++ b/lib/rules/forward-ref-uses-ref.js
+@@ -60 +60 @@
+-    const sourceCode = context.getSourceCode();
++    const sourceCode = context.sourceCode || context.getSourceCode();
+--- a/lib/rules/jsx-curly-spacing.js
++++ b/lib/rules/jsx-curly-spacing.js
+@@ -12,0 +13,2 @@
++
++const isSpaceBetween = require('../util/eslint').isSpaceBetween;
+@@ -395 +397 @@
+-        if (!sourceCode.isSpaceBetweenTokens(first, second)) {
++        if (!isSpaceBetween(sourceCode, first, second)) {
+@@ -400 +402 @@
+-        if (!sourceCode.isSpaceBetweenTokens(penultimate, last)) {
++        if (!isSpaceBetween(sourceCode, penultimate, last)) {
+@@ -410 +412 @@
+-        } else if (sourceCode.isSpaceBetweenTokens(first, second)) {
++        } else if (isSpaceBetween(sourceCode, first, second)) {
+@@ -417 +419 @@
+-        } else if (sourceCode.isSpaceBetweenTokens(penultimate, last)) {
++        } else if (isSpaceBetween(sourceCode, penultimate, last)) {
+--- a/lib/rules/jsx-equals-spacing.js
++++ b/lib/rules/jsx-equals-spacing.js
+@@ -6,0 +7,2 @@
++
++const isSpaceBetween = require('../util/eslint').isSpaceBetween;
+@@ -66,2 +68,2 @@
+-          const spacedBefore = sourceCode.isSpaceBetweenTokens(attrNode.name, equalToken);
+-          const spacedAfter = sourceCode.isSpaceBetweenTokens(equalToken, attrNode.value);
++          const spacedBefore = isSpaceBetween(sourceCode, attrNode.name, equalToken);
++          const spacedAfter = isSpaceBetween(sourceCode, equalToken, attrNode.value);
+--- a/lib/rules/jsx-filename-extension.js
++++ b/lib/rules/jsx-filename-extension.js
+@@ -64 +64 @@
+-    const filename = context.getFilename();
++    const filename = typeof context.filename === 'string' ? context.filename : context.getFilename();
+--- a/lib/rules/jsx-handler-names.js
++++ b/lib/rules/jsx-handler-names.js
+@@ -8 +8 @@
+-const minimatch = require('minimatch');
++const { minimatch } = require('minimatch');
+--- a/lib/rules/jsx-one-expression-per-line.js
++++ b/lib/rules/jsx-one-expression-per-line.js
+@@ -6,0 +7,2 @@
++
++const isSpaceBetween = require('../util/eslint').isSpaceBetween;
+@@ -174 +176 @@
+-              || getSourceCode(context).isSpaceBetweenTokens(prevChild, child);
++              || isSpaceBetween(getSourceCode(context), prevChild, child);
+@@ -180 +182 @@
+-              || getSourceCode(context).isSpaceBetweenTokens(child, nextChild);
++              || isSpaceBetween(getSourceCode(context), child, nextChild);
+--- a/lib/rules/jsx-pascal-case.js
++++ b/lib/rules/jsx-pascal-case.js
+@@ -9 +9 @@
+-const minimatch = require('minimatch');
++const { minimatch } = require('minimatch');
+--- a/lib/rules/jsx-space-before-closing.js
++++ b/lib/rules/jsx-space-before-closing.js
+@@ -7,0 +8,2 @@
++
++const isSpaceBetween = require('../util/eslint').isSpaceBetween;
+@@ -68 +70 @@
+-        if (configuration === 'always' && !sourceCode.isSpaceBetweenTokens(leftToken, closingSlash)) {
++        if (configuration === 'always' && !isSpaceBetween(sourceCode, leftToken, closingSlash)) {
+@@ -75 +77 @@
+-        } else if (configuration === 'never' && sourceCode.isSpaceBetweenTokens(leftToken, closingSlash)) {
++        } else if (configuration === 'never' && isSpaceBetween(sourceCode, leftToken, closingSlash)) {
+--- a/lib/rules/jsx-tag-spacing.js
++++ b/lib/rules/jsx-tag-spacing.js
+@@ -6,0 +7,2 @@
++
++const isSpaceBetween = require('../util/eslint').isSpaceBetween;
+@@ -43 +45 @@
+-    adjacent = !sourceCode.isSpaceBetweenTokens(lastTokens[0], lastTokens[1]);
++    adjacent = !isSpaceBetween(sourceCode, lastTokens[0], lastTokens[1]);
+@@ -73 +75 @@
+-    adjacent = !sourceCode.isSpaceBetweenTokens(firstTokens[0], firstTokens[1]);
++    adjacent = !isSpaceBetween(sourceCode, firstTokens[0], firstTokens[1]);
+@@ -125 +127 @@
+-  const adjacent = !sourceCode.isSpaceBetweenTokens(leftToken, closingSlash);
++  const adjacent = !isSpaceBetween(sourceCode, leftToken, closingSlash);
+@@ -157 +159 @@
+-  const adjacent = !sourceCode.isSpaceBetweenTokens(openingToken, node.name);
++  const adjacent = !isSpaceBetween(sourceCode, openingToken, node.name);
+@@ -212 +214 @@
+-    const adjacent = !sourceCode.isSpaceBetweenTokens(leftToken, closingToken);
++    const adjacent = !isSpaceBetween(sourceCode, leftToken, closingToken);
+--- a/lib/rules/no-danger.js
++++ b/lib/rules/no-danger.js
+@@ -10 +10 @@
+-const minimatch = require('minimatch');
++const { minimatch } = require('minimatch');
+--- a/lib/rules/no-unstable-nested-components.js
++++ b/lib/rules/no-unstable-nested-components.js
+@@ -8 +8 @@
+-const minimatch = require('minimatch');
++const { minimatch } = require('minimatch');
+--- a/lib/util/eslint.js
++++ b/lib/util/eslint.js
+@@ -38,0 +39,6 @@
++function isSpaceBetween(sourceCode, first, second) {
++  return sourceCode.isSpaceBetween
++    ? sourceCode.isSpaceBetween(first, second)
++    : sourceCode.isSpaceBetweenTokens(first, second);
++}
++
+@@ -39,0 +46 @@
++  isSpaceBetween,
+--- a/lib/util/version.js
++++ b/lib/util/version.js
+@@ -31 +31,2 @@
+-    const filename = typeof contextOrFilename === 'string' ? contextOrFilename : contextOrFilename.getFilename();
++    const filename = typeof contextOrFilename === 'string' ? contextOrFilename
++      : (typeof contextOrFilename.filename === 'string' ? contextOrFilename.filename : contextOrFilename.getFilename());
 --- a/package.json
 +++ b/package.json
 @@ -3 +3 @@
@@ -46,13 +167,3 @@
 @@ -95 +95 @@
 -    "node": ">=4"
 +    "node": "^22.23.4 || ^24.22.1 || >=26.12.1"
---- a/lib/rules/forward-ref-uses-ref.js
-+++ b/lib/rules/forward-ref-uses-ref.js
-@@ -60 +60 @@
--    const sourceCode = context.getSourceCode();
-+    const sourceCode = context.sourceCode || context.getSourceCode();
---- a/lib/rules/jsx-filename-extension.js
-+++ b/lib/rules/jsx-filename-extension.js
-@@ -64 +64 @@
--    const filename = context.getFilename();
-+    const filename = typeof context.filename === 'string' ? context.filename : context.getFilename();
