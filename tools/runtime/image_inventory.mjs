@@ -6,6 +6,17 @@ import process from 'node:process';
 const hash = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
 const manifests = [];
 const fileErrors = [];
+const buildToolPaths = [
+  '/usr/local/bin/npm', '/usr/local/bin/npx', '/usr/local/bin/yarn',
+  '/usr/local/bin/yarnpkg', '/usr/local/bin/corepack',
+  '/usr/local/lib/node_modules/npm',
+];
+const buildToolsPresent = buildToolPaths.filter(name => {
+  try { fs.lstatSync(name); return true; } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+    return false;
+  }
+});
 function walk(folder) {
   if (!fs.existsSync(folder)) return;
   for (const entry of fs.readdirSync(folder, { withFileTypes: true })) {
@@ -32,9 +43,10 @@ for (const entry of fs.readdirSync('/app/backend/test', { withFileTypes: true })
 }
 process.stdout.write(`${JSON.stringify({
   node: process.version, components: process.versions, uid: process.getuid(), gid: process.getgid(),
+  node_executable_sha256: hash(fs.readFileSync(process.execPath)),
   architecture: process.arch, platform: process.platform,
   backend_manifest_sha256: hash(fs.readFileSync('/app/backend/package.json')),
   backend_lock_sha256: hash(fs.readFileSync('/app/backend/package-lock.json')),
-  manifests, fileErrors, original_case_sha256: cases,
+  manifests, fileErrors, original_case_sha256: cases, buildToolsPresent,
   application_or_package_code_imported: false,
 })}\n`);

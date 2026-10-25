@@ -36,6 +36,19 @@ if mode == 'inventory':
     (folder / 'installed-metadata.json').write_bytes(raw)
     data = json.loads(raw)
     assert data['node'] == 'v26.12.1' and data['uid'] == data['gid'] == 10001
+    assert data['buildToolsPresent'] == [], 'Build package managers must be absent from the production image'
+    assert all(entry['path'].startswith('/app/backend/') for entry in data['manifests'])
+    source_image = 'node:26.12.1-alpine@sha256:40cd011b55415bc894e45b02fdd5a5dfde056921b7d23a64c74f80497af48797'
+    metadata_command = ("const fs=require('node:fs'),crypto=require('node:crypto');"
+        "process.stdout.write(JSON.stringify({components:process.versions,node_executable_sha256:"
+        "crypto.createHash('sha256').update(fs.readFileSync(process.execPath)).digest('hex')}))")
+    source_raw = subprocess.check_output(['docker', 'run', '--rm', '--network', 'none', '--read-only',
+        '--user', '10001:10001', '--cap-drop', 'ALL', '--security-opt', 'no-new-privileges',
+        '--memory', '512m', '--cpus', '1', '--pids-limit', '64', source_image, 'node', '-e', metadata_command])
+    (folder / 'official-source-node-metadata.json').write_bytes(source_raw)
+    source_node = json.loads(source_raw)
+    assert data['node_executable_sha256'] == source_node['node_executable_sha256']
+    assert data['components'] == source_node['components']
     sha = lambda raw: hashlib.sha256(raw).hexdigest()
     assert data['backend_manifest_sha256'] == sha(Path('backend/package.json').read_bytes())
     assert data['backend_lock_sha256'] == sha(Path('backend/package-lock.json').read_bytes())
@@ -54,8 +67,17 @@ if mode == 'inventory':
         'all_manifest_records_retained': len(data['manifests']), 'manifest_parse_diagnostics_retained': data['fileErrors'],
         'all_components_current': False, 'live_provider_or_operator_data_acceptance': False}, indent=2) + '\n')
 elif mode == 'cases':
-    # Run the original package.json test command, with every original case.
-    invoke([*common, '--rm', *environment({**fixtures, 'NODE_ENV': 'test'}), image, 'npm', 'test'],
+    # npm is a build-stage tool. Execute the exact unchanged declared command in
+    # the production image, with every original case and no extra lifecycle step.
+    manifest = json.loads(Path('backend/package.json').read_text())
+    scripts = manifest['scripts']
+    assert scripts['test'] == 'node --test test/*.test.js'
+    assert 'pretest' not in scripts and 'posttest' not in scripts
+    (folder / 'original-image-case-command.json').write_text(json.dumps({
+        'declared_original_script': scripts['test'], 'launcher': ['/bin/sh', '-c'],
+        'pretest_or_posttest_declared': False, 'original_cases_modified_filtered_or_replaced': False,
+        'npm_available_in_production': False}, indent=2) + '\n')
+    invoke([*common, '--rm', *environment({**fixtures, 'NODE_ENV': 'test'}), image, '/bin/sh', '-c', scripts['test']],
            'original-image-cases.log', timeout=600)
 elif mode == 'startup':
     values = {**fixtures, 'NODE_ENV': 'production', 'PUBLIC_URL': 'https://sharet-ci.invalid',
