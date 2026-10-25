@@ -15,6 +15,7 @@ jobs:
     timeout-minutes: 30
     env:
       CODEQL_VERSION: 2.27.3
+      CODEQL_EXTRACTOR_JAVASCRIPT_ALLOW_MINIFIED_FILES: 'true'
       CODEQL_BUNDLE_SHA256: 95a1de65ac7f234ebbc49786eda82135819e2b0ac3b2c5d3263277ec5c020711
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -36,6 +37,8 @@ jobs:
       - name: Create a fresh database from the complete source tree
         run: |
           set -euo pipefail
+          # Preserve the root walk and explicitly include every tracked file, including hidden directories.
+          export LGTM_INDEX_INCLUDE="$(printf '.\n'; git -c core.quotePath=false ls-files)"
           "$RUNNER_TEMP/sharet-codeql/codeql/codeql" database create "$RUNNER_TEMP/sharet-codeql/database" \
             --language=javascript-typescript --build-mode=none --source-root="$GITHUB_WORKSPACE" \
             --threads=2 --ram=6000 2>&1 | tee "$RUNNER_TEMP/sharet-codeql/evidence/create.log"
@@ -50,7 +53,7 @@ jobs:
       - name: Require the full suite and zero findings at every severity
         run: |
           python3 - <<'PY'
-          import json, os
+          import json, os, hashlib, zipfile
           from pathlib import Path
           folder = Path(os.environ['RUNNER_TEMP']) / 'sharet-codeql/evidence'
           sarif = json.loads((folder / 'full-source.sarif').read_text())
@@ -61,9 +64,25 @@ jobs:
           rules = {rule['id'] for item in components for rule in item.get('rules', [])}
           assert len(rules) >= 87
           assert {'js/request-forgery', 'js/missing-rate-limiting'} <= rules
+          expected = {}
+          for line in (folder / 'source-sha256.txt').read_text().splitlines():
+              digest, path = line.split('  ', 1)
+              if path.endswith(('.js', '.jsx', '.mjs', '.cjs', '.ts', '.tsx')):
+                  expected[path] = digest
+          missing = []
+          with zipfile.ZipFile(folder / 'extracted-source.zip') as source:
+              for path, digest in expected.items():
+                  matches = [name for name in source.namelist() if name.endswith('/' + path)]
+                  if not matches:
+                      missing.append(path)
+                      continue
+                  assert len(matches) == 1
+                  assert hashlib.sha256(source.read(matches[0])).hexdigest() == digest
+          assert not missing, 'Tracked source missing from the extraction archive: ' + repr(missing)
           findings = run.get('results', [])
           summary = {'scope': 'complete source; no PR diff restriction', 'rules': sorted(rules),
                      'finding_count': len(findings), 'all_results_retained': True,
+                     'every_tracked_JS_TS_extracted_with_matching_hash': len(expected),
                      'zero_findings_required_at_every_severity': True}
           (folder / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n')
           print(json.dumps(summary))
