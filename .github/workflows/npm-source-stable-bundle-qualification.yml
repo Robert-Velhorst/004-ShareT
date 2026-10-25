@@ -57,7 +57,7 @@ jobs:
           npm install --global npm@12.2.1 2>&1 | tee "$evidence/npm-source-bootstrap.log"
           cd .npm-source
           npm install 2>&1 | tee "$evidence/npm-source-install.log"
-          node . update undici ip-address 2>&1 | tee "$evidence/npm-source-update.log"
+          node . update 2>&1 | tee "$evidence/npm-source-update.log"
       - name: Audit every installed upstream dependency without severity exclusions
         id: source_audit
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
