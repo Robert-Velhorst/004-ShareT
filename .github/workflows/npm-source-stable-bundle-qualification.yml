@@ -46,6 +46,12 @@ jobs:
           ref: ae98c62586b6fea44114f72e249e246a2981de70 # public stable v12.2.1
           path: .npm-source
           persist-credentials: false
+      - name: Isolate vendor configuration ancestry from ShareT
+        shell: bash
+        run: |
+          set -euo pipefail
+          test ! -e "$RUNNER_TEMP/npm-source"
+          mv .npm-source "$RUNNER_TEMP/npm-source"
       - name: Preserve every original upstream tracked payload
         run: python tools/runtime/npm_source_workspace_evidence.py before
       - name: Prepare the public stable Tap 21 declaration in every declared workspace
@@ -57,7 +63,7 @@ jobs:
           set -euo pipefail
           evidence="$RUNNER_TEMP/sharet-build-toolchain/reports"
           npm install --global npm@12.2.1 2>&1 | tee "$evidence/npm-source-bootstrap.log"
-          cd .npm-source
+          cd "$RUNNER_TEMP/npm-source"
           npm install 2>&1 | tee "$evidence/npm-source-install.log"
           node . update 2>&1 | tee "$evidence/npm-source-update.log"
       - name: Audit every installed upstream dependency without severity exclusions
@@ -66,7 +72,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          cd .npm-source
+          cd "$RUNNER_TEMP/npm-source"
           audit_status=0
           node . audit --json > "$RUNNER_TEMP/sharet-build-toolchain/reports/npm-source-full-audit.json" 2> "$RUNNER_TEMP/sharet-build-toolchain/reports/npm-source-full-audit.stderr" || audit_status=$?
           printf '%s\n' "$audit_status" > "$RUNNER_TEMP/sharet-build-toolchain/reports/npm-source-full-audit.exit-status"
@@ -85,7 +91,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          cd .npm-source
+          cd "$RUNNER_TEMP/npm-source"
           node . run test-all 2>&1 | tee "$RUNNER_TEMP/sharet-build-toolchain/reports/npm-source-all-original-cases.log"
       - name: Run all original upstream lint commands
         id: upstream_lint
@@ -93,7 +99,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          cd .npm-source
+          cd "$RUNNER_TEMP/npm-source"
           node . run lint-all 2>&1 | tee "$RUNNER_TEMP/sharet-build-toolchain/reports/npm-source-all-original-lint.log"
       - name: Reconcile original source and cases after upstream execution
         id: after_cases
@@ -106,7 +112,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/npm-source-pack"
-          cd .npm-source
+          cd "$RUNNER_TEMP/npm-source"
           node . pack --pack-destination "$RUNNER_TEMP/npm-source-pack" 2>&1 | tee "$RUNNER_TEMP/sharet-build-toolchain/reports/npm-source-pack.log"
           sha256sum "$RUNNER_TEMP/npm-source-pack/npm-12.2.1.tgz" > "$RUNNER_TEMP/sharet-build-toolchain/reports/npm-source-pack.sha256"
           cp "$RUNNER_TEMP/npm-source-pack/npm-12.2.1.tgz" "$RUNNER_TEMP/sharet-build-toolchain/reports/npm-source-bundle.tgz"

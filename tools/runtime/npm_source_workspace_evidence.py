@@ -12,7 +12,7 @@ if sys.platform != 'linux' or os.environ.get('RUNNER_ENVIRONMENT') != 'github-ho
 
 mode = sys.argv[1]
 assert mode in {'before', 'prepare-tap21', 'integrity', 'resolved', 'after-cases'}
-source = Path('.npm-source').resolve()
+source = Path(os.environ['RUNNER_TEMP']) / 'npm-source'
 reports = Path(os.environ['RUNNER_TEMP']) / 'sharet-build-toolchain/reports'
 reports.mkdir(parents=True, exist_ok=True)
 git = lambda *args: subprocess.check_output(['git', '-C', str(source), *args])
