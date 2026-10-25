@@ -1,5 +1,5 @@
 {
-  "prepared_at": "2026-10-25T00:21:17.209670+00:00",
+  "prepared_at": "2026-10-25T00:29:23.255640+00:00",
   "publisher_name": "mocha",
   "publisher_version": "12.0.3",
   "publisher_tarball": "https://registry.npmjs.org/mocha/-/mocha-12.0.3.tgz",
@@ -83,7 +83,7 @@
   },
   "added_entry_path": "bin/_mocha",
   "adapter_file": "mocha-legacy-entry.mjs",
-  "adapter_sha256": "584b197f193b758376d80e70b3057417394fac6500dad4bac5662764f3b05789",
+  "adapter_sha256": "d589310fd18c0bc7573bf93e6b5956b7a3b537357a4d5ef96140a8ad7df608f6",
   "delegated_entry": "lib/cli/cli.js",
   "delegated_function": "main",
   "forwarded_argv": "process.argv.slice(2)",
