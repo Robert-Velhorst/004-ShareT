@@ -11,15 +11,15 @@
   "upstream_source_sha256": "368fbbad2895ea2b93fcb2ca064b9f9cbd7c47e25bfd9fdc170348083d42e6c5",
   "candidate_archive": {
     "file": "eslint-plugin-react-7.37.5+sharet.eslint10.1.tgz",
-    "bytes": 185469,
-    "sha256": "a9c66cafe09a2acceb2bad2561f51ef32214de06372f78b762e63eb70e65ee14",
-    "integrity": "sha512-fT+QOZhrJqzj5eU/OX8ZOIWiX2CeZUc9dmmpcZxuIcD5btErQaIaMvK8y9bLU5xrlacijfeUwkcvBsSppwlMvw=="
+    "bytes": 186037,
+    "sha256": "a7b2adcbccfa11f84ac5597da9a94dbec08c54bb3948fc61022b956fdd78c76c",
+    "integrity": "sha512-7T7WkJ5hX1uCdg/0orNIx6IstGnk1IvZEYL501Bg1oLD5Hyn/LRDolrjpEENqw1Wm+UOoHUSoAlnfWXhuX4OnQ=="
   },
   "unit_source_archive": {
     "file": "eslint-plugin-react-7.37.5+sharet.eslint10.1-unit-source.tgz",
-    "bytes": 454210,
-    "sha256": "f5f86ee13397035a3c64f49237649b3587fa7d511545145147f95f6efcdde553",
-    "integrity": "sha512-q0wQ5Cy+wb+mrsjHnQb+RMqruSwFRIhIfysI8Dxp/xGjk3hkeqtGu0yT4pHWPcLYkfLVhGhtgZ6o6aSNXdOUGQ=="
+    "bytes": 454821,
+    "sha256": "fca6945c79fc5dca5b3c90cdfae7325d0803bcbe83d95e07cb95583350bb62a6",
+    "integrity": "sha512-8zdtylypq4oR1fFpSHGAXQ6y1HSkrKWwZhRo/uM58ecyMCK8EG5aCVxFAEmYgJsH52XEHsCSSZA6UuPdFax4gQ=="
   },
   "changed_library_files": [
     "lib/rules/forbid-component-props.js",
@@ -34,6 +34,7 @@
     "lib/rules/jsx-tag-spacing.js",
     "lib/rules/no-danger.js",
     "lib/rules/no-unstable-nested-components.js",
+    "lib/util/componentUtil.js",
     "lib/util/eslint.js",
     "lib/util/version.js"
   ],
@@ -1214,11 +1215,11 @@
     "lib/util/Components.js": "151a97d58f4f2dac8df14bd29e0d8310336ab92e37dbc3b60aceeef51a64745f",
     "lib/util/annotations.js": "0ee704096da1847e165ea39ce00e2c090b39f13d4f418c78103c4eb402ccce62",
     "lib/util/ast.js": "548cf88d0e73c1559cdfe05348b8fbe9382ba78a250e1de24a4dc77dff061dc6",
-    "lib/util/componentUtil.js": "53c4cf250b7bae1186ef20b1f590cfe10030443dabd0f0d9754ac16f2c8cb9d7",
+    "lib/util/componentUtil.js": "4a6d6260b925a32be8b7a4afb47f618669cd9303ebae726ac8a25cae97005c2c",
     "lib/util/defaultProps.js": "2cb67db97b1b14071bb369ae49769771f4af794155f6e6ddae3dadd32f8486df",
     "lib/util/docsUrl.js": "3a9f36f88197252f066ce63d9a560f043533d2355d59601bd657a9706b65ccdc",
     "lib/util/error.js": "667d5313fe51611223c3be1e3b5f624b8cc0ce81e7cd67d96cca8c55bbe15f69",
-    "lib/util/eslint.js": "1fc203a9070c86c5c0401dd6798e8b4e1ec2cee689b6b34a25d12cb09ad115a9",
+    "lib/util/eslint.js": "e6bed2b3f37c7b61016bbaea326486ac3110da0f2fae8896f5fec463132d3e1c",
     "lib/util/getTokenBeforeClosingBracket.js": "f8bc247742a2edc2933cdfda008df8914309b1570d201f15500a9684663ac2e2",
     "lib/util/isCreateContext.js": "47c12e82b5173b31a2785299201a7f156b586e96381795e12f1bd5ae78615335",
     "lib/util/isCreateElement.js": "f05ddb642f7b72d6e4b3895fa8f24e07463b58483f1abb2fe711dafece788ec1",
@@ -1247,5 +1248,17 @@
   "local_vendor_code_or_test_execution": false,
   "full_upstream_lint_type_documentation_or_all_parser_platform_acceptance": false,
   "known_sdk_peer_compatibility_work": "@typescript-eslint/parser 8.72.0 declares TypeScript <6.1 while target TypeScript is 7.0.2",
-  "ESLint10_followup": "Official filename and whitespace method migrations; maintained Minimatch named export; all original unit cases preserved"
+  "ESLint10_followup": {
+    "previous_public_API_migration": "Official filename and whitespace method migrations; maintained Minimatch named export; all original unit cases preserved",
+    "JSDoc_attachment": {
+      "source": "https://raw.githubusercontent.com/eslint/eslint/v9.39.4/lib/languages/js/source-code/source-code.js",
+      "source_sha256": "3aff6d86cded84d36f75d03b9dc18491307d919b6bce5a6a6bf965506ad40d3f",
+      "retained_license_file": "LICENSE.eslint",
+      "license_source": "https://raw.githubusercontent.com/eslint/eslint/v9.39.4/LICENSE",
+      "license_sha256": "3b6be04f862a077a4b97929dbf247299360824d9365f8603c263769303ace18c",
+      "older_method_delegation_preserved": true,
+      "public_getTokenBefore_and_getCommentsBefore_only": true,
+      "old_985_case_failures_not_waived": true
+    }
+  }
 }

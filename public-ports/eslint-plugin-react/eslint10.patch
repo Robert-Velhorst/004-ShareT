@@ -1,3 +1,51 @@
+--- a/package.json
++++ b/package.json
+@@ -3 +3 @@
+-  "version": "7.37.5",
++  "version": "7.37.5+sharet.eslint10.1",
+@@ -39,18 +39,18 @@
+-    "array-includes": "^3.1.8",
+-    "array.prototype.findlast": "^1.2.5",
+-    "array.prototype.flatmap": "^1.3.3",
+-    "array.prototype.tosorted": "^1.1.4",
+-    "doctrine": "^2.1.0",
+-    "es-iterator-helpers": "^1.2.1",
+-    "estraverse": "^5.3.0",
+-    "hasown": "^2.0.2",
+-    "jsx-ast-utils": "^2.4.1 || ^3.0.0",
+-    "minimatch": "^3.1.2",
+-    "object.entries": "^1.1.9",
+-    "object.fromentries": "^2.0.8",
+-    "object.values": "^1.2.1",
+-    "prop-types": "^15.8.1",
+-    "resolve": "^2.0.0-next.5",
+-    "semver": "^6.3.1",
+-    "string.prototype.matchall": "^4.0.12",
+-    "string.prototype.repeat": "^1.0.0"
++    "array-includes": "3.2.0",
++    "array.prototype.findlast": "1.2.5",
++    "array.prototype.flatmap": "1.3.3",
++    "array.prototype.tosorted": "1.1.4",
++    "doctrine": "3.0.0",
++    "es-iterator-helpers": "1.4.0",
++    "estraverse": "5.3.0",
++    "hasown": "2.0.4",
++    "jsx-ast-utils": "3.3.5",
++    "minimatch": "10.2.6",
++    "object.entries": "1.1.9",
++    "object.fromentries": "2.0.8",
++    "object.values": "1.2.1",
++    "prop-types": "15.8.1",
++    "resolve": "1.22.13",
++    "semver": "7.8.5",
++    "string.prototype.matchall": "4.1.0",
++    "string.prototype.repeat": "1.0.0"
+@@ -92 +92 @@
+-    "eslint": "^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7"
++    "eslint": "^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7 || ^10.0.0"
+@@ -95 +95 @@
+-    "node": ">=4"
++    "node": "^22.23.4 || ^24.22.1 || >=26.12.1"
 --- a/lib/rules/forbid-component-props.js
 +++ b/lib/rules/forbid-component-props.js
 @@ -8 +8 @@
@@ -102,9 +150,91 @@
 @@ -8 +8 @@
 -const minimatch = require('minimatch');
 +const { minimatch } = require('minimatch');
+--- a/lib/util/componentUtil.js
++++ b/lib/util/componentUtil.js
+@@ -72 +72 @@
+-    comment = sourceCode.getJSDocComment(node);
++    comment = eslintUtil.getJSDocComment(sourceCode, node);
 --- a/lib/util/eslint.js
 +++ b/lib/util/eslint.js
-@@ -38,0 +39,16 @@
+@@ -38,0 +39,93 @@
++// Adapted from ESLint v9.39.4 SourceCode; retain LICENSE.eslint.
++function getJSDocComment(sourceCode, node) {
++  if (typeof sourceCode.getJSDocComment === 'function') {
++    return sourceCode.getJSDocComment(node);
++  }
++
++  /**
++   * Checks for the presence of a JSDoc comment for the given node and returns it.
++   * @param {ASTNode} astNode The AST node to get the comment for.
++   * @returns {Token|null} The Block comment token containing the JSDoc comment
++   *      for the given node or null if not found.
++   * @private
++   */
++  const findJSDocComment = (astNode) => {
++    const tokenBefore = sourceCode.getTokenBefore(astNode, {
++      includeComments: true,
++    });
++
++    if (
++      tokenBefore &&
++      tokenBefore.type === 'Block' &&
++      tokenBefore.value.charAt(0) === '*' &&
++      astNode.loc.start.line - tokenBefore.loc.end.line <= 1
++    ) {
++      return tokenBefore;
++    }
++
++    return null;
++  };
++  let parent = node.parent;
++
++  switch (node.type) {
++    case 'ClassDeclaration':
++    case 'FunctionDeclaration':
++      return findJSDocComment(
++        ['ExportDefaultDeclaration', 'ExportNamedDeclaration', 'ExportAllDeclaration', 'ExportSpecifier'].includes(parent.type) ? parent : node,
++      );
++
++    case 'ClassExpression':
++      return findJSDocComment(parent.parent);
++
++    case 'ArrowFunctionExpression':
++    case 'FunctionExpression':
++      if (
++        parent.type !== 'CallExpression' &&
++        parent.type !== 'NewExpression'
++      ) {
++        while (
++          !sourceCode.getCommentsBefore(parent).length &&
++          !/Function/u.test(parent.type) &&
++          parent.type !== 'MethodDefinition' &&
++          parent.type !== 'Property'
++        ) {
++          parent = parent.parent;
++
++          if (!parent) {
++            break;
++          }
++        }
++
++        if (
++          parent &&
++          parent.type !== 'FunctionDeclaration' &&
++          parent.type !== 'Program'
++        ) {
++          return findJSDocComment(parent);
++        }
++      }
++
++      return findJSDocComment(node);
++
++    // falls through
++    default:
++      return null;
++  }
++}
++
 +function isSpaceBetween(sourceCode, first, second) {
 +  if (sourceCode.isSpaceBetweenTokens) {
 +    return sourceCode.isSpaceBetweenTokens(first, second);
@@ -121,7 +251,8 @@
 +    .some((token) => token.type === 'JSXText' && /\s/u.test(token.value));
 +}
 +
-@@ -39,0 +56 @@
+@@ -39,0 +133,2 @@
++  getJSDocComment,
 +  isSpaceBetween,
 --- a/lib/util/version.js
 +++ b/lib/util/version.js
@@ -129,51 +260,25 @@
 -    const filename = typeof contextOrFilename === 'string' ? contextOrFilename : contextOrFilename.getFilename();
 +    const filename = typeof contextOrFilename === 'string' ? contextOrFilename
 +      : (typeof contextOrFilename.filename === 'string' ? contextOrFilename.filename : contextOrFilename.getFilename());
---- a/package.json
-+++ b/package.json
-@@ -3 +3 @@
--  "version": "7.37.5",
-+  "version": "7.37.5+sharet.eslint10.1",
-@@ -39,18 +39,18 @@
--    "array-includes": "^3.1.8",
--    "array.prototype.findlast": "^1.2.5",
--    "array.prototype.flatmap": "^1.3.3",
--    "array.prototype.tosorted": "^1.1.4",
--    "doctrine": "^2.1.0",
--    "es-iterator-helpers": "^1.2.1",
--    "estraverse": "^5.3.0",
--    "hasown": "^2.0.2",
--    "jsx-ast-utils": "^2.4.1 || ^3.0.0",
--    "minimatch": "^3.1.2",
--    "object.entries": "^1.1.9",
--    "object.fromentries": "^2.0.8",
--    "object.values": "^1.2.1",
--    "prop-types": "^15.8.1",
--    "resolve": "^2.0.0-next.5",
--    "semver": "^6.3.1",
--    "string.prototype.matchall": "^4.0.12",
--    "string.prototype.repeat": "^1.0.0"
-+    "array-includes": "3.2.0",
-+    "array.prototype.findlast": "1.2.5",
-+    "array.prototype.flatmap": "1.3.3",
-+    "array.prototype.tosorted": "1.1.4",
-+    "doctrine": "3.0.0",
-+    "es-iterator-helpers": "1.4.0",
-+    "estraverse": "5.3.0",
-+    "hasown": "2.0.4",
-+    "jsx-ast-utils": "3.3.5",
-+    "minimatch": "10.2.6",
-+    "object.entries": "1.1.9",
-+    "object.fromentries": "2.0.8",
-+    "object.values": "1.2.1",
-+    "prop-types": "15.8.1",
-+    "resolve": "1.22.13",
-+    "semver": "7.8.5",
-+    "string.prototype.matchall": "4.1.0",
-+    "string.prototype.repeat": "1.0.0"
-@@ -92 +92 @@
--    "eslint": "^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7"
-+    "eslint": "^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7 || ^10.0.0"
-@@ -95 +95 @@
--    "node": ">=4"
-+    "node": "^22.23.4 || ^24.22.1 || >=26.12.1"
+--- /dev/null
++++ b/LICENSE.eslint
+@@ -0,0 +1,19 @@
++Copyright OpenJS Foundation and other contributors, <www.openjsf.org>
++
++Permission is hereby granted, free of charge, to any person obtaining a copy
++of this software and associated documentation files (the "Software"), to deal
++in the Software without restriction, including without limitation the rights
++to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++copies of the Software, and to permit persons to whom the Software is
++furnished to do so, subject to the following conditions:
++
++The above copyright notice and this permission notice shall be included in
++all copies or substantial portions of the Software.
++
++THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
++IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
++FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
++AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
++LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
++THE SOFTWARE.
