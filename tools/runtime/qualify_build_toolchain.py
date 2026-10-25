@@ -16,6 +16,7 @@ common = ['docker', 'run', '--rm', '--network', 'none', '--read-only', '--user',
     '--tmpfs', '/app/backend/data:rw,noexec,nosuid,nodev,size=128m,mode=1777',
     '--tmpfs', '/app/node_modules/.vite:rw,noexec,nosuid,nodev,size=128m,mode=1777',
     '--tmpfs', '/app/node_modules/.vite-temp:rw,noexec,nosuid,nodev,size=128m,mode=1777', '-e', 'HOME=/tmp']
+common.extend(['--tmpfs', '/app/node_modules/.vitest-cache:rw,noexec,nosuid,nodev,size=128m,mode=1777'])
 
 if mode == 'inventory':
     script = str(Path('tools/runtime/image_inventory.mjs').resolve())
@@ -73,6 +74,9 @@ elif mode == 'cases':
                 stdout=out, stderr=subprocess.STDOUT, timeout=600)
         outcomes.append({'original_command': command, 'working_directory': workdir,
             'returncode': result.returncode, 'unmodified_raw_log': 'original-npm12-' + name + '.log'})
+        print(json.dumps(outcomes[-1]), flush=True)
+        if result.returncode:
+            print((folder / outcomes[-1]['unmodified_raw_log']).read_text(errors='replace')[-12000:], flush=True)
     (folder / 'original-command-results.json').write_text(json.dumps(outcomes, indent=2) + '\n')
     assert all(row['returncode'] == 0 for row in outcomes), 'An original command failed; all raw outcomes retained'
 else:
