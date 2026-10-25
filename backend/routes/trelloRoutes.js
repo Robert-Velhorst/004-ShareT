@@ -9,6 +9,10 @@ const trelloController = require('../controllers/trelloController');
 const { protect } = require('../middleware/auth');
 const { standardApiRateLimit } = require('../utils/rateLimiter');
 const { owner: requireResourceBalance } = require('../billing/access');
+const { validateTrelloPathParam } = require('../utils/trelloPath');
+
+router.param('cardId', validateTrelloPathParam);
+router.param('boardId', validateTrelloPathParam);
 
 // OAuth routes
 router.get('/auth-url', standardApiRateLimit, protect, trelloController.getAuthUrl);

@@ -7,9 +7,11 @@ const express = require('express');
 const router = express.Router();
 const shareController = require('../controllers/shareController');
 const { protect } = require('../middleware/auth');
+const { standardApiRateLimit } = require('../utils/rateLimiter');
 const { owner: requireResourceBalance } = require('../billing/access');
 
 // All routes require authentication
+router.use(standardApiRateLimit);
 router.use(protect);
 
 // CRUD operations

@@ -6,12 +6,13 @@
 
 const { TrelloConnection } = require('../db/pouchdb');
 const { getNotificationStatus } = require('./sharedCommentController');
+const { fetchTrelloApi } = require('../utils/trelloRequest');
 
 const TRELLO_API_BASE = 'https://api.trello.com/1';
 
 // Helper function to fetch JSON
 async function fetchJSON(url, options = {}) {
-  const response = await fetch(url, options);
+  const response = await fetchTrelloApi(url, options);
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
@@ -29,7 +30,7 @@ exports.getAuthUrl = async (req, res) => {
     const developmentOrigin = process.env.NODE_ENV !== 'production' && /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(requestedOrigin);
     const appOrigin = configuredOrigins.includes(requestedOrigin) || developmentOrigin ? requestedOrigin : fallbackOrigin;
     const callbackUrl = `${appOrigin.replace(/\/$/, '')}/api/trello/callback`;
-    const authUrl = `https://trello.com/1/authorize?expiration=never&name=ShareT&scope=read,write,account&response_type=token&key=${process.env.TRELLO_API_KEY}&return_url=${encodeURIComponent(callbackUrl)}&callback_method=fragment`;
+    const authUrl = `https://trello.com/1/authorize?expiration=never&name=ShareT&scope=read,write,account&response_type=token&key=${encodeURIComponent(process.env.TRELLO_API_KEY)}&return_url=${encodeURIComponent(callbackUrl)}&callback_method=fragment`;
     
     res.json({
       success: true,
@@ -102,7 +103,7 @@ exports.connect = async (req, res) => {
     }
 
     // Verify token by getting member info
-    const memberUrl = `${TRELLO_API_BASE}/members/me?key=${process.env.TRELLO_API_KEY}&token=${token}`;
+    const memberUrl = `${TRELLO_API_BASE}/members/me?key=${encodeURIComponent(process.env.TRELLO_API_KEY)}&token=${encodeURIComponent(token)}`;
     const member = await fetchJSON(memberUrl);
 
     // Save or update connection
@@ -199,7 +200,7 @@ exports.getStatus = async (req, res) => {
 
     // Verify token is still valid
     try {
-      const memberUrl = `${TRELLO_API_BASE}/members/me?key=${process.env.TRELLO_API_KEY}&token=${connection.trelloToken}`;
+      const memberUrl = `${TRELLO_API_BASE}/members/me?key=${encodeURIComponent(process.env.TRELLO_API_KEY)}&token=${encodeURIComponent(connection.trelloToken)}`;
       const member = await fetchJSON(memberUrl);
       
       res.json({
@@ -248,8 +249,8 @@ exports.getBoards = async (req, res) => {
     // /members/me/organizations returns in creation order, NOT sidebar order.
     // The member's idOrganizations array IS the canonical sidebar order.
     const [memberMeta, orgsRaw] = await Promise.all([
-      fetchJSON(`${TRELLO_API_BASE}/members/me?key=${key}&token=${token}&fields=idOrganizations`).catch(() => ({})),
-      fetchJSON(`${TRELLO_API_BASE}/members/me/organizations?key=${key}&token=${token}&fields=displayName,name,id`).catch(() => [])
+      fetchJSON(`${TRELLO_API_BASE}/members/me?key=${encodeURIComponent(key)}&token=${encodeURIComponent(token)}&fields=idOrganizations`).catch(() => ({})),
+      fetchJSON(`${TRELLO_API_BASE}/members/me/organizations?key=${encodeURIComponent(key)}&token=${encodeURIComponent(token)}&fields=displayName,name,id`).catch(() => [])
     ]);
     const orgById = Object.fromEntries(orgsRaw.map(o => [o.id, o]));
     const sidebarOrder = memberMeta.idOrganizations || [];
@@ -260,7 +261,7 @@ exports.getBoards = async (req, res) => {
     ];
 
     // Step 2: Get all boards with organization info
-    const boardListUrl = `${TRELLO_API_BASE}/members/me/boards?key=${key}&token=${token}&fields=name,desc,url,closed,idOrganization&organization=true&organization_fields=displayName,name`;
+    const boardListUrl = `${TRELLO_API_BASE}/members/me/boards?key=${encodeURIComponent(key)}&token=${encodeURIComponent(token)}&fields=name,desc,url,closed,idOrganization&organization=true&organization_fields=displayName,name`;
     const boards = await fetchJSON(boardListUrl);
     const openBoards = boards.filter(b => !b.closed);
 
@@ -272,7 +273,7 @@ exports.getBoards = async (req, res) => {
     const openBoardsWithData = await Promise.all(openBoards.map(async board => {
       try {
         // --- Primary: combined board fetch ---
-        const boardDataUrl = `${TRELLO_API_BASE}/boards/${board.id}?key=${key}&token=${token}&lists=open&cards=open&card_fields=name,desc,url,due,dueComplete,idBoard,idList`;
+        const boardDataUrl = `${TRELLO_API_BASE}/boards/${board.id}?key=${encodeURIComponent(key)}&token=${encodeURIComponent(token)}&lists=open&cards=open&card_fields=name,desc,url,due,dueComplete,idBoard,idList`;
         const boardData = await fetchJSON(boardDataUrl);
 
         let inlineCards = boardData.cards || [];
@@ -283,7 +284,7 @@ exports.getBoards = async (req, res) => {
         // boards where the authenticated user is a guest/observer member).
         if (lists.length > 0 && inlineCards.length === 0) {
           try {
-            const cardsUrl = `${TRELLO_API_BASE}/boards/${board.id}/cards?filter=open&key=${key}&token=${token}&fields=name,desc,url,due,dueComplete,idBoard,idList`;
+            const cardsUrl = `${TRELLO_API_BASE}/boards/${board.id}/cards?filter=open&key=${encodeURIComponent(key)}&token=${encodeURIComponent(token)}&fields=name,desc,url,due,dueComplete,idBoard,idList`;
             inlineCards = await fetchJSON(cardsUrl);
           } catch {
             // Fallback A failed — proceed to Fallback B
@@ -304,7 +305,7 @@ exports.getBoards = async (req, res) => {
         if (listsStillEmpty.length > 0 && inlineCards.length === 0) {
           await Promise.all(listsStillEmpty.map(async list => {
             try {
-              const listCardsUrl = `${TRELLO_API_BASE}/lists/${list.id}/cards?key=${key}&token=${token}&fields=name,desc,url,due,dueComplete,idBoard,idList`;
+              const listCardsUrl = `${TRELLO_API_BASE}/lists/${list.id}/cards?key=${encodeURIComponent(key)}&token=${encodeURIComponent(token)}&fields=name,desc,url,due,dueComplete,idBoard,idList`;
               const listCards = await fetchJSON(listCardsUrl);
               if (listCards.length) {
                 cardsByList[list.id] = listCards;
@@ -362,7 +363,7 @@ exports.getBoard = async (req, res) => {
       });
     }
 
-    const url = `${TRELLO_API_BASE}/boards/${boardId}?key=${process.env.TRELLO_API_KEY}&token=${connection.trelloToken}&organization=true&organization_fields=displayName,name`;
+    const url = `${TRELLO_API_BASE}/boards/${boardId}?key=${encodeURIComponent(process.env.TRELLO_API_KEY)}&token=${encodeURIComponent(connection.trelloToken)}&organization=true&organization_fields=displayName,name`;
     const board = await fetchJSON(url);
 
     res.json({
@@ -393,7 +394,7 @@ exports.getBoardCards = async (req, res) => {
       });
     }
 
-    const url = `${TRELLO_API_BASE}/boards/${boardId}/cards?key=${process.env.TRELLO_API_KEY}&token=${connection.trelloToken}&fields=name,desc,url,due,dueComplete,idBoard,idList`;
+    const url = `${TRELLO_API_BASE}/boards/${boardId}/cards?key=${encodeURIComponent(process.env.TRELLO_API_KEY)}&token=${encodeURIComponent(connection.trelloToken)}&fields=name,desc,url,due,dueComplete,idBoard,idList`;
     const cards = await fetchJSON(url);
 
     res.json({
@@ -424,7 +425,7 @@ exports.getBoardLists = async (req, res) => {
       });
     }
 
-    const url = `${TRELLO_API_BASE}/boards/${boardId}/lists?key=${process.env.TRELLO_API_KEY}&token=${connection.trelloToken}`;
+    const url = `${TRELLO_API_BASE}/boards/${boardId}/lists?key=${encodeURIComponent(process.env.TRELLO_API_KEY)}&token=${encodeURIComponent(connection.trelloToken)}`;
     const lists = await fetchJSON(url);
 
     res.json({
@@ -455,7 +456,7 @@ exports.getCard = async (req, res) => {
       });
     }
 
-    const url = `${TRELLO_API_BASE}/cards/${cardId}?key=${process.env.TRELLO_API_KEY}&token=${connection.trelloToken}&attachments=true&members=true&member_fields=fullName,username,avatarUrl&checklists=all&pluginData=true`;
+    const url = `${TRELLO_API_BASE}/cards/${cardId}?key=${encodeURIComponent(process.env.TRELLO_API_KEY)}&token=${encodeURIComponent(connection.trelloToken)}&attachments=true&members=true&member_fields=fullName,username,avatarUrl&checklists=all&pluginData=true`;
     const card = await fetchJSON(url);
 
     res.json({
@@ -486,7 +487,7 @@ exports.getCardAttachments = async (req, res) => {
       });
     }
 
-    const url = `${TRELLO_API_BASE}/cards/${cardId}/attachments?key=${process.env.TRELLO_API_KEY}&token=${connection.trelloToken}`;
+    const url = `${TRELLO_API_BASE}/cards/${cardId}/attachments?key=${encodeURIComponent(process.env.TRELLO_API_KEY)}&token=${encodeURIComponent(connection.trelloToken)}`;
     const attachments = await fetchJSON(url);
 
     // Fix #15: Sort chronologically (oldest first) matching Trello's native order
@@ -521,7 +522,7 @@ exports.getCardComments = async (req, res) => {
     }
 
     // Fix #13: Fetch all comments with limit=1000 to get full history
-    const url = `${TRELLO_API_BASE}/cards/${cardId}/actions?key=${process.env.TRELLO_API_KEY}&token=${connection.trelloToken}&filter=commentCard&limit=1000`;
+    const url = `${TRELLO_API_BASE}/cards/${cardId}/actions?key=${encodeURIComponent(process.env.TRELLO_API_KEY)}&token=${encodeURIComponent(connection.trelloToken)}&filter=commentCard&limit=1000`;
     const comments = await fetchJSON(url);
 
     res.json({
@@ -552,7 +553,7 @@ exports.getCardActions = async (req, res) => {
       });
     }
 
-    const url = `${TRELLO_API_BASE}/cards/${cardId}/actions?key=${process.env.TRELLO_API_KEY}&token=${connection.trelloToken}&limit=1000`;
+    const url = `${TRELLO_API_BASE}/cards/${cardId}/actions?key=${encodeURIComponent(process.env.TRELLO_API_KEY)}&token=${encodeURIComponent(connection.trelloToken)}&limit=1000`;
     const actions = await fetchJSON(url);
 
     res.json({
@@ -583,7 +584,7 @@ exports.getCardChecklists = async (req, res) => {
       });
     }
 
-    const url = `${TRELLO_API_BASE}/cards/${cardId}/checklists?key=${process.env.TRELLO_API_KEY}&token=${connection.trelloToken}&checkItem_fields=name,state,pos`;
+    const url = `${TRELLO_API_BASE}/cards/${cardId}/checklists?key=${encodeURIComponent(process.env.TRELLO_API_KEY)}&token=${encodeURIComponent(connection.trelloToken)}&checkItem_fields=name,state,pos`;
     const checklists = await fetchJSON(url);
 
     res.json({
@@ -614,7 +615,7 @@ exports.getCardMembers = async (req, res) => {
       });
     }
 
-    const url = `${TRELLO_API_BASE}/cards/${cardId}/members?key=${process.env.TRELLO_API_KEY}&token=${connection.trelloToken}&fields=fullName,username,avatarUrl`;
+    const url = `${TRELLO_API_BASE}/cards/${cardId}/members?key=${encodeURIComponent(process.env.TRELLO_API_KEY)}&token=${encodeURIComponent(connection.trelloToken)}&fields=fullName,username,avatarUrl`;
     const members = await fetchJSON(url);
 
     res.json({
@@ -645,7 +646,7 @@ exports.getCardLinks = async (req, res) => {
       });
     }
 
-    const url = `${TRELLO_API_BASE}/cards/${cardId}/attachments?key=${process.env.TRELLO_API_KEY}&token=${connection.trelloToken}`;
+    const url = `${TRELLO_API_BASE}/cards/${cardId}/attachments?key=${encodeURIComponent(process.env.TRELLO_API_KEY)}&token=${encodeURIComponent(connection.trelloToken)}`;
     const attachments = await fetchJSON(url);
 
     // Filter for URL-type attachments (links, not file uploads)
@@ -685,8 +686,8 @@ exports.addComment = async (req, res) => {
       });
     }
 
-    const url = `${TRELLO_API_BASE}/cards/${cardId}/actions/comments?key=${process.env.TRELLO_API_KEY}&token=${connection.trelloToken}&text=${encodeURIComponent(text)}`;
-    const response = await fetch(url, { method: 'POST' });
+    const url = `${TRELLO_API_BASE}/cards/${cardId}/actions/comments?key=${encodeURIComponent(process.env.TRELLO_API_KEY)}&token=${encodeURIComponent(connection.trelloToken)}&text=${encodeURIComponent(text)}`;
+    const response = await fetchTrelloApi(url, { method: 'POST' });
     const comment = await response.json();
 
     res.json({
@@ -744,7 +745,7 @@ exports.getNotificationHealth = async (req, res) => {
 
     try {
       const relay = await fetchJSON(
-        `${TRELLO_API_BASE}/members/me?key=${key}&token=${relayToken}&fields=id,username,fullName&boards=all&board_fields=id,name`
+        `${TRELLO_API_BASE}/members/me?key=${encodeURIComponent(key)}&token=${encodeURIComponent(relayToken)}&fields=id,username,fullName&boards=all&board_fields=id,name`
       );
       health.relayAccount = { id: relay.id, username: relay.username, fullName: relay.fullName };
       health.relayBoards = (relay.boards || []).map(board => ({ id: board.id, name: board.name }));
@@ -803,8 +804,8 @@ exports.setDueDate = async (req, res) => {
       });
     }
 
-    const url = `${TRELLO_API_BASE}/cards/${cardId}?key=${process.env.TRELLO_API_KEY}&token=${connection.trelloToken}&due=${due || 'null'}`;
-    const response = await fetch(url, { method: 'PUT' });
+    const url = `${TRELLO_API_BASE}/cards/${cardId}?key=${encodeURIComponent(process.env.TRELLO_API_KEY)}&token=${encodeURIComponent(connection.trelloToken)}&due=${encodeURIComponent(due || 'null')}`;
+    const response = await fetchTrelloApi(url, { method: 'PUT' });
     const card = await response.json();
 
     res.json({
