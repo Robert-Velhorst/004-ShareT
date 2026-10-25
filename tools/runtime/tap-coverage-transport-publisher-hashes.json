@@ -1,0 +1,5 @@
+{
+  "@tapjs/run/dist/esm/run.js": "19c1df5d7883a9a2bd58e42ce23d66323ce39d21bba3f15943cdc96a84353096",
+  "@tapjs/processinfo/dist/esm/register-coverage.js": "91b670c22500bf4cc723a7aca87fe5862d1f8b2cdf74ed2f685c62332cf65db9",
+  "@tapjs/processinfo/dist/commonjs/register-coverage.js": "e2d651d9e4932e5cc5cc6b7e1e97d4496c55b8fa85dc38f9da7809f81e36c248"
+}

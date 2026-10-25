@@ -67,6 +67,10 @@ jobs:
           npm install 2>&1 | tee "$evidence/npm-source-install.log"
           node . update 2>&1 | tee "$evidence/npm-source-update.log"
           npm ci 2>&1 | tee "$evidence/npm-source-clean-install.log"
+      - name: Apply publisher-bound exact coverage-list transport compatibility port
+        id: coverage_transport
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        run: python tools/runtime/apply_tap_coverage_transport.py
       - name: Audit every installed upstream dependency without severity exclusions
         id: source_audit
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
@@ -93,7 +97,7 @@ jobs:
         run: |
           set -euo pipefail
           cd "$RUNNER_TEMP/npm-source"
-          TAP_REPORTER=tap node . run test-all 2>&1 | tee "$RUNNER_TEMP/sharet-build-toolchain/reports/npm-source-all-original-cases.log"
+          TAP_COVERAGE_TRANSPORT_REPORT="$RUNNER_TEMP/sharet-build-toolchain/reports/npm-source-coverage-transport-events.jsonl" TAP_REPORTER=tap node . run test-all 2>&1 | tee "$RUNNER_TEMP/sharet-build-toolchain/reports/npm-source-all-original-cases.log"
       - name: Require every original reported case file with no selection drift
         id: original_case_inventory
         if: ${{ !cancelled() && steps.source_gate.outcome == 'success' }}
@@ -124,9 +128,13 @@ jobs:
         id: after_cases
         if: ${{ !cancelled() && steps.source_gate.outcome == 'success' }}
         run: python tools/runtime/npm_source_workspace_evidence.py after-cases
+      - name: Verify ported module identity and actual exact-byte coverage transport
+        id: coverage_transport_integrity
+        if: ${{ !cancelled() && steps.coverage_transport.outcome == 'success' }}
+        run: python tools/runtime/apply_tap_coverage_transport.py verify
       - name: Build the normal distributable through its original prepack lifecycle
         id: pack
-        if: ${{ !cancelled() && steps.source_audit.outcome == 'success' && steps.graph_stability.outcome == 'success' && steps.upstream_cases.outcome == 'success' && steps.original_case_inventory.outcome == 'success' && steps.upstream_lint.outcome == 'success' && steps.after_cases.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.coverage_transport.outcome == 'success' && steps.coverage_transport_integrity.outcome == 'success' && steps.source_audit.outcome == 'success' && steps.graph_stability.outcome == 'success' && steps.upstream_cases.outcome == 'success' && steps.original_case_inventory.outcome == 'success' && steps.upstream_lint.outcome == 'success' && steps.after_cases.outcome == 'success' }}
         shell: bash
         run: |
           set -euo pipefail
