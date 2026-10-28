@@ -1,0 +1,58 @@
+name: Container readiness JSON contract
+on:
+  pull_request:
+    paths:
+      - Dockerfile
+      - backend/container-readiness.cjs
+      - backend/test/container-readiness.test.js
+      - .github/workflows/container-readiness-contract.yml
+permissions:
+  contents: read
+jobs:
+  real-loopback-contract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '26.12.1'
+      - name: Bind all tracked source before execution
+        run: |
+          python - <<'PY'
+          import hashlib,json,pathlib,subprocess
+          rows={}
+          for item in subprocess.check_output(['git','ls-files','-s','-z']).split(b'\0'):
+              if not item:continue
+              left,name=item.split(b'\t');mode,blob,stage=left.decode().split();assert stage=='0'
+              path=pathlib.Path(name.decode());raw=path.read_bytes();assert hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()==blob
+              rows[name.decode()]={'mode':mode,'blob':blob,'sha256':hashlib.sha256(raw).hexdigest()}
+          pathlib.Path('readiness-source-before.json').write_bytes((json.dumps({'head':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'tree':subprocess.check_output(['git','rev-parse','HEAD^{tree}'],text=True).strip(),'payloads':rows},indent=2)+'\n').encode())
+          PY
+      - name: Run real HTTP and production CLI contract cases
+        run: |
+          set -o pipefail
+          node --test backend/test/container-readiness.test.js 2>&1 | tee readiness-test.log
+      - name: Verify every tracked source payload remains unchanged
+        if: always()
+        run: |
+          python - <<'PY'
+          import hashlib,json,pathlib
+          before=json.loads(pathlib.Path('readiness-source-before.json').read_bytes())
+          after={name:{**row,'sha256':hashlib.sha256(pathlib.Path(name).read_bytes()).hexdigest()} for name,row in before['payloads'].items()}
+          pathlib.Path('readiness-source-after.json').write_bytes((json.dumps({'head':before['head'],'tree':before['tree'],'payloads':after},indent=2)+'\n').encode())
+          assert before['payloads']==after
+          PY
+      - name: Retain complete source and real-case results
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: readiness-contract-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            readiness-source-before.json
+            readiness-source-after.json
+            readiness-test.log
+          if-no-files-found: error
+          retention-days: 14

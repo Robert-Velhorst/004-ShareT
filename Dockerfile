@@ -50,6 +50,6 @@ USER 10001:10001
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=90s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://127.0.0.1:5005/ready || exit 1
+  CMD ["node", "container-readiness.cjs"]
 
 CMD ["node", "server.js"]
