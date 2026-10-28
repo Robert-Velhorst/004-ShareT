@@ -76,7 +76,7 @@ export default [
   },
   {
     files: [
-      "backend/**/*.js",
+      "backend/**/*.{js,cjs}",
       "scripts/**/*.cjs",
       "ecosystem.config.js",
       "tailwind.config.cjs",

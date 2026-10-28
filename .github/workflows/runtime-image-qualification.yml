@@ -1,0 +1,101 @@
+name: Runtime image qualification
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  runtime-image:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.15.1'
+      - name: Record exact source and original case identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$RUNNER_ENVIRONMENT" = github-hosted
+          mkdir -p "$RUNNER_TEMP/sharet-runtime-image/"{input,reports,cache}
+          python - <<'PY'
+          from pathlib import Path
+          import subprocess, hashlib, json, os
+          paths = subprocess.check_output(['git', 'ls-files', '-z']).decode().split('\0')
+          record = {
+              'tested_head': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+              'tested_tree': subprocess.check_output(['git', 'rev-parse', 'HEAD^{tree}'], text=True).strip(),
+              'tracked_file_sha256': {p: hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in paths if p and Path(p).is_file()},
+              'deployment_or_live_data_changes': False,
+          }
+          (Path(os.environ['RUNNER_TEMP']) / 'sharet-runtime-image/reports/source-identity.json').write_text(json.dumps(record, indent=2) + '\n')
+          PY
+      - name: Build the existing production Dockerfile
+        id: build
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker build --progress=plain --tag sharet-runtime:ci . 2>&1 | tee "$RUNNER_TEMP/sharet-runtime-image/reports/build.log"
+      - name: Preserve exact image identity and archive
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          evidence="$RUNNER_TEMP/sharet-runtime-image"
+          docker image inspect sharet-runtime:ci > "$evidence/reports/image-inspect.json"
+          docker image save sharet-runtime:ci -o "$evidence/input/image.tar"
+          python tools/runtime/runner_image_archive_identity.py "$evidence/input/image.tar" "$evidence/reports/image-inspect.json" sharet-runtime:ci "$evidence/reports/image-identity.json" "$evidence/reports/image-config-id.txt"
+      - name: Inspect installed runtime and original case hashes
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        run: python tools/runtime/qualify_image.py inventory
+      - name: Run all existing backend cases inside the exact image
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        run: python tools/runtime/qualify_image.py cases
+      - name: Exercise original readiness command with isolated fixture data
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        run: python tools/runtime/qualify_image.py startup
+      - name: Scan the complete saved image without advisory exclusions
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          evidence="$RUNNER_TEMP/sharet-runtime-image"
+          scan_status=0
+          docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges \
+            aquasec/trivy:0.76.1@sha256:790fd66d1697395d8693d1acaa1ea702406a20f109b6fc7bac8db623eca6c06c \
+            --version > "$evidence/reports/image-security-scanner-version.txt" 2>&1
+          docker run --rm --read-only --user "$(id -u):$(id -g)" --cap-drop ALL \
+            --security-opt no-new-privileges --memory 4g --cpus 2 --pids-limit 128 \
+            --tmpfs /tmp:rw,noexec,nosuid,nodev,size=3g \
+            --mount "type=bind,src=$evidence/input,dst=/input,readonly" \
+            --mount "type=bind,src=$evidence/reports,dst=/reports" \
+            --mount "type=bind,src=$evidence/cache,dst=/cache" \
+            aquasec/trivy:0.76.1@sha256:790fd66d1697395d8693d1acaa1ea702406a20f109b6fc7bac8db623eca6c06c \
+            image --input /input/image.tar --cache-dir /cache --scanners vuln \
+            --list-all-pkgs --ignorefile /dev/null \
+            --exit-code 1 --format json --timeout 10m --output /reports/image-security.json \
+            > "$evidence/reports/image-security-scanner.log" 2>&1 || scan_status=$?
+          python tools/runtime/qualify_image.py scan
+          test "$scan_status" -eq 0
+      - name: Retain the complete compressed image for independent inspection
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          evidence="$RUNNER_TEMP/sharet-runtime-image"
+          gzip -1 -c "$evidence/input/image.tar" > "$evidence/reports/image.tar.gz"
+          sha256sum "$evidence/reports/image.tar.gz" > "$evidence/reports/image.tar.gz.sha256"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: sharet-runtime-image-evidence
+          path: ${{ runner.temp }}/sharet-runtime-image/reports/
+          retention-days: 7
+          if-no-files-found: error
