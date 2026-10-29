@@ -12,9 +12,18 @@ const outputDirectory = path.join(root, 'support');
 fs.mkdirSync(outputDirectory, { recursive: true });
 
 async function readHealth() {
-  const port = process.env.PORT || 5005;
   try {
-    const response = await fetch(`http://127.0.0.1:${port}/ready`, { signal: AbortSignal.timeout(3000) });
+    const configuredPort = process.env.PORT || '5005';
+    if (typeof configuredPort !== 'string' || configuredPort.length > 5 || /[^0-9]/.test(configuredPort)) {
+      throw new Error('PORT must be a decimal integer between 1 and 65535');
+    }
+    const port = Number(configuredPort);
+    if (port < 1 || port > 65535) {
+      throw new Error('PORT must be a decimal integer between 1 and 65535');
+    }
+    const healthUrl = new URL('http://127.0.0.1/ready');
+    healthUrl.port = String(port);
+    const response = await fetch(healthUrl, { redirect: 'error', signal: AbortSignal.timeout(3000) });
     return { reachable: true, status: response.status, body: await response.json() };
   } catch (error) {
     return { reachable: false, error: error.message };
