@@ -57,7 +57,8 @@ async function main() {
       destination('https://proxy.invalid:9443');
       const url=new URL(dispatches[0].url);
       assert.equal(url.searchParams.get('key'),'owned-synthetic-key');
-      assert.equal(url.searchParams.get('target'),'http://127.0.0.1');
+      assert.deepEqual(url.searchParams.getAll('target'),endpoint==='?target=https://attacker.invalid'
+        ? ['https://attacker.invalid','http://127.0.0.1'] : ['http://127.0.0.1']);
       assert.equal(url.searchParams.has('empty'),false);
     });
   }
