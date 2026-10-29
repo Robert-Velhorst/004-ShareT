@@ -1,0 +1,31 @@
+name: Qualify scikit-learn Alpine source build
+on:
+  push:
+    branches: [qualify/scikit-musl-wheel-20261029]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Prepare verified public source
+        run: python3 .github/qualification/scikit-source-prepare.py
+      - name: Build wheel on pinned Alpine image
+        run: |
+          cp .github/qualification/scikit-alpine.Dockerfile "$RUNNER_TEMP/scikit-source-build/Dockerfile"
+          docker build --progress=plain --output "type=local,dest=$RUNNER_TEMP/scikit-source-build/wheel" "$RUNNER_TEMP/scikit-source-build" > "$RUNNER_TEMP/scikit-source-build/build.log" 2>&1
+      - name: Retain build evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: scikit-alpine-build
+          path: |
+            ${{ runner.temp }}/scikit-source-build/source-identity.json
+            ${{ runner.temp }}/scikit-source-build/build.log
+            ${{ runner.temp }}/scikit-source-build/wheel/
+          if-no-files-found: warn
+          retention-days: 7
