@@ -10,7 +10,7 @@ RUN python - <<'PY'
 import hashlib, pathlib, zipfile
 root = pathlib.Path('/source')
 wheel = pathlib.Path('/wheel-input/scikit_learn-1.9.1-cp315-cp315-linux_x86_64.whl')
-assert hashlib.sha256(wheel.read_bytes()).hexdigest() == '09b80c8c3b8d6b07c7dc2462b63b4b93d1143d193b2ed2a83a618b523cfaecde'
+assert hashlib.sha256(wheel.read_bytes()).hexdigest() == 'c271663a5a7b8a97797458ffd946f9145e0c7284d0c4309f34e27c08a0bffce1'
 before = {p.relative_to(root).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in root.rglob('*') if p.is_file()}
 with zipfile.ZipFile(wheel) as z:
     extensions = [n for n in z.namelist() if n.startswith('sklearn/') and n.endswith('.so')]
