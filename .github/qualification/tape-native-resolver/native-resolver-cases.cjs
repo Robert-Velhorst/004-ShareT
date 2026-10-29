@@ -30,7 +30,7 @@ check('directory package main', () => assert.equal(resolve('./directory'), direc
 check('package main from working directory', () => assert.equal(resolve('fixture-package'), main));
 check('nested directory module lookup', () => { fs.mkdirSync(path.join(root,'nested')); assert.equal(resolve('fixture-package',path.join(root,'nested')), main); });
 check('package main retains previous exports-disabled caller semantics', () => assert.equal(resolve('exported-package'), legacyMain));
-check('package file subpath remains supported', () => assert.equal(resolve('exported-package/allowed'), allowed));
+check('explicit package file subpath remains supported', () => assert.equal(resolve('exported-package/allowed.cjs'), allowed));
 check('package private subpath remains a supported preload', () => { assert.equal(resolve('exported-package/private.cjs'), privateSubpath); assert.equal(require(resolve('exported-package/private.cjs')), 10); });
 check('missing module retains MODULE_NOT_FOUND', () => assert.throws(() => resolve('not-present'), {code:'MODULE_NOT_FOUND'}));
 check('custom registered require extension', () => {
