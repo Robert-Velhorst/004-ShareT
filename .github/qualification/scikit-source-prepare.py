@@ -1,0 +1,12 @@
+import hashlib,io,json,os,pathlib,subprocess,tarfile,urllib.request
+root=pathlib.Path(os.environ['GITHUB_WORKSPACE']);temp=pathlib.Path(os.environ['RUNNER_TEMP']);out=temp/'scikit-source-build';out.mkdir();source=out/'source';source.mkdir()
+url='https://files.pythonhosted.org/packages/d2/eb/eaf5e07fcc0da7149b0e084f24e54edd7441b9a89ce7e034032ae97fe3a0/scikit_learn-1.9.1.tar.gz'
+with urllib.request.urlopen(url,timeout=90) as response: raw=response.read(9*1024*1024)
+assert hashlib.sha256(raw).hexdigest()=='629cada3e33e2b9bf376cdc7614a47a4140b8aedc1d836579e359736fbd82977'
+with tarfile.open(fileobj=io.BytesIO(raw),mode='r:gz') as archive:
+ members=archive.getmembers();assert members and all(m.isfile() and m.name.startswith('scikit_learn-1.9.1/') and '..' not in pathlib.PurePosixPath(m.name).parts and not pathlib.PurePosixPath(m.name).is_absolute() for m in members)
+ for member in members:
+  relative=pathlib.PurePosixPath(member.name).relative_to('scikit_learn-1.9.1');dest=source.joinpath(*relative.parts);dest.parent.mkdir(parents=True,exist_ok=True);data=archive.extractfile(member).read();dest.write_bytes(data)
+def snap():return {p.relative_to(source).as_posix():hashlib.sha256(p.read_bytes()).hexdigest() for p in source.rglob('*') if p.is_file()}
+before=snap();assert len(before)==1550;patch=root/'.github/qualification/scikit-toolchain.patch';subprocess.run(['git','apply','--check',str(patch)],cwd=source,check=True);subprocess.run(['git','apply',str(patch)],cwd=source,check=True);after=snap();assert set(before)==set(after) and [x for x in before if before[x]!=after[x]]==['pyproject.toml']
+(out/'source-identity.json').write_text(json.dumps({'source_sha256':hashlib.sha256(raw).hexdigest(),'file_count':len(before),'changed':['pyproject.toml'],'original_tests_preserved':True,'vendor_tests_run':False},indent=2));print(out)
