@@ -1,0 +1,42 @@
+name: Electron lock-only metadata resolution
+on:
+  push:
+    branches: [qualify/electron-lock-only-20261029]
+permissions:
+  contents: read
+jobs:
+  resolve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          path: worker
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: Robert-Velhorst/008-Sneup-Digital-Project-Manager
+          ref: e39eaa73f657fbe30675891702090c32d9fc8e54
+          persist-credentials: false
+          path: sneup
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: Robert-Velhorst/010-Nationale-Hulpgids-reach-out
+          ref: bb3c9351ec63d0f7002d731ad9b30a30bd984f0a
+          persist-credentials: false
+          path: hulpgids
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: 26.13.0
+      - name: Select current stable package managers
+        run: npm install --global npm@12.2.1 pnpm@12.16.1
+      - name: Resolve metadata and bind source files
+        run: python worker/.github/qualification/electron-lock-only-worker.py
+      - name: Retain lock resolution evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: electron-lock-resolution
+          path: ${{ runner.temp }}/electron-lock-resolution/
+          retention-days: 14
+          if-no-files-found: error
