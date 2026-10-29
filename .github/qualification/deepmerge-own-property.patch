@@ -56,3 +56,50 @@
 +	t.equal(merge({}, object)[symbol], 'kept', 'symbol keys survive')
 +	t.end()
 +})
+--- a/package.json
++++ b/package.json
+@@ -26,17 +26,18 @@
+     "size": "npm run build && uglifyjs --compress --mangle -- ./dist/umd.js | gzip -c | wc -c"
+   },
+   "devDependencies": {
+-    "@types/node": "^8.10.54",
+-    "is-mergeable-object": "1.1.0",
+-    "is-plain-object": "^5.0.0",
+-    "jsmd": "^1.0.2",
+-    "rollup": "^1.23.1",
+-    "rollup-plugin-commonjs": "^10.1.0",
+-    "rollup-plugin-node-resolve": "^5.2.0",
+-    "tape": "^4.11.0",
+-    "ts-node": "7.0.1",
+-    "typescript": "=2.2.2",
+-    "uglify-js": "^3.6.1"
++    "@types/node": "^26.6.6",
++    "is-mergeable-object": "1.1.1",
++    "is-plain-object": "^5.1.0",
++    "jsmd": "^2.0.0",
++    "rollup": "^4.66.0",
++    "@rollup/plugin-commonjs": "^29.0.3",
++    "@rollup/plugin-node-resolve": "^16.0.3",
++    "tape": "^5.10.3",
++    "ts-node": "10.9.2",
++    "@typescript/native": "npm:typescript@^7.0.2",
++    "typescript": "npm:@typescript/typescript6@^6.0.2",
++    "uglify-js": "^3.19.3"
+   },
+   "license": "MIT"
+ }
+--- a/rollup.config.js
++++ b/rollup.config.js
+@@ -1,8 +1,8 @@
+-import resolve from 'rollup-plugin-node-resolve'
+-import commonjs from 'rollup-plugin-commonjs'
+-import pkg from './package.json'
++const { nodeResolve: resolve } = require('@rollup/plugin-node-resolve')
++const commonjs = require('@rollup/plugin-commonjs')
++const pkg = require('./package.json')
+ 
+-export default {
++module.exports = {
+ 	input: `index.js`,
+ 	plugins: [
+ 		commonjs(),
