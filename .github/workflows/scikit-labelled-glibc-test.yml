@@ -1,0 +1,66 @@
+name: Test labelled glibc scikit wheel with original vendor suite
+on:
+  push:
+    branches: [qualify/scikit-labelled-glibc-test-20261030]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  vendor-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.15.2'
+      - uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e
+        with:
+          version: 0.13.6
+          enable-cache: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: scikit-labelled-glibc-build
+          path: ${{ runner.temp }}/scikit-labelled-build
+          github-token: ${{ github.token }}
+          run-id: 40974693386
+      - name: Verify source and overlay exact wheel extensions
+        run: |
+          python .github/qualification/scikit-source-prepare.py
+          mkdir "$RUNNER_TEMP/scikit-source-build/wheel-input"
+          cp "$RUNNER_TEMP/scikit-labelled-build/wheel/"*.whl "$RUNNER_TEMP/scikit-source-build/wheel-input/"
+          python .github/qualification/scikit-labelled-glibc-overlay.py
+      - name: Resolve latest stable test graph
+        run: |
+          cp .github/qualification/scikit-test-requirements.in "$RUNNER_TEMP/scikit-source-build/requirements-test.in"
+          cd "$RUNNER_TEMP/scikit-source-build"
+          uv pip compile requirements-test.in --upgrade --generate-hashes --python-version 3.15 --python-platform x86_64-unknown-linux-gnu --prerelease disallow --output-file requirements-test.lock > requirements-resolution.log 2>&1
+      - name: Install isolated graph and exact wheel
+        run: |
+          cd "$RUNNER_TEMP/scikit-source-build"
+          python -m venv .venv
+          .venv/bin/python -m pip install --require-hashes -r requirements-test.lock > install.log 2>&1
+          .venv/bin/python -m pip install ./wheel-input/*.whl >> install.log 2>&1
+          .venv/bin/python -m pip check >> install.log 2>&1
+      - name: Run original complete vendor test command
+        run: |
+          cd "$RUNNER_TEMP/scikit-source-build/source"
+          export PATH="$RUNNER_TEMP/scikit-source-build/.venv/bin:$PATH"
+          pytest > "$RUNNER_TEMP/scikit-source-build/vendor-test.log" 2>&1
+      - name: Retain qualification evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: scikit-labelled-glibc-test-evidence
+          path: |
+            ${{ runner.temp }}/scikit-source-build/source-identity.json
+            ${{ runner.temp }}/scikit-source-build/overlay-identity.json
+            ${{ runner.temp }}/scikit-source-build/requirements-test.in
+            ${{ runner.temp }}/scikit-source-build/requirements-test.lock
+            ${{ runner.temp }}/scikit-source-build/requirements-resolution.log
+            ${{ runner.temp }}/scikit-source-build/install.log
+            ${{ runner.temp }}/scikit-source-build/vendor-test.log
+          if-no-files-found: warn
+          retention-days: 7
