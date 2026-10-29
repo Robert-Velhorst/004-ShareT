@@ -1,0 +1,54 @@
+name: Qualify official scikit manylinux publisher tests
+on:
+  push:
+    branches: [qualify/scikit-official-glibc-20261030]
+permissions:
+  contents: read
+jobs:
+  vendor-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.15.2'
+      - uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e
+        with:
+          version: 0.13.6
+          enable-cache: false
+      - name: Verify original source and publisher wheel
+        run: python .github/qualification/scikit-official-prepare.py
+      - name: Resolve latest stable test graph
+        run: |
+          cp .github/qualification/scikit-test-requirements.in "$RUNNER_TEMP/scikit-official-glibc/requirements-test.in"
+          cd "$RUNNER_TEMP/scikit-official-glibc"
+          uv pip compile requirements-test.in --upgrade --generate-hashes --python-version 3.15 --python-platform x86_64-unknown-linux-gnu --prerelease disallow --output-file requirements-test.lock > requirements-resolution.log 2>&1
+      - name: Install isolated graph and official wheel
+        run: |
+          cd "$RUNNER_TEMP/scikit-official-glibc"
+          python -m venv .venv
+          .venv/bin/python -m pip install --require-hashes -r requirements-test.lock > install.log 2>&1
+          .venv/bin/python -m pip install ./scikit_learn-1.9.1-cp315-cp315-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl >> install.log 2>&1
+          .venv/bin/python -m pip check >> install.log 2>&1
+      - name: Run original complete vendor test command
+        run: |
+          cd "$RUNNER_TEMP/scikit-official-glibc/source"
+          export PATH="$RUNNER_TEMP/scikit-official-glibc/.venv/bin:$PATH"
+          pytest > "$RUNNER_TEMP/scikit-official-glibc/vendor-test.log" 2>&1
+      - name: Retain qualification evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: scikit-official-glibc-evidence
+          path: |
+            ${{ runner.temp }}/scikit-official-glibc/identity.json
+            ${{ runner.temp }}/scikit-official-glibc/requirements-test.in
+            ${{ runner.temp }}/scikit-official-glibc/requirements-test.lock
+            ${{ runner.temp }}/scikit-official-glibc/requirements-resolution.log
+            ${{ runner.temp }}/scikit-official-glibc/install.log
+            ${{ runner.temp }}/scikit-official-glibc/vendor-test.log
+          if-no-files-found: warn
+          retention-days: 7
