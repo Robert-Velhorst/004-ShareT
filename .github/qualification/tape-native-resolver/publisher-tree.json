@@ -1,0 +1,1764 @@
+{
+  "sha": "223d58ebbde2c4a8505ea1ecd149408b87e8423a",
+  "url": "https://api.github.com/repos/tape-testing/tape/git/trees/223d58ebbde2c4a8505ea1ecd149408b87e8423a",
+  "tree": [
+    {
+      "path": ".editorconfig",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d499d966eb649daad7ee8673293fc5ea829c2e11",
+      "size": 541,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/d499d966eb649daad7ee8673293fc5ea829c2e11"
+    },
+    {
+      "path": ".github",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "437ce88f4275b1409885f4225e6c8c45c40d83e0",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/437ce88f4275b1409885f4225e6c8c45c40d83e0"
+    },
+    {
+      "path": ".github/FUNDING.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6ed04b5c5847aac3ee8eb1ecad690b0fa2d563c4",
+      "size": 613,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/6ed04b5c5847aac3ee8eb1ecad690b0fa2d563c4"
+    },
+    {
+      "path": ".github/SECURITY.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "82e4285adc6285693cd6c06af02d606e09dd8fcd",
+      "size": 157,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/82e4285adc6285693cd6c06af02d606e09dd8fcd"
+    },
+    {
+      "path": ".github/workflows",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "d39763d5ca6f46a823385f86be80214f1711e656",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/d39763d5ca6f46a823385f86be80214f1711e656"
+    },
+    {
+      "path": ".github/workflows/node-aught.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a4cd29e9d87bb5edd1753523fd17e23a90a8dc25",
+      "size": 373,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/a4cd29e9d87bb5edd1753523fd17e23a90a8dc25"
+    },
+    {
+      "path": ".github/workflows/node-pretest.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "55a3b69de701977bc5437ea178035e98b190f3ce",
+      "size": 264,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/55a3b69de701977bc5437ea178035e98b190f3ce"
+    },
+    {
+      "path": ".github/workflows/node-tens.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6b71d59cea119f539ebf628eaca95a22f33b30d1",
+      "size": 359,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/6b71d59cea119f539ebf628eaca95a22f33b30d1"
+    },
+    {
+      "path": ".github/workflows/node-twenties.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "66c938249bb1fbe2b950464736f5eb2546c636c7",
+      "size": 350,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/66c938249bb1fbe2b950464736f5eb2546c636c7"
+    },
+    {
+      "path": ".github/workflows/rebase.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1c4b85b756a968f4fcad0e76cbf67cad78113510",
+      "size": 315,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/1c4b85b756a968f4fcad0e76cbf67cad78113510"
+    },
+    {
+      "path": ".github/workflows/require-allow-edits.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f25870d366d4d6dc127ec7ff84f3b8a22b85ee00",
+      "size": 351,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/f25870d366d4d6dc127ec7ff84f3b8a22b85ee00"
+    },
+    {
+      "path": ".gitignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a63afe6d5806f872104a07a2a045cd0e7d15387c",
+      "size": 142,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/a63afe6d5806f872104a07a2a045cd0e7d15387c"
+    },
+    {
+      "path": ".npmrc",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "eacea13e1815dd5fe322f64b653bc81eb9924377",
+      "size": 55,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/eacea13e1815dd5fe322f64b653bc81eb9924377"
+    },
+    {
+      "path": ".nycrc",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "daab59baf43d0e2d7d76780ca823e8a73b9b521b",
+      "size": 182,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/daab59baf43d0e2d7d76780ca823e8a73b9b521b"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "55b32c2e524e120face3abf99b7684701b99ad76",
+      "size": 168440,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/55b32c2e524e120face3abf99b7684701b99ad76"
+    },
+    {
+      "path": "LICENSE",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ff4fce28af33a4504d6960856a0bd603860a62e0",
+      "size": 1071,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/ff4fce28af33a4504d6960856a0bd603860a62e0"
+    },
+    {
+      "path": "bin",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "1e01fb15bc126268d13e5da757fbc6b2873ccc67",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/1e01fb15bc126268d13e5da757fbc6b2873ccc67"
+    },
+    {
+      "path": "bin/import-or-require.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3bc7cb53dc9797319afbb1d14b1db6e9b064b790",
+      "size": 500,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/3bc7cb53dc9797319afbb1d14b1db6e9b064b790"
+    },
+    {
+      "path": "bin/tape",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "ca0a4bedb5674788cfbbf36db7dc1d2a87d1fc32",
+      "size": 3924,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/ca0a4bedb5674788cfbbf36db7dc1d2a87d1fc32"
+    },
+    {
+      "path": "eslint.config.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d888834ac428cfe2dce2a33da243b20f66e3a862",
+      "size": 2730,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/d888834ac428cfe2dce2a33da243b20f66e3a862"
+    },
+    {
+      "path": "example",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "3fee99418fe31edecbcd8b6da588b840effe9159",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/3fee99418fe31edecbcd8b6da588b840effe9159"
+    },
+    {
+      "path": "example/array.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "400fc9f0b4c52737f37c2427cce3cb573629de4f",
+      "size": 732,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/400fc9f0b4c52737f37c2427cce3cb573629de4f"
+    },
+    {
+      "path": "example/fail.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "112dfb324bd90a80a3270304ea9c8b84191695a9",
+      "size": 735,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/112dfb324bd90a80a3270304ea9c8b84191695a9"
+    },
+    {
+      "path": "example/nested.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "46d7171b7b55f0d0ca8ac3d81c23bc7a56730a20",
+      "size": 999,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/46d7171b7b55f0d0ca8ac3d81c23bc7a56730a20"
+    },
+    {
+      "path": "example/nested_fail.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9a9b415a2c564bd903ebdab321974ceefcce0491",
+      "size": 971,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/9a9b415a2c564bd903ebdab321974ceefcce0491"
+    },
+    {
+      "path": "example/no_callback.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "698701f5976fd27aa9b59105484f302644167f4e",
+      "size": 63,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/698701f5976fd27aa9b59105484f302644167f4e"
+    },
+    {
+      "path": "example/not_enough_fail.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4ca2cfee89f7c21d7c6698b628cd876e03ae7834",
+      "size": 732,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/4ca2cfee89f7c21d7c6698b628cd876e03ae7834"
+    },
+    {
+      "path": "example/static",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "1aec7d38399be8aec2d57385bb5f3dae90a6b394",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/1aec7d38399be8aec2d57385bb5f3dae90a6b394"
+    },
+    {
+      "path": "example/static/build.sh",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "c5836404b312097eddea1a559c85c8c1629b0803",
+      "size": 49,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/c5836404b312097eddea1a559c85c8c1629b0803"
+    },
+    {
+      "path": "example/static/index.html",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "45ccf070fc42596f8b5d65c035d6b6ab67c21a2d",
+      "size": 354,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/45ccf070fc42596f8b5d65c035d6b6ab67c21a2d"
+    },
+    {
+      "path": "example/static/server.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6b1e3532ec7118dd3b944f61e16a9239827badd3",
+      "size": 153,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/6b1e3532ec7118dd3b944f61e16a9239827badd3"
+    },
+    {
+      "path": "example/stream",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "702fc5e7f9d6fced477dca284800e46d94c800d7",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/702fc5e7f9d6fced477dca284800e46d94c800d7"
+    },
+    {
+      "path": "example/stream/object.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ebed86e358aa548466bf29b0c7e0f1fd1691e8cf",
+      "size": 264,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/ebed86e358aa548466bf29b0c7e0f1fd1691e8cf"
+    },
+    {
+      "path": "example/stream/tap.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "84f1cd8a32496baec54b9d77b7dc2de9c93ab2af",
+      "size": 199,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/84f1cd8a32496baec54b9d77b7dc2de9c93ab2af"
+    },
+    {
+      "path": "example/stream/test",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "ba0970a20d3c8b717081cf8dc7813c73ee03e6d8",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/ba0970a20d3c8b717081cf8dc7813c73ee03e6d8"
+    },
+    {
+      "path": "example/stream/test/x_fail.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "40ef5e4dfe63793d1dba02306fe6b329ecac0c3b",
+      "size": 110,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/40ef5e4dfe63793d1dba02306fe6b329ecac0c3b"
+    },
+    {
+      "path": "example/stream/test/y.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "06194fb0b07a8e0487dbbfd64a49b051980924c7",
+      "size": 174,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/06194fb0b07a8e0487dbbfd64a49b051980924c7"
+    },
+    {
+      "path": "example/throw_fail.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "eeacc5e464c5330fa92a45ca291937a8e6ae8ca7",
+      "size": 152,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/eeacc5e464c5330fa92a45ca291937a8e6ae8ca7"
+    },
+    {
+      "path": "example/timing.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f51f64de9c4cf5dcb797a7ca331ae4c2468dd8d2",
+      "size": 230,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/f51f64de9c4cf5dcb797a7ca331ae4c2468dd8d2"
+    },
+    {
+      "path": "example/too_many_fail.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9362b828f638ef5ab51025e3bc191f6a16298657",
+      "size": 732,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/9362b828f638ef5ab51025e3bc191f6a16298657"
+    },
+    {
+      "path": "example/two.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "79424c13010e1fdad6ad9026f7c8bf5d4ddac699",
+      "size": 303,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/79424c13010e1fdad6ad9026f7c8bf5d4ddac699"
+    },
+    {
+      "path": "index.d.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1bece709033333f104980f91ab32d925ef37408f",
+      "size": 4646,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/1bece709033333f104980f91ab32d925ef37408f"
+    },
+    {
+      "path": "index.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bd4a893f48189af5a21f9f4858363ecd8bcc9261",
+      "size": 6743,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/bd4a893f48189af5a21f9f4858363ecd8bcc9261"
+    },
+    {
+      "path": "lib",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "0fcc13c9e39babb8c64177242845d84ef88659c3",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/0fcc13c9e39babb8c64177242845d84ef88659c3"
+    },
+    {
+      "path": "lib/default_stream.d.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3e359cdd9123d6476cf3a4950124d108ca392a0d",
+      "size": 129,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/3e359cdd9123d6476cf3a4950124d108ca392a0d"
+    },
+    {
+      "path": "lib/default_stream.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "833da73cc17021c5551a81ec8953e57d6549fb0f",
+      "size": 1788,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/833da73cc17021c5551a81ec8953e57d6549fb0f"
+    },
+    {
+      "path": "lib/results.d.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7758f3adc07e9e3b6cf2e447f6610fd7a48dc093",
+      "size": 1275,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/7758f3adc07e9e3b6cf2e447f6610fd7a48dc093"
+    },
+    {
+      "path": "lib/results.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b9338afc3700e245065d1f51684dcadd2a2657c6",
+      "size": 7202,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/b9338afc3700e245065d1f51684dcadd2a2657c6"
+    },
+    {
+      "path": "lib/test.d.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9dd8ac37e5aa0e72a3973dc95b56edae4b8ba53c",
+      "size": 7890,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/9dd8ac37e5aa0e72a3973dc95b56edae4b8ba53c"
+    },
+    {
+      "path": "lib/test.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "473888ba79c86c358b87b6b4468f1ae9212041c5",
+      "size": 32971,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/473888ba79c86c358b87b6b4468f1ae9212041c5"
+    },
+    {
+      "path": "package.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7f0a569d74ea9c85bddd79883353342a21fab6aa",
+      "size": 4585,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/7f0a569d74ea9c85bddd79883353342a21fab6aa"
+    },
+    {
+      "path": "readme.markdown",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "00db73855db9ef4ed7f58cde7c76aa45100a8635",
+      "size": 26369,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/00db73855db9ef4ed7f58cde7c76aa45100a8635"
+    },
+    {
+      "path": "test",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "17049c4a1c73bb41b1e0552c0f4dd06a3a3e14f4",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/17049c4a1c73bb41b1e0552c0f4dd06a3a3e14f4"
+    },
+    {
+      "path": "test/add-subtest-async.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dc16e7a5e563837222fdb524a2404c76f6c4fc4c",
+      "size": 206,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/dc16e7a5e563837222fdb524a2404c76f6c4fc4c"
+    },
+    {
+      "path": "test/anonymous-fn.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6fd995bdac5eb13ac3b18f25513aefa8a8b9dae5",
+      "size": 1080,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/6fd995bdac5eb13ac3b18f25513aefa8a8b9dae5"
+    },
+    {
+      "path": "test/anonymous-fn",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "8eb3d34384e3e12b2775e5904e74ee9f3981364f",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/8eb3d34384e3e12b2775e5904e74ee9f3981364f"
+    },
+    {
+      "path": "test/anonymous-fn/test-wrapper.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e86f26971bfbd0d93be17d1b5a2e729b2c0bdf5e",
+      "size": 402,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/e86f26971bfbd0d93be17d1b5a2e729b2c0bdf5e"
+    },
+    {
+      "path": "test/array.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ee6a0efeec5f85b135f803b1f4dd7ef4d742ba95",
+      "size": 1339,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/ee6a0efeec5f85b135f803b1f4dd7ef4d742ba95"
+    },
+    {
+      "path": "test/assertion.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5c49baf96fd88294c80f6952100830bccf69f870",
+      "size": 3587,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/5c49baf96fd88294c80f6952100830bccf69f870"
+    },
+    {
+      "path": "test/async-await.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "52e56caeeb5d39dbad5dff07d204ec681ace4602",
+      "size": 7698,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/52e56caeeb5d39dbad5dff07d204ec681ace4602"
+    },
+    {
+      "path": "test/async-await",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "2e2adcd0a00abc3d1a593b62bdae5f2eddadbf4d",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/2e2adcd0a00abc3d1a593b62bdae5f2eddadbf4d"
+    },
+    {
+      "path": "test/async-await/async-bug.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "db75f44df27384d60ed8c0a0cc14aaf119efcfca",
+      "size": 566,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/db75f44df27384d60ed8c0a0cc14aaf119efcfca"
+    },
+    {
+      "path": "test/async-await/async-error.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "95f47b07af1e97dea25f8e58ed3cdeeb465d653a",
+      "size": 214,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/95f47b07af1e97dea25f8e58ed3cdeeb465d653a"
+    },
+    {
+      "path": "test/async-await/async1.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5bf12e13ab3529a28e85b2090de41bc6b41511bf",
+      "size": 276,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/5bf12e13ab3529a28e85b2090de41bc6b41511bf"
+    },
+    {
+      "path": "test/async-await/async2.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "98bd69b8d1d1dd6f55809343f2eee0c50552523f",
+      "size": 266,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/98bd69b8d1d1dd6f55809343f2eee0c50552523f"
+    },
+    {
+      "path": "test/async-await/async3.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e86d09057f8232e58939553ad5c97641aa9b0723",
+      "size": 215,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/e86d09057f8232e58939553ad5c97641aa9b0723"
+    },
+    {
+      "path": "test/async-await/async4.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "88253c99adf5b5b128d5fc473aa915a0a16cce56",
+      "size": 325,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/88253c99adf5b5b128d5fc473aa915a0a16cce56"
+    },
+    {
+      "path": "test/async-await/async5.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4491d61aa4c7628502c28974340268a0f3969cdf",
+      "size": 1272,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/4491d61aa4c7628502c28974340268a0f3969cdf"
+    },
+    {
+      "path": "test/async-await/sync-error.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "314bc8679f5747989b3c80c6832258e62a17dc71",
+      "size": 217,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/314bc8679f5747989b3c80c6832258e62a17dc71"
+    },
+    {
+      "path": "test/bound.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e233a5c90dd4c4d7d0465584c63d57ce4a196e05",
+      "size": 191,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/e233a5c90dd4c4d7d0465584c63d57ce4a196e05"
+    },
+    {
+      "path": "test/browser",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "013fb0bffd0129fd676aca385304eef7a1ebb863",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/013fb0bffd0129fd676aca385304eef7a1ebb863"
+    },
+    {
+      "path": "test/browser/asserts.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0e59e8a03962d29b7f6a43b9413c9b12b41227b6",
+      "size": 213,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/0e59e8a03962d29b7f6a43b9413c9b12b41227b6"
+    },
+    {
+      "path": "test/capture-output.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "457698ef5ebd83ff949fe842c045be5372f1a282",
+      "size": 1599,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/457698ef5ebd83ff949fe842c045be5372f1a282"
+    },
+    {
+      "path": "test/capture-output",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "d6326afaf616e433cd0f3feda5be3c84cb6f2325",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/d6326afaf616e433cd0f3feda5be3c84cb6f2325"
+    },
+    {
+      "path": "test/capture-output/console.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "975478355cd3aab0eda0ca180819b89a0154425b",
+      "size": 1057,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/975478355cd3aab0eda0ca180819b89a0154425b"
+    },
+    {
+      "path": "test/capture.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "38ae2e8841ccbf67fb0037b14ecebdc41722ce9f",
+      "size": 3974,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/38ae2e8841ccbf67fb0037b14ecebdc41722ce9f"
+    },
+    {
+      "path": "test/captureFn.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5440722f55083e8bb6b1c7db6426bf46f76797f1",
+      "size": 2118,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/5440722f55083e8bb6b1c7db6426bf46f76797f1"
+    },
+    {
+      "path": "test/child_ordering.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "012630487589661d814adf7cde1329434c3b8cf3",
+      "size": 1277,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/012630487589661d814adf7cde1329434c3b8cf3"
+    },
+    {
+      "path": "test/circular-things.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "71bc06031bcd63536511f64718fd589317f981e0",
+      "size": 1128,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/71bc06031bcd63536511f64718fd589317f981e0"
+    },
+    {
+      "path": "test/comment.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "106d0911e9f2f98a8d13ad7aa47ef935e2a54ec1",
+      "size": 3967,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/106d0911e9f2f98a8d13ad7aa47ef935e2a54ec1"
+    },
+    {
+      "path": "test/common.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "791c2cdb865264f462c7357e5afa4e7eade243bc",
+      "size": 6168,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/791c2cdb865264f462c7357e5afa4e7eade243bc"
+    },
+    {
+      "path": "test/create_multiple_streams.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "965e984a7d95196841c3974dab7cd1cc24b2496c",
+      "size": 611,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/965e984a7d95196841c3974dab7cd1cc24b2496c"
+    },
+    {
+      "path": "test/deep-equal-failure.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b0738e974bfecd5ccffa2f0ffd540452d5f79f73",
+      "size": 5426,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/b0738e974bfecd5ccffa2f0ffd540452d5f79f73"
+    },
+    {
+      "path": "test/deep.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "725471c4ed3cd1c628ef696aa4aa29464624150e",
+      "size": 1562,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/725471c4ed3cd1c628ef696aa4aa29464624150e"
+    },
+    {
+      "path": "test/default-messages.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "43f41b8d10711baea0d81057c0ad28ca4b9df133",
+      "size": 1472,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/43f41b8d10711baea0d81057c0ad28ca4b9df133"
+    },
+    {
+      "path": "test/default_stream-console.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bd529395769bfa67d51231fa1d56cbb45f89817f",
+      "size": 1528,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/bd529395769bfa67d51231fa1d56cbb45f89817f"
+    },
+    {
+      "path": "test/default_stream.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "49975ac4a100b27e82e46106d928146408a7f820",
+      "size": 682,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/49975ac4a100b27e82e46106d928146408a7f820"
+    },
+    {
+      "path": "test/double_end.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "054ac26438b9bcbae1aa6599cce499d606d9a61c",
+      "size": 1843,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/054ac26438b9bcbae1aa6599cce499d606d9a61c"
+    },
+    {
+      "path": "test/double_end",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "7e4e19c2b1b3fd6702ff7396f5b289ff7dafa482",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/7e4e19c2b1b3fd6702ff7396f5b289ff7dafa482"
+    },
+    {
+      "path": "test/double_end/double.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1a4d470d68fb58f5fad2713c9803a01a1fedc836",
+      "size": 172,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/1a4d470d68fb58f5fad2713c9803a01a1fedc836"
+    },
+    {
+      "path": "test/edge-cases.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7c8a7453cc18f4bc329f863029f06aed96318588",
+      "size": 9068,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/7c8a7453cc18f4bc329f863029f06aed96318588"
+    },
+    {
+      "path": "test/end-as-callback.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3ccb811012bdbcba1f4fd1dccf32c55622dcbe4e",
+      "size": 2288,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/3ccb811012bdbcba1f4fd1dccf32c55622dcbe4e"
+    },
+    {
+      "path": "test/error.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e1515a8492d3d1f24859c3356e3782a53af27d9e",
+      "size": 886,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/e1515a8492d3d1f24859c3356e3782a53af27d9e"
+    },
+    {
+      "path": "test/exit.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "08acc0850661b35e95102e6025f399c96fda4d40",
+      "size": 5988,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/08acc0850661b35e95102e6025f399c96fda4d40"
+    },
+    {
+      "path": "test/exit",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "95c5ce159ac9b4be81ef4c77717d95e84f891987",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/95c5ce159ac9b4be81ef4c77717d95e84f891987"
+    },
+    {
+      "path": "test/exit/fail.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d8a3606f6a94fc385e030706ae4f5300d5d8c668",
+      "size": 712,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/d8a3606f6a94fc385e030706ae4f5300d5d8c668"
+    },
+    {
+      "path": "test/exit/missing_end.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0009b72479eaf502e98e0cb8799aa27f1079cd76",
+      "size": 159,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/0009b72479eaf502e98e0cb8799aa27f1079cd76"
+    },
+    {
+      "path": "test/exit/ok.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f2e8ed16d078dc0c47437197fd9b273cd5d1ab8e",
+      "size": 753,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/f2e8ed16d078dc0c47437197fd9b273cd5d1ab8e"
+    },
+    {
+      "path": "test/exit/second.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e7ca2cf52823f4da91d4d660a71c480fdb25d28a",
+      "size": 164,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/e7ca2cf52823f4da91d4d660a71c480fdb25d28a"
+    },
+    {
+      "path": "test/exit/todo.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b6863c59d92c649a4b2ed57a4395448617172d0c",
+      "size": 124,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/b6863c59d92c649a4b2ed57a4395448617172d0c"
+    },
+    {
+      "path": "test/exit/todo_fail.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6e8dea938cead6b031447d1b2649ad5c1c477358",
+      "size": 125,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/6e8dea938cead6b031447d1b2649ad5c1c477358"
+    },
+    {
+      "path": "test/exit/too_few.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b38c498aca8d9b3cb5f27f3039c7d1afb5cf0415",
+      "size": 735,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/b38c498aca8d9b3cb5f27f3039c7d1afb5cf0415"
+    },
+    {
+      "path": "test/exposed-harness.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "53a2dd92bb5ec5951eb4629b7b517365e1187253",
+      "size": 441,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/53a2dd92bb5ec5951eb4629b7b517365e1187253"
+    },
+    {
+      "path": "test/fail.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "26ef0fa06f80690d219e7cbbbbac8e0e7f99d664",
+      "size": 2040,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/26ef0fa06f80690d219e7cbbbbac8e0e7f99d664"
+    },
+    {
+      "path": "test/has spaces.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b4fa1bfc885690a3447774f2212a4edbbf90b7b4",
+      "size": 928,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/b4fa1bfc885690a3447774f2212a4edbbf90b7b4"
+    },
+    {
+      "path": "test/ignore-pattern.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9f63a66f310d59745b5e4b85b0582d5084c079ef",
+      "size": 1149,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/9f63a66f310d59745b5e4b85b0582d5084c079ef"
+    },
+    {
+      "path": "test/ignore-pattern",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "fd8fe889e6662d033bb82570f27fb08d023136ad",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/fd8fe889e6662d033bb82570f27fb08d023136ad"
+    },
+    {
+      "path": "test/ignore-pattern/.ignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ec1cc296880f6d1a586a9acae94d4bec72b33539",
+      "size": 18,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/ec1cc296880f6d1a586a9acae94d4bec72b33539"
+    },
+    {
+      "path": "test/ignore-pattern/fake_node_modules",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "2ff5e7f7dd7cf7f365db8903f6e00d229981bc35",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/2ff5e7f7dd7cf7f365db8903f6e00d229981bc35"
+    },
+    {
+      "path": "test/ignore-pattern/fake_node_modules/stub1.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d8d58e150b86c718fbb059b3ed1f8e03def956ae",
+      "size": 119,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/d8d58e150b86c718fbb059b3ed1f8e03def956ae"
+    },
+    {
+      "path": "test/ignore-pattern/fake_node_modules/stub2.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "213ee99efe67621b60df95dc6fd900b5bce8f784",
+      "size": 117,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/213ee99efe67621b60df95dc6fd900b5bce8f784"
+    },
+    {
+      "path": "test/ignore-pattern/fake_other_ignored_dir",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "2ff5e7f7dd7cf7f365db8903f6e00d229981bc35",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/2ff5e7f7dd7cf7f365db8903f6e00d229981bc35"
+    },
+    {
+      "path": "test/ignore-pattern/fake_other_ignored_dir/stub1.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d8d58e150b86c718fbb059b3ed1f8e03def956ae",
+      "size": 119,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/d8d58e150b86c718fbb059b3ed1f8e03def956ae"
+    },
+    {
+      "path": "test/ignore-pattern/fake_other_ignored_dir/stub2.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "213ee99efe67621b60df95dc6fd900b5bce8f784",
+      "size": 117,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/213ee99efe67621b60df95dc6fd900b5bce8f784"
+    },
+    {
+      "path": "test/ignore-pattern/test.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1364e64d251d0c3a6431ce6e37afc1b27d5026bd",
+      "size": 110,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/1364e64d251d0c3a6431ce6e37afc1b27d5026bd"
+    },
+    {
+      "path": "test/ignore-pattern/test",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "3e78f17f690b6a0c71a0a9e52336928d3d7b265a",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/3e78f17f690b6a0c71a0a9e52336928d3d7b265a"
+    },
+    {
+      "path": "test/ignore-pattern/test/stub1.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0ea00c46ebf3200b43adf80765ba2e9e285a41df",
+      "size": 113,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/0ea00c46ebf3200b43adf80765ba2e9e285a41df"
+    },
+    {
+      "path": "test/ignore-pattern/test/stub2.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7f0618908675dbc9f1951b66bb34f9b79d81efd9",
+      "size": 111,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/7f0618908675dbc9f1951b66bb34f9b79d81efd9"
+    },
+    {
+      "path": "test/ignore-pattern/test/sub",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "de9e5731264e3aa770f5d5dcc6566582130ff804",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/de9e5731264e3aa770f5d5dcc6566582130ff804"
+    },
+    {
+      "path": "test/ignore-pattern/test/sub/sub.stub1.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "96a23cdef1cb4766e2987bb2740a005e1cf9257b",
+      "size": 120,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/96a23cdef1cb4766e2987bb2740a005e1cf9257b"
+    },
+    {
+      "path": "test/ignore-pattern/test/sub/sub.stub2.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "daa2c84ea5ce90bb4e40f8ff97e8471a970b6c69",
+      "size": 118,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/daa2c84ea5ce90bb4e40f8ff97e8471a970b6c69"
+    },
+    {
+      "path": "test/ignore-pattern/test2.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1364e64d251d0c3a6431ce6e37afc1b27d5026bd",
+      "size": 110,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/1364e64d251d0c3a6431ce6e37afc1b27d5026bd"
+    },
+    {
+      "path": "test/ignore",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "dc208ca9a241ebe4f47d3b12a9a0a24afa012c6e",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/dc208ca9a241ebe4f47d3b12a9a0a24afa012c6e"
+    },
+    {
+      "path": "test/ignore/.ignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ec1cc296880f6d1a586a9acae94d4bec72b33539",
+      "size": 18,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/ec1cc296880f6d1a586a9acae94d4bec72b33539"
+    },
+    {
+      "path": "test/ignore/fake_node_modules",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "2ff5e7f7dd7cf7f365db8903f6e00d229981bc35",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/2ff5e7f7dd7cf7f365db8903f6e00d229981bc35"
+    },
+    {
+      "path": "test/ignore/fake_node_modules/stub1.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d8d58e150b86c718fbb059b3ed1f8e03def956ae",
+      "size": 119,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/d8d58e150b86c718fbb059b3ed1f8e03def956ae"
+    },
+    {
+      "path": "test/ignore/fake_node_modules/stub2.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "213ee99efe67621b60df95dc6fd900b5bce8f784",
+      "size": 117,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/213ee99efe67621b60df95dc6fd900b5bce8f784"
+    },
+    {
+      "path": "test/ignore/test.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "52777336d78cb37fb647f6d4d3d3161fd34eaf5c",
+      "size": 102,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/52777336d78cb37fb647f6d4d3d3161fd34eaf5c"
+    },
+    {
+      "path": "test/ignore/test",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "3e78f17f690b6a0c71a0a9e52336928d3d7b265a",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/3e78f17f690b6a0c71a0a9e52336928d3d7b265a"
+    },
+    {
+      "path": "test/ignore/test/stub1.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0ea00c46ebf3200b43adf80765ba2e9e285a41df",
+      "size": 113,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/0ea00c46ebf3200b43adf80765ba2e9e285a41df"
+    },
+    {
+      "path": "test/ignore/test/stub2.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7f0618908675dbc9f1951b66bb34f9b79d81efd9",
+      "size": 111,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/7f0618908675dbc9f1951b66bb34f9b79d81efd9"
+    },
+    {
+      "path": "test/ignore/test/sub",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "de9e5731264e3aa770f5d5dcc6566582130ff804",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/de9e5731264e3aa770f5d5dcc6566582130ff804"
+    },
+    {
+      "path": "test/ignore/test/sub/sub.stub1.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "96a23cdef1cb4766e2987bb2740a005e1cf9257b",
+      "size": 120,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/96a23cdef1cb4766e2987bb2740a005e1cf9257b"
+    },
+    {
+      "path": "test/ignore/test/sub/sub.stub2.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "daa2c84ea5ce90bb4e40f8ff97e8471a970b6c69",
+      "size": 118,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/daa2c84ea5ce90bb4e40f8ff97e8471a970b6c69"
+    },
+    {
+      "path": "test/ignore/test2.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1364e64d251d0c3a6431ce6e37afc1b27d5026bd",
+      "size": 110,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/1364e64d251d0c3a6431ce6e37afc1b27d5026bd"
+    },
+    {
+      "path": "test/ignore_from_gitignore.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8cd33ed2644bf126b3309a36ac7e4b7eb8c4471b",
+      "size": 3072,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/8cd33ed2644bf126b3309a36ac7e4b7eb8c4471b"
+    },
+    {
+      "path": "test/import.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cd7a7db3f8947f513a8efaa82a259cc8bc6bc21b",
+      "size": 5554,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/cd7a7db3f8947f513a8efaa82a259cc8bc6bc21b"
+    },
+    {
+      "path": "test/import",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "9eb834cb968c13bf864fe32759355b158fe55c15",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/9eb834cb968c13bf864fe32759355b158fe55c15"
+    },
+    {
+      "path": "test/import/mjs-a.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "eb7b580b78a1f5c9353c9cb0ccd04bb6b5c212d7",
+      "size": 149,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/eb7b580b78a1f5c9353c9cb0ccd04bb6b5c212d7"
+    },
+    {
+      "path": "test/import/mjs-b.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "57d724adbc01f7a69fc8535f2c406a4de1627f4a",
+      "size": 193,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/57d724adbc01f7a69fc8535f2c406a4de1627f4a"
+    },
+    {
+      "path": "test/import/mjs-c.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9b591996f87cba1a99dddb59e42ac6e6ad774cb2",
+      "size": 193,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/9b591996f87cba1a99dddb59e42ac6e6ad774cb2"
+    },
+    {
+      "path": "test/import/mjs-d.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "71654fa4c454e6c72c6cbaf7f47a28acbb7faa9e",
+      "size": 193,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/71654fa4c454e6c72c6cbaf7f47a28acbb7faa9e"
+    },
+    {
+      "path": "test/import/mjs-e.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0d256849681a6b8921c2ca9412710d387a5f4149",
+      "size": 193,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/0d256849681a6b8921c2ca9412710d387a5f4149"
+    },
+    {
+      "path": "test/import/mjs-f.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bf2e05f2bdf8a4c6ce7f325822cbfdbc25ca2421",
+      "size": 193,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/bf2e05f2bdf8a4c6ce7f325822cbfdbc25ca2421"
+    },
+    {
+      "path": "test/import/mjs-g.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "562da8bf6215955845f8e57a6eb1296aedf66d06",
+      "size": 193,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/562da8bf6215955845f8e57a6eb1296aedf66d06"
+    },
+    {
+      "path": "test/import/mjs-h.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d47b66983880ac7dc9901885e46a0b8c05311841",
+      "size": 150,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/d47b66983880ac7dc9901885e46a0b8c05311841"
+    },
+    {
+      "path": "test/import/package_type",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "98f2210cc45dca0e17b4923848f7b614a6e500c2",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/98f2210cc45dca0e17b4923848f7b614a6e500c2"
+    },
+    {
+      "path": "test/import/package_type/package-a.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "507fd8aa8e587f3e0dc7ce167d3461766b9ae05c",
+      "size": 170,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/507fd8aa8e587f3e0dc7ce167d3461766b9ae05c"
+    },
+    {
+      "path": "test/import/package_type/package-b.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "069f41cd88fa43dd7dc69d22e5dcfcfdf98b1f27",
+      "size": 232,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/069f41cd88fa43dd7dc69d22e5dcfcfdf98b1f27"
+    },
+    {
+      "path": "test/import/package_type/package-c.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8cc50cad190e1cf642a94a2d4a2de394536c0e89",
+      "size": 180,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/8cc50cad190e1cf642a94a2d4a2de394536c0e89"
+    },
+    {
+      "path": "test/import/package_type/package.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "472002573ef7ac89dbe55c0788d68b49ddc61ddc",
+      "size": 25,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/472002573ef7ac89dbe55c0788d68b49ddc61ddc"
+    },
+    {
+      "path": "test/import/syntax-error.cjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9c5df8686bc04aa82c3beae526695e0ccccb834d",
+      "size": 3,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/9c5df8686bc04aa82c3beae526695e0ccccb834d"
+    },
+    {
+      "path": "test/import/syntax-error.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9c5df8686bc04aa82c3beae526695e0ccccb834d",
+      "size": 3,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/9c5df8686bc04aa82c3beae526695e0ccccb834d"
+    },
+    {
+      "path": "test/import/throws.cjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "007f9a0397b6dccfa9847d33ee7a481bd2539e16",
+      "size": 42,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/007f9a0397b6dccfa9847d33ee7a481bd2539e16"
+    },
+    {
+      "path": "test/import/throws.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cbfa6d27745417202be4957ef25d1d27cb42503a",
+      "size": 27,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/cbfa6d27745417202be4957ef25d1d27cb42503a"
+    },
+    {
+      "path": "test/intercept.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7a6d26f855e80f170c3e5061c2e9fede045aef04",
+      "size": 12710,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/7a6d26f855e80f170c3e5061c2e9fede045aef04"
+    },
+    {
+      "path": "test/many-sync-subtests.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f9b407df6501efcb7d04f219a775ba7307b6b0fa",
+      "size": 1304,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/f9b407df6501efcb7d04f219a775ba7307b6b0fa"
+    },
+    {
+      "path": "test/many.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "99b8ff06010f22415547b0f8bdef802ed53f386c",
+      "size": 192,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/99b8ff06010f22415547b0f8bdef802ed53f386c"
+    },
+    {
+      "path": "test/match.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9012a118c90954e869cf3cc3b780b87cb10e7468",
+      "size": 9338,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/9012a118c90954e869cf3cc3b780b87cb10e7468"
+    },
+    {
+      "path": "test/max_listeners.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "74c50a32531d06b624cdaf32e351337cc2fcaeb0",
+      "size": 425,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/74c50a32531d06b624cdaf32e351337cc2fcaeb0"
+    },
+    {
+      "path": "test/max_listeners",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "de202f13dbd1bf711ed09616f95f8657d167c404",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/de202f13dbd1bf711ed09616f95f8657d167c404"
+    },
+    {
+      "path": "test/max_listeners/source.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5443182d2e8d45cc98146705d1e8fcba2457ec0c",
+      "size": 148,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/5443182d2e8d45cc98146705d1e8fcba2457ec0c"
+    },
+    {
+      "path": "test/messages",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "ed635ca5ca275ff0050e87b2d97a65d4ea7aae02",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/ed635ca5ca275ff0050e87b2d97a65d4ea7aae02"
+    },
+    {
+      "path": "test/messages/defaults.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6e01fe25125a96fd28087d799812e56404d873e2",
+      "size": 426,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/6e01fe25125a96fd28087d799812e56404d873e2"
+    },
+    {
+      "path": "test/nested-async-plan-noend.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a0339d38a3965cd984a78b2bb960e8bf569bcdb4",
+      "size": 716,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/a0339d38a3965cd984a78b2bb960e8bf569bcdb4"
+    },
+    {
+      "path": "test/nested-sync-noplan-noend.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "10949cb594aa9c79869c340fd3d29aeb3074e478",
+      "size": 842,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/10949cb594aa9c79869c340fd3d29aeb3074e478"
+    },
+    {
+      "path": "test/nested.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1cb5a16ac9f301d0e0f4d974df9feb4cefca52b5",
+      "size": 1719,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/1cb5a16ac9f301d0e0f4d974df9feb4cefca52b5"
+    },
+    {
+      "path": "test/nested2.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "011467ec662d2c573adf205f0860fcb4e5337eed",
+      "size": 276,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/011467ec662d2c573adf205f0860fcb4e5337eed"
+    },
+    {
+      "path": "test/no_callback.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ae06c7ba83068c17f4c726c701265c3455bc5369",
+      "size": 956,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/ae06c7ba83068c17f4c726c701265c3455bc5369"
+    },
+    {
+      "path": "test/no_only.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ff1f0eb0fb5f3ae418a41a0f838a973ab242d140",
+      "size": 3365,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/ff1f0eb0fb5f3ae418a41a0f838a973ab242d140"
+    },
+    {
+      "path": "test/no_only",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "c732b2286211a8071a1b4d73a20077f4cd012ee2",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/c732b2286211a8071a1b4d73a20077f4cd012ee2"
+    },
+    {
+      "path": "test/no_only/test-a.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "db1815721d7dbdfdf2949582cb79fe30e76cf70e",
+      "size": 112,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/db1815721d7dbdfdf2949582cb79fe30e76cf70e"
+    },
+    {
+      "path": "test/no_only/test-b.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d2aa5801f043d9bc2fb1269104b8a23c73952fc6",
+      "size": 191,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/d2aa5801f043d9bc2fb1269104b8a23c73952fc6"
+    },
+    {
+      "path": "test/not-deep-equal-failure.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6ba69ba1d9cd3e21217080dd06b1bf0742c2b9f3",
+      "size": 5619,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/6ba69ba1d9cd3e21217080dd06b1bf0742c2b9f3"
+    },
+    {
+      "path": "test/not-equal-failure.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "eb7dd42f646c34b79783277d3adafe3c64fb183d",
+      "size": 1615,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/eb7dd42f646c34b79783277d3adafe3c64fb183d"
+    },
+    {
+      "path": "test/numerics.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c155241afa82e09fcd0a56698466eb314e46763c",
+      "size": 6386,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/c155241afa82e09fcd0a56698466eb314e46763c"
+    },
+    {
+      "path": "test/objectMode.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3f2ade375bdee4eeac44d04d70b16aefc5902e52",
+      "size": 1826,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/3f2ade375bdee4eeac44d04d70b16aefc5902e52"
+    },
+    {
+      "path": "test/objectModeWithComment.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "835d3daac603b88c7a5291670bb3ed963a8362c6",
+      "size": 1044,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/835d3daac603b88c7a5291670bb3ed963a8362c6"
+    },
+    {
+      "path": "test/onFailure.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c9ef03a31173ed6360823869917a95178f70f5fc",
+      "size": 594,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/c9ef03a31173ed6360823869917a95178f70f5fc"
+    },
+    {
+      "path": "test/onFinish.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b54e265a9d91909e84e6956736457200ed488bea",
+      "size": 253,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/b54e265a9d91909e84e6956736457200ed488bea"
+    },
+    {
+      "path": "test/only-twice.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f6db94d3fb4999d6b28dd8dab6378b12a6fc7341",
+      "size": 406,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/f6db94d3fb4999d6b28dd8dab6378b12a6fc7341"
+    },
+    {
+      "path": "test/only.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8f3db404f754288052b469d72d85e0465e77055c",
+      "size": 1076,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/8f3db404f754288052b469d72d85e0465e77055c"
+    },
+    {
+      "path": "test/only2.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "494e60044d6fb25cfb7e1c7a4fa8f16c5bc938de",
+      "size": 149,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/494e60044d6fb25cfb7e1c7a4fa8f16c5bc938de"
+    },
+    {
+      "path": "test/only3.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "01cfb041adf5ea6ac19bec269d675978f02d7d22",
+      "size": 236,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/01cfb041adf5ea6ac19bec269d675978f02d7d22"
+    },
+    {
+      "path": "test/only4.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fa96b02e6be2f4f0addf5becf7e50fa52f046c68",
+      "size": 193,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/fa96b02e6be2f4f0addf5becf7e50fa52f046c68"
+    },
+    {
+      "path": "test/only5.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "272b1ae2e08138fd49cf9915dfc31a03606d98ec",
+      "size": 193,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/272b1ae2e08138fd49cf9915dfc31a03606d98ec"
+    },
+    {
+      "path": "test/order.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e1f67292c524067a8f17c765453e03364967c0df",
+      "size": 273,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/e1f67292c524067a8f17c765453e03364967c0df"
+    },
+    {
+      "path": "test/plan_optional.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "abd8b367cb7d1eb34b67a2c0173838e9672660d7",
+      "size": 275,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/abd8b367cb7d1eb34b67a2c0173838e9672660d7"
+    },
+    {
+      "path": "test/promise_fail.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0a98db70b4358672e91af24fa0bc0d6be3669c5f",
+      "size": 3360,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/0a98db70b4358672e91af24fa0bc0d6be3669c5f"
+    },
+    {
+      "path": "test/promises",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "710f4e43303446bb743ba99f6c60b342953e56eb",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/710f4e43303446bb743ba99f6c60b342953e56eb"
+    },
+    {
+      "path": "test/promises/fail.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e60c831d561d580e33303eb687ca0ac10a44158e",
+      "size": 412,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/e60c831d561d580e33303eb687ca0ac10a44158e"
+    },
+    {
+      "path": "test/promises/subTests.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d0c3f7b476a2e3bc784de6dbcd4c5901343d05b1",
+      "size": 502,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/d0c3f7b476a2e3bc784de6dbcd4c5901343d05b1"
+    },
+    {
+      "path": "test/require.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "848c9273aceff08851ce0b776bda759c987d5d0a",
+      "size": 1670,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/848c9273aceff08851ce0b776bda759c987d5d0a"
+    },
+    {
+      "path": "test/require",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "995211b38088e3f5fa0fdc3c39e660d544aebbb7",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/995211b38088e3f5fa0fdc3c39e660d544aebbb7"
+    },
+    {
+      "path": "test/require/a.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a5223705d91c19ee734586c8c98c528943ab17b0",
+      "size": 171,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/a5223705d91c19ee734586c8c98c528943ab17b0"
+    },
+    {
+      "path": "test/require/b.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6620bfceec8f333e5f4bb0df212ae4b3ddd789d3",
+      "size": 171,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/6620bfceec8f333e5f4bb0df212ae4b3ddd789d3"
+    },
+    {
+      "path": "test/require/test-a.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e09910411b5f339fef248cc59e1434219bf2f901",
+      "size": 221,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/e09910411b5f339fef248cc59e1434219bf2f901"
+    },
+    {
+      "path": "test/require/test-b.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "76337750cd4cae79544141ff2933faf7421197a6",
+      "size": 221,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/76337750cd4cae79544141ff2933faf7421197a6"
+    },
+    {
+      "path": "test/skip.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e5fd3f795908c043e369c53fa6409c2df56e916e",
+      "size": 928,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/e5fd3f795908c043e369c53fa6409c2df56e916e"
+    },
+    {
+      "path": "test/skip_explanation.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8c20414b7bf6d98dacceac2adafd8e6856e6de26",
+      "size": 2682,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/8c20414b7bf6d98dacceac2adafd8e6856e6de26"
+    },
+    {
+      "path": "test/stackTrace.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0f022d6fa72ba3577615b038b8c1d4983dd7f0d8",
+      "size": 10702,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/0f022d6fa72ba3577615b038b8c1d4983dd7f0d8"
+    },
+    {
+      "path": "test/stack_trace",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "43305099a5309076525e570a9f800e92da3736d0",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/43305099a5309076525e570a9f800e92da3736d0"
+    },
+    {
+      "path": "test/stack_trace/cjs.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "28147b2362ed1d22dfbe9331e88da932741a5224",
+      "size": 120,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/28147b2362ed1d22dfbe9331e88da932741a5224"
+    },
+    {
+      "path": "test/stack_trace/esm.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "52c14233fec0d4d9b5e520d643ba61f2123b4821",
+      "size": 110,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/52c14233fec0d4d9b5e520d643ba61f2123b4821"
+    },
+    {
+      "path": "test/strict.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3ebd706a5c7dff56a3e1b4bfc82a7511701a9cb3",
+      "size": 2040,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/3ebd706a5c7dff56a3e1b4bfc82a7511701a9cb3"
+    },
+    {
+      "path": "test/subcount.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c670b4600ad61054ef081ce7f732dfc6b824e274",
+      "size": 259,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/c670b4600ad61054ef081ce7f732dfc6b824e274"
+    },
+    {
+      "path": "test/subtest_and_async.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e67d15d5226e9a66486cc9783a0dad9cb3e9bd31",
+      "size": 591,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/e67d15d5226e9a66486cc9783a0dad9cb3e9bd31"
+    },
+    {
+      "path": "test/subtest_plan.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "04c2dad32f935be503d628354539f2267d1d7861",
+      "size": 406,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/04c2dad32f935be503d628354539f2267d1d7861"
+    },
+    {
+      "path": "test/teardown.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4a924f1784782ca62f19639720b993bfc8493bfc",
+      "size": 8496,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/4a924f1784782ca62f19639720b993bfc8493bfc"
+    },
+    {
+      "path": "test/throws.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6f7435b353cb73c63606c8f28ae4ccc96088e3db",
+      "size": 14715,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/6f7435b353cb73c63606c8f28ae4ccc96088e3db"
+    },
+    {
+      "path": "test/timeout.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "27979678a5f89fc92e2a50ca84b064098c23725d",
+      "size": 264,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/27979678a5f89fc92e2a50ca84b064098c23725d"
+    },
+    {
+      "path": "test/timeoutAfter.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9c7caed01488b33922be9d62aac24201fede13dd",
+      "size": 8184,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/9c7caed01488b33922be9d62aac24201fede13dd"
+    },
+    {
+      "path": "test/todo.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4dbf0c2db65d1f1f9ba5643aae2e0391ef05fcb7",
+      "size": 1846,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/4dbf0c2db65d1f1f9ba5643aae2e0391ef05fcb7"
+    },
+    {
+      "path": "test/todo_explanation.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7d18e1772721464e436254b56a26c4c0fa8bef7d",
+      "size": 1799,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/7d18e1772721464e436254b56a26c4c0fa8bef7d"
+    },
+    {
+      "path": "test/todo_single.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "eb5d80a193e0660624282e5c407502a777851fbb",
+      "size": 853,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/eb5d80a193e0660624282e5c407502a777851fbb"
+    },
+    {
+      "path": "test/too_many.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a639528dd0bb327692693728926c944a66805d53",
+      "size": 1998,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/a639528dd0bb327692693728926c944a66805d53"
+    },
+    {
+      "path": "test/undef.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "71f1d06fb41266d35cdfd3e31f931ba5a513aab4",
+      "size": 1034,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/71f1d06fb41266d35cdfd3e31f931ba5a513aab4"
+    },
+    {
+      "path": "test/wait.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a62012c4358ed3fe0558fe4fae9e557b956cc219",
+      "size": 394,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/a62012c4358ed3fe0558fe4fae9e557b956cc219"
+    },
+    {
+      "path": "tsconfig.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a714c9f6226a2e22cf329c679e6dbc189fe05b32",
+      "size": 218,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/a714c9f6226a2e22cf329c679e6dbc189fe05b32"
+    },
+    {
+      "path": "types",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "df20c658883e751e7a91a8a77ae1f94802376470",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/df20c658883e751e7a91a8a77ae1f94802376470"
+    },
+    {
+      "path": "types/ecstatic",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "2740bad95c200a80ecc8ed17246d67e1081f19e5",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/2740bad95c200a80ecc8ed17246d67e1081f19e5"
+    },
+    {
+      "path": "types/ecstatic/index.d.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fd7c2a73b407bd2fee16d6cef702d6adea5592bd",
+      "size": 128,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/fd7c2a73b407bd2fee16d6cef702d6adea5592bd"
+    },
+    {
+      "path": "types/tap-parser",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "81ca9b764ab8e821f8aad41e704f0eb6e81a038e",
+      "url": "https://api.github.com/repos/tape-testing/tape/git/trees/81ca9b764ab8e821f8aad41e704f0eb6e81a038e"
+    },
+    {
+      "path": "types/tap-parser/index.d.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "afca68fb9f9c4a482dcc38d4f90a339d09c70ff9",
+      "size": 2042,
+      "url": "https://api.github.com/repos/tape-testing/tape/git/blobs/afca68fb9f9c4a482dcc38d4f90a339d09c70ff9"
+    }
+  ],
+  "truncated": false
+}
