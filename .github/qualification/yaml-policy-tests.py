@@ -15,4 +15,13 @@ for invalid in [header + "packages:\n  foo@1.2.3:\n    resolution: {broken\n", h
     except (ValueError, yaml.YAMLError):
         continue
     raise AssertionError("Unsupported or malformed YAML was accepted")
-print("Exact default lock and stable, prerelease, duplicate, malformed and missing-package cases verified.")
+for filename, guarded in [("ci.yml", {"verify", "browser-smoke"}), ("windows-installer.yml", {"installer"})]:
+    original = yaml.safe_load(Path("hulpgids/.github/workflows", filename).read_text(encoding="utf8"))
+    candidate = yaml.safe_load(Path(".github/qualification", "candidate-" + filename).read_text(encoding="utf8"))
+    policy = candidate["jobs"].pop("pnpm-stability-policy")
+    assert policy["runs-on"] == "ubuntu-latest"
+    assert policy["steps"][-1]["run"] == "python .github/qualification/strict-yaml-pnpm-guard.py"
+    for name in guarded:
+        assert candidate["jobs"][name].pop("needs") == "pnpm-stability-policy"
+    assert candidate == original, "Existing workflow behavior changed beyond policy prerequisites"
+print("Original workflow jobs preserved behind prerequisites; exact lock and boundary cases verified.")
