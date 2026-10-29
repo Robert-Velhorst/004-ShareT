@@ -11,3 +11,22 @@
      "node-fetch": "^2.6.7"
    },
    "devDependencies": {
+--- a/src/_shims/node-runtime.ts
++++ b/src/_shims/node-runtime.ts
+@@ -48,10 +48,14 @@
+   const encoder = new FormDataEncoder(form);
+   const readable = Readable.from(encoder);
+   const body = new MultipartBody(readable);
++  // The encoder may not know the byte length of a streaming upload. Never
++  // preserve a caller-supplied length when it cannot be derived from the body.
++  const callerHeaders = Object.fromEntries(
++    Object.entries(opts.headers ?? {}).filter(([name]) => name.toLowerCase() !== 'content-length'),
++  );
+   const headers = {
+-    ...opts.headers,
++    ...callerHeaders,
+     ...encoder.headers,
+-    'Content-Length': encoder.contentLength,
+   };
+ 
+   return { ...opts, body: body as any, headers };

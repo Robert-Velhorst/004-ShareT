@@ -18,8 +18,8 @@ try:
  with (out/'resolution.log').open('wb') as log:res=subprocess.run(['npm','install','--package-lock-only'],cwd=repo,stdout=log,stderr=subprocess.STDOUT,timeout=900)
  report['returncode']=res.returncode
  if res.returncode:raise RuntimeError('npm lock resolution failed')
- assert not (repo/'node_modules').exists();after=snap();assert set(before)==set(after);changed=[k for k in before if before[k]!=after[k]];assert set(changed)=={'package.json','package-lock.json'},changed
+ assert not (repo/'node_modules').exists();after=snap();assert set(before)==set(after);changed=[k for k in before if before[k]!=after[k]];assert set(changed)=={'package.json','package-lock.json','yarn.lock','src/_shims/node-runtime.ts'},changed
  lock=json.loads((repo/'package-lock.json').read_text());pk=lock['packages'];assert pk['node_modules/formdata-node']['version']=='6.0.3';assert pk['node_modules/form-data-encoder']['version']=='4.1.0'
- for f in ('package.json','package-lock.json'):(out/f).write_bytes((repo/f).read_bytes())
+ for f in ('package.json','package-lock.json','yarn.lock'):(out/f).write_bytes((repo/f).read_bytes())
  report.update(status='resolved',changed=changed,unchanged_files=len(before)-len(changed),publisher_tests_run=False,lock_sha256=hashlib.sha256((repo/'package-lock.json').read_bytes()).hexdigest())
 finally:(out/'result.json').write_text(json.dumps(report,indent=2))
