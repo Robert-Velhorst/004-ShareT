@@ -16,6 +16,10 @@ try:
  with (out/'resolution.log').open('wb') as log:res=subprocess.run(['npm','install','--package-lock-only'],cwd=repo,stdout=log,stderr=subprocess.STDOUT,timeout=900)
  report['returncode']=res.returncode
  if res.returncode:raise RuntimeError('publisher lock resolution failed')
+ with (out/'update-shell-quote.log').open('wb') as log:
+  update=subprocess.run(['npm','update','shell-quote','--package-lock-only'],cwd=repo,stdout=log,stderr=subprocess.STDOUT,timeout=900)
+ report['shell_quote_update_returncode']=update.returncode
+ if update.returncode:raise RuntimeError('shell-quote lock update failed')
  assert not (repo/'node_modules').exists();after=snap();assert set(before)==set(after);changed=[k for k in before if before[k]!=after[k]];assert set(changed)=={'package.json','package-lock.json'},changed
  lock=json.loads((repo/'package-lock.json').read_text());assert lock['packages']['node_modules/marked']['version']=='18.1.2'
  with (out/'audit.json').open('wb') as log:audit=subprocess.run(['npm','audit','--json'],cwd=repo,stdout=log,stderr=subprocess.PIPE,timeout=300)
