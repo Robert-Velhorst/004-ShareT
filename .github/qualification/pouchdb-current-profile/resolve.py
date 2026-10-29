@@ -12,7 +12,7 @@ sdk = owner / 'qualification-pouchdb-sdk'
 out = Path(os.environ['RUNNER_TEMP']) / 'pouchdb-current-profile'
 out.mkdir(exist_ok=True)
 prefix = owner / '.github/qualification/pouchdb-current-profile'
-expected = json.loads((prefix / 'publisher-tree.json').read_text())
+expected = json.loads((prefix / 'publisher-tree.json').read_text())['tree']
 records = [r for r in expected['tree'] if r['type'] == 'blob']
 assert not expected['truncated']
 head = subprocess.check_output(['git', '-C', str(sdk), 'rev-parse', 'HEAD'], text=True).strip()
