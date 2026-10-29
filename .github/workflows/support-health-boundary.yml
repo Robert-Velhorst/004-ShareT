@@ -28,6 +28,7 @@ jobs:
       - name: Bind every source payload before execution
         run: |
           python .github/qualification/support-health-source.py before
+          git fetch --no-tags --depth=1 origin a5b2abc06f2716d6ddcd807ae85a3560f56b66cc
           git show a5b2abc06f2716d6ddcd807ae85a3560f56b66cc:scripts/support-bundle.cjs > "$RUNNER_TEMP/sharet-support-health/original-support-bundle.cjs"
       - name: Check syntax before boundary cases
         run: |

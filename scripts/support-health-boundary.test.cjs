@@ -122,7 +122,7 @@ async function compare(source, label) {
   } finally {
     await close(primary); await close(secondary);
   }
-  for (const [name, value] of [['unset-default', undefined], ['empty-default', ''], ['lower-bound', '1'], ['upper-bound', '65535'], ['leading-zero-decimal', '05005']]) {
+  for (const [name, value] of [['unset-default', undefined], ['empty-default', ''], ['lower-bound', '1'], ['upper-bound', '65535'], ['leading-zero-decimal', '05005'], ['six-digit-padded-decimal', '005005'], ['long-padded-decimal', '0000000000000000000000005005']]) {
     await record(name, async () => {
       const calls = [];
       const result = await load(source, value, async (url, options) => {

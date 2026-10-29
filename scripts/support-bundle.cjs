@@ -14,7 +14,7 @@ fs.mkdirSync(outputDirectory, { recursive: true });
 async function readHealth() {
   try {
     const configuredPort = process.env.PORT || '5005';
-    if (typeof configuredPort !== 'string' || configuredPort.length > 5 || /[^0-9]/.test(configuredPort)) {
+    if (typeof configuredPort !== 'string' || /[^0-9]/.test(configuredPort)) {
       throw new Error('PORT must be a decimal integer between 1 and 65535');
     }
     const port = Number(configuredPort);
