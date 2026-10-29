@@ -50,7 +50,9 @@ try:
     stable=[r for r in releases if r['stable']];highest=max(stable,key=lambda r:tuple(map(int,r['version'][2:].split('.'))))
     assert highest['version']=='go1.27.3';report['official_current_Go_release']=highest
     requirements=configuration['SDK_current_requirements']
-    assert all(re.fullmatch(r'v\d+\.\d+\.\d+',v) for v in requirements.values())
+    # Declarations are resolved as inert metadata. This does not permit
+    # installing/executing any selected nonstable version below.
+    assert all(re.fullmatch(r'v\d+\.\d+\.\d+(?:-[0-9A-Za-z.\-]+)?',v) for v in requirements.values())
     assert run(['go','mod','edit']+['-require='+m+'@'+v for m,v in sorted(requirements.items())],'explicit-current-SDK-requirements')[0]==0
     code,raw=run(['go','list','-mod=mod','-m','-json','all'],'normal-selected-module-graph');assert code==0
     decoder=json.JSONDecoder();text=raw.decode();modules=[]
@@ -59,7 +61,8 @@ try:
     actual={m['Path']:m['Version'] for m in modules if not m.get('Main')}
     report['selected_module_graph']=modules
     assert all(actual[m]==v for m,v in versions.items() if m!='golang.org/x/net'), 'Direct declaration mismatch'
-    assert all(re.fullmatch(r'v\d+\.\d+\.\d+',v) for v in actual.values())
+    nonstable={m:v for m,v in actual.items() if not re.fullmatch(r'v\d+\.\d+\.\d+',v)}
+    assert not nonstable, 'Unapproved nonstable selected versions: '+json.dumps(nonstable,sort_keys=True)
     assert all('Replace' not in m for m in modules)
     references={}
     for name,version in actual.items():
@@ -97,5 +100,5 @@ finally:
     report['commands']=commands
     (out/'SDK-source-graph-and-tests.json').write_text(json.dumps(report,indent=2)+'\n')
     (out/'original-go.mod').write_bytes((sdk/'go.mod').read_bytes());(out/'original-go.sum').write_bytes((sdk/'go.sum').read_bytes())
-    print(json.dumps({k:v for k,v in report.items() if k not in ('before','after','official_current_Go_release','selected_module_graph','original_platform_packages')},indent=2))
+    print(json.dumps({k:v for k,v in report.items() if k not in ('before','prepared','after','official_current_Go_release','selected_module_graph','original_platform_packages')},indent=2))
 sys.exit(0 if report.get('SDK_linux_command_qualification_passed') and report['all_original_nonmanifest_payloads_unchanged'] and report['prepared_payloads_unchanged_during_tests'] else 1)
