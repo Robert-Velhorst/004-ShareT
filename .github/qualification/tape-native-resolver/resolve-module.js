@@ -1,11 +1,26 @@
 'use strict';
 
-var createRequire = require('node:module').createRequire;
-var join = require('node:path').join;
+var nativeModule = require('node:module');
+var nativePath = require('node:path');
 
-// Resolve from the caller's working directory using the active Node loader.
-// This intentionally targets the current stable Node runtime, including its
-// package exports, custom require.extensions and builtin module semantics.
+// Tape passes only basedir and the active require.extensions. Its previous
+// resolver has exports resolution disabled for these options. Resolve bare
+// requests as explicit filesystem candidates to retain package main/private
+// subpath preloads, then let the current Node loader handle files/extensions.
 module.exports = function resolveModule(specifier, options) {
-	return createRequire(join(options.basedir, '__tape_preload__.js')).resolve(specifier);
+	var caller = nativeModule.createRequire(nativePath.join(options.basedir, '__tape_preload__.js'));
+	if (nativeModule.isBuiltin(specifier) || nativePath.isAbsolute(specifier) || /^\.{1,2}(?:[\\/]|$)/.test(specifier)) {
+		return caller.resolve(specifier);
+	}
+	var directories = caller.resolve.paths(specifier) || [];
+	for (var i = 0; i < directories.length; i += 1) {
+		try {
+			return caller.resolve(nativePath.join(directories[i], specifier));
+		} catch (error) {
+			if (error.code !== 'MODULE_NOT_FOUND') { throw error; }
+		}
+	}
+	var missing = new Error("Cannot find module '" + specifier + "' from '" + options.basedir + "'");
+	missing.code = 'MODULE_NOT_FOUND';
+	throw missing;
 };
