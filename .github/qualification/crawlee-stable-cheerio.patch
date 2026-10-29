@@ -101,3 +101,14 @@
  import isEqual from 'lodash.isequal';
  import type { Page } from 'playwright';
  import type { SetRequired } from 'type-fest';
+--- a/package.json
++++ b/package.json
+@@ -100,7 +100,7 @@
+         "got": "^13.0.0",
+         "husky": "^9.0.11",
+         "is-ci": "^4.0.0",
+-        "lerna": "^10.0.0",
++        "lerna": "^10.1.1",
+         "lint-staged": "^17.0.0",
+         "nock": "^13.4.0",
+         "playwright": "1.62.1",

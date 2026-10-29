@@ -19,7 +19,7 @@ try:
  assert not (repo/'node_modules').exists(), 'Lock-only mode unexpectedly linked dependencies'
  after=snapshot();assert set(before)==set(after);changed=[k for k in before if before[k]!=after[k]]
  expected={'packages/'+n+'/package.json' for n in ['cheerio-crawler','http-crawler','jsdom-crawler','linkedom-crawler','playwright-crawler','puppeteer-crawler','utils']}
- expected|={'packages/utils/src/internals/cheerio.ts','packages/playwright-crawler/src/internals/adaptive-playwright-crawler.ts','yarn.lock'}
+ expected|={'packages/utils/src/internals/cheerio.ts','packages/playwright-crawler/src/internals/adaptive-playwright-crawler.ts','yarn.lock','package.json'}
  assert set(changed)==expected,(changed,sorted(expected));data=(repo/'yarn.lock').read_bytes();(out/'yarn.lock').write_bytes(data)
  report.update(status='resolved',changed=changed,unchanged_source_files=len(before)-len(changed),lock_sha256=hashlib.sha256(data).hexdigest(),publisher_tests_run=False)
 finally:(out/'result.json').write_text(json.dumps(report,indent=2))
