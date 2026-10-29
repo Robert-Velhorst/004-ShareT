@@ -53,10 +53,16 @@ try:
     while text.strip():
         record,end=decoder.raw_decode(text.lstrip());modules.append(record);text=text.lstrip()[end:]
     actual={m['Path']:m['Version'] for m in modules if not m.get('Main')}
-    assert actual=={m:v for m,v in versions.items() if m!='golang.org/x/net'}
+    report['selected_module_graph']=modules
+    assert all(actual[m]==v for m,v in versions.items() if m!='golang.org/x/net'), 'Direct declaration mismatch'
     assert all(re.fullmatch(r'v\d+\.\d+\.\d+',v) for v in actual.values())
     assert all('Replace' not in m for m in modules)
-    report['selected_module_graph']=modules
+    references={}
+    for name,version in actual.items():
+        with urllib.request.urlopen('https://proxy.golang.org/'+name+'/@latest',timeout=45) as response:reference=json.load(response)
+        references[name]=reference
+        assert version==reference['Version'], 'Selected module is not highest public stable: '+name
+    report['all_selected_module_public_references']=references
     assert run(['go','mod','verify'],'normal-module-integrity')[0]==0
     code,packages=run(['go','list','./...'],'original-platform-package-inventory');assert code==0
     report['original_platform_packages']=packages.decode().splitlines()
