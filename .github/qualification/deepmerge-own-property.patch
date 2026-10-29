@@ -1,0 +1,58 @@
+--- a/index.js
++++ b/index.js
+@@ -51,11 +51,21 @@
+ 			&& Object.propertyIsEnumerable.call(target, key)) // and also unsafe if they're nonenumerable.
+ }
+ 
++// Write data properties without invoking Object.prototype.__proto__ setters.
++function setOwn(destination, key, value) {
++	Object.defineProperty(destination, key, {
++		value: value,
++		enumerable: true,
++		configurable: true,
++		writable: true
++	})
++}
++
+ function mergeObject(target, source, options) {
+ 	var destination = {}
+ 	if (options.isMergeableObject(target)) {
+ 		getKeys(target).forEach(function(key) {
+-			destination[key] = cloneUnlessOtherwiseSpecified(target[key], options)
++			setOwn(destination, key, cloneUnlessOtherwiseSpecified(target[key], options))
+ 		})
+ 	}
+ 	getKeys(source).forEach(function(key) {
+@@ -64,9 +74,9 @@
+ 		}
+ 
+ 		if (propertyIsOnObject(target, key) && options.isMergeableObject(source[key])) {
+-			destination[key] = getMergeFunction(key, options)(target[key], source[key], options)
++			setOwn(destination, key, getMergeFunction(key, options)(target[key], source[key], options))
+ 		} else {
+-			destination[key] = cloneUnlessOtherwiseSpecified(source[key], options)
++			setOwn(destination, key, cloneUnlessOtherwiseSpecified(source[key], options))
+ 		}
+ 	})
+ 	return destination
+--- /dev/null
++++ b/test/prototype-own-key-regression.js
+@@ -0,0 +1,18 @@
++var merge = require('../')
++var test = require('tape')
++
++test('own prototype keys never alter the returned prototype', function(t) {
++	var owned = JSON.parse('{"__proto__":{"admin":true},"safe":1}')
++	var fromTarget = merge(owned, {})
++	t.equal(Object.getPrototypeOf(fromTarget), Object.prototype, 'target key does not change prototype')
++	t.notOk(fromTarget.admin, 'target key does not create inherited property')
++	t.equal(fromTarget.safe, 1, 'ordinary target properties survive')
++	var fromSource = merge(Object.create(null), owned)
++	t.equal(Object.getPrototypeOf(fromSource), Object.prototype, 'null-prototype target does not expose setter')
++	t.notOk(fromSource.admin, 'source key does not create inherited property')
++	t.equal(fromSource.safe, 1, 'ordinary source properties survive')
++	var symbol = Symbol('normal')
++	var object = {}; object[symbol] = 'kept'
++	t.equal(merge({}, object)[symbol], 'kept', 'symbol keys survive')
++	t.end()
++})
