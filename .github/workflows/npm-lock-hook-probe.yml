@@ -1,0 +1,34 @@
+name: npm lock-only lifecycle observation
+on:
+  push:
+    branches: [qualify/npm-lock-hook-probe-20261029]
+permissions:
+  contents: read
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: 26.13.0
+      - run: npm install --global npm@12.2.1
+      - name: Observe original npm lock-only lifecycle on synthetic package
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/lock-hook-probe"
+          cd "$RUNNER_TEMP/lock-hook-probe"
+          printf '%s\n' '{"name":"lifecycle-observation","version":"1.0.0","private":true,"scripts":{"prepare":"node probe.cjs"}}' > package.json
+          printf '%s\n' "require('node:fs').writeFileSync('prepare-marker', 'executed')" > probe.cjs
+          npm install --package-lock-only
+          if test -f prepare-marker; then printf 'prepare executed\n' > outcome.txt; else printf 'prepare not observed\n' > outcome.txt; fi
+          test ! -d node_modules
+      - name: Retain observation
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: npm-lock-hook-observation
+          path: ${{ runner.temp }}/lock-hook-probe/outcome.txt
+          if-no-files-found: warn
+          retention-days: 7
