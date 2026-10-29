@@ -29,7 +29,8 @@ jobs:
         with:
           python-version: 3.13.16
       - name: Install hash-bound YAML parser
-        run: python -m pip install --require-hashes --only-binary=:all: -r .github/qualification/va-yaml-requirements.txt
+        run: >-
+          python -m pip install --require-hashes --only-binary=:all: -r .github/qualification/va-yaml-requirements.txt
       - name: Resolve without installation
         run: python3 .github/qualification/va-day-picker-lock.py
       - name: Retain evidence
