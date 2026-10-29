@@ -34,11 +34,11 @@ jobs:
           enable-cache: false
       - name: Resolve normal stable dependency graph
         env:
-          RUNNER_NAME: ${{ matrix.runner }}
+          HAI_RUNNER_SERVICE: ${{ matrix.runner }}
           PYTHON_VERSION: ${{ matrix.python }}
         run: |
           mkdir -p "$RUNNER_TEMP/hai-graph"
-          cd "hai/services/${RUNNER_NAME}-runner"
+          cd "hai/services/${HAI_RUNNER_SERVICE}-runner"
           uv pip compile requirements.in --upgrade --generate-hashes --python-version "$PYTHON_VERSION" --python-platform x86_64-unknown-linux-gnu --prerelease disallow --output-file "$RUNNER_TEMP/hai-graph/requirements.lock" > "$RUNNER_TEMP/hai-graph/resolution.log" 2>&1
       - name: Retain metadata evidence
         if: always()
