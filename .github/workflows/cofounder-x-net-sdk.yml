@@ -1,0 +1,36 @@
+name: Cofounder x-net original SDK
+on:
+  push:
+    branches: [qualify/cofounder-x-net-sdk-20261029]
+permissions:
+  contents: read
+jobs:
+  original-sdk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      GOTOOLCHAIN: local
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: golang/net
+          ref: 3de643db506517b3e652a13cc0b56034cea6b8e6
+          path: qualification-x-net-sdk
+          persist-credentials: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e
+        with:
+          go-version: '1.27.3'
+          cache: false
+      - name: Verify immutable SDK stable graph and original complete tests
+        run: python .github/qualification/cofounder-x-net/proof.py
+      - name: Preserve original source graph and full test evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: cofounder-x-net-original-sdk
+          path: ${{ runner.temp }}/cofounder-x-net-sdk/
+          if-no-files-found: error
+          retention-days: 14

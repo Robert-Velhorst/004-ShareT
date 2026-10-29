@@ -1,0 +1,11 @@
+{
+  "setup_go_action_sha": "b7ad1dad31e06c5925ef5d2fc7ad053ef454303e",
+  "SDK_commit": "3de643db506517b3e652a13cc0b56034cea6b8e6",
+  "versions": {
+    "golang.org/x/net": "v0.62.0",
+    "golang.org/x/crypto": "v0.58.0",
+    "golang.org/x/sys": "v0.49.0",
+    "golang.org/x/term": "v0.47.0",
+    "golang.org/x/text": "v0.43.0"
+  }
+}
