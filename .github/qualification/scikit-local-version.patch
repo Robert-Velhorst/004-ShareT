@@ -1,0 +1,9 @@
+--- a/sklearn/__init__.py
++++ b/sklearn/__init__.py
+@@ -43,5 +43,5 @@
+ # 'X.Y.dev0' is the canonical version of 'X.Y.dev'
+ #
+-__version__ = "1.9.1"
++__version__ = "1.9.1+hai.1"
+ 
+ 

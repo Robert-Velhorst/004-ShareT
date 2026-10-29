@@ -22,12 +22,12 @@ jobs:
           name: scikit-alpine-build
           path: ${{ runner.temp }}/scikit-built-artifact
           github-token: ${{ github.token }}
-          run-id: 40963588057
+          run-id: 40967045288
       - name: Prepare verified source and build artifact
         run: |
           python3 .github/qualification/scikit-source-prepare.py
           mkdir "$RUNNER_TEMP/scikit-source-build/wheel-input"
-          echo "c271663a5a7b8a97797458ffd946f9145e0c7284d0c4309f34e27c08a0bffce1  $RUNNER_TEMP/scikit-built-artifact/wheel/scikit_learn-1.9.1-cp315-cp315-linux_x86_64.whl" | sha256sum --check
+          echo "914b6d16dcc16a976a405ba2108f0eeb938c2b02ea6f7789e6b535d02131cb04  $RUNNER_TEMP/scikit-built-artifact/wheel/scikit_learn-1.9.1+hai.1-cp315-cp315-linux_x86_64.whl" | sha256sum --check
           cp "$RUNNER_TEMP/scikit-built-artifact/wheel/"*.whl "$RUNNER_TEMP/scikit-source-build/wheel-input/"
       - name: Resolve complete stable test tool graph
         run: |
