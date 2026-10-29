@@ -1,4 +1,4 @@
-name: Qualify ShareT backend security lock
+name: Qualify combined backend security lock
 on:
   push:
     branches: [qualify/backend-security-lock-20261029]
