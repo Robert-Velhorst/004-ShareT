@@ -1,0 +1,44 @@
+name: Qualify VA chatbot outbound boundaries
+on:
+  push:
+    branches: [qualify/va-chatbot-boundary-20261029]
+permissions:
+  contents: read
+jobs:
+  boundary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: Robert-Velhorst/006-autoreminder-virtualworkers
+          ref: 9fc9e5f1c6c849daab0dbf5d86e395ab69823b09
+          path: va-dashboard
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: 3.13.16
+      - name: Install hash-bound YAML parser
+        run: >-
+          python -m pip install --require-hashes --only-binary=:all: -r .github/qualification/va-yaml-requirements.txt
+      - name: Check every package record before installation
+        working-directory: va-dashboard
+        run: python ../.github/qualification/va-pnpm-stability.py
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413
+        with:
+          version: 12.14.0
+          run_install: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: 26.12.0
+      - name: Install exact candidate dependencies
+        working-directory: va-dashboard
+        run: pnpm install --frozen-lockfile
+      - name: Run supplemental chatbot URL cases
+        working-directory: va-dashboard
+        run: |
+          cp ../.github/qualification/va-chatbot-boundary.test.ts server/services/chatbot-url-qualification.test.ts
+          pnpm exec vitest run server/services/chatbot-url-qualification.test.ts --maxWorkers=1
