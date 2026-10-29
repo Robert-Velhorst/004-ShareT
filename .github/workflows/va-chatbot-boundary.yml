@@ -37,8 +37,16 @@ jobs:
       - name: Install exact candidate dependencies
         working-directory: va-dashboard
         run: pnpm install --frozen-lockfile
+      - name: Apply isolated candidate patch
+        working-directory: va-dashboard
+        run: |
+          git apply --check ../.github/qualification/va-chatbot-platform.patch
+          git apply ../.github/qualification/va-chatbot-platform.patch
+      - name: Run existing type check
+        working-directory: va-dashboard
+        run: pnpm check
       - name: Run supplemental chatbot URL cases
         working-directory: va-dashboard
         run: |
           cp ../.github/qualification/va-chatbot-boundary.test.ts server/services/chatbot-url-qualification.test.ts
-          pnpm exec vitest run server/services/chatbot-url-qualification.test.ts --maxWorkers=1
+          pnpm exec vitest run server/services/chatbot-url-qualification.test.ts server/services/chatbot-extractor-html.test.ts server/retry.test.ts --maxWorkers=1
