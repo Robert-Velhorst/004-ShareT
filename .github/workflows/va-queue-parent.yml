@@ -1,0 +1,16 @@
+name: Qualify VA queue parent traversal
+on:
+  push:
+    branches: [qualify/va-queue-parent-20261029]
+permissions:
+  contents: read
+jobs:
+  fixture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Verify synthetic UID traversal
+        run: sudo /usr/bin/python3 .github/qualification/va-queue-parent.py
