@@ -1,0 +1,103 @@
+--- a/packages/cheerio-crawler/package.json
++++ b/packages/cheerio-crawler/package.json
+@@ -56,7 +56,7 @@
+         "@crawlee/http": "3.18.2",
+         "@crawlee/types": "3.18.2",
+         "@crawlee/utils": "3.18.2",
+-        "cheerio": "1.0.0-rc.12",
++        "cheerio": "1.2.0",
+         "htmlparser2": "^9.0.0",
+         "tslib": "^2.4.0"
+     }
+--- a/packages/http-crawler/package.json
++++ b/packages/http-crawler/package.json
+@@ -60,7 +60,7 @@
+         "@crawlee/types": "3.18.2",
+         "@crawlee/utils": "3.18.2",
+         "@types/content-type": "^1.1.5",
+-        "cheerio": "1.0.0-rc.12",
++        "cheerio": "1.2.0",
+         "content-type": "^1.0.4",
+         "got-scraping": "^4.2.1",
+         "iconv-lite": "^0.7.0",
+--- a/packages/jsdom-crawler/package.json
++++ b/packages/jsdom-crawler/package.json
+@@ -59,7 +59,7 @@
+         "@crawlee/types": "3.18.2",
+         "@crawlee/utils": "3.18.2",
+         "@types/jsdom": "^21.0.0",
+-        "cheerio": "1.0.0-rc.12",
++        "cheerio": "1.2.0",
+         "jsdom": "^26.0.0",
+         "ow": "^0.28.2",
+         "tslib": "^2.4.0"
+--- a/packages/linkedom-crawler/package.json
++++ b/packages/linkedom-crawler/package.json
+@@ -58,7 +58,7 @@
+         "@crawlee/http": "3.18.2",
+         "@crawlee/types": "3.18.2",
+         "@crawlee/utils": "3.18.2",
+-        "cheerio": "1.0.0-rc.12",
++        "cheerio": "1.2.0",
+         "linkedom": "^0.18.0",
+         "ow": "^0.28.2",
+         "tslib": "^2.4.0"
+--- a/packages/playwright-crawler/package.json
++++ b/packages/playwright-crawler/package.json
+@@ -61,7 +61,8 @@
+         "@crawlee/core": "3.18.2",
+         "@crawlee/types": "3.18.2",
+         "@crawlee/utils": "3.18.2",
+-        "cheerio": "1.0.0-rc.12",
++        "cheerio": "1.2.0",
++        "domhandler": "6.0.1",
+         "jquery": "^3.6.0",
+         "lodash.isequal": "^4.5.0",
+         "ml-logistic-regression": "^2.0.0",
+--- a/packages/puppeteer-crawler/package.json
++++ b/packages/puppeteer-crawler/package.json
+@@ -59,7 +59,7 @@
+         "@crawlee/browser-pool": "3.18.2",
+         "@crawlee/types": "3.18.2",
+         "@crawlee/utils": "3.18.2",
+-        "cheerio": "1.0.0-rc.12",
++        "cheerio": "1.2.0",
+         "devtools-protocol": "*",
+         "idcac-playwright": "^0.2.0",
+         "jquery": "^3.6.0",
+--- a/packages/utils/package.json
++++ b/packages/utils/package.json
+@@ -51,7 +51,8 @@
+         "@apify/ps-tree": "^1.2.0",
+         "@crawlee/types": "3.18.2",
+         "@types/sax": "^1.2.7",
+-        "cheerio": "1.0.0-rc.12",
++        "cheerio": "1.2.0",
++        "domhandler": "6.0.1",
+         "file-type": "^21.3.1",
+         "got-scraping": "^4.2.1",
+         "ow": "^0.28.1",
+--- a/packages/utils/src/internals/cheerio.ts
++++ b/packages/utils/src/internals/cheerio.ts
+@@ -6,7 +6,8 @@
+ 
+ /** @deprecated use CheerioAPI instead */
+ export type CheerioRoot = ReturnType<typeof load>;
+-export type { CheerioAPI, Cheerio, Element } from 'cheerio';
++export type { CheerioAPI, Cheerio } from 'cheerio';
++export type { Element } from 'domhandler';
+ 
+ // NOTE: We are skipping 'noscript' since it's content is evaluated as text, instead of HTML elements. That damages the results.
+ const SKIP_TAGS_REGEX = /^(script|style|canvas|svg|noscript)$/i;
+--- a/packages/playwright-crawler/src/internals/adaptive-playwright-crawler.ts
++++ b/packages/playwright-crawler/src/internals/adaptive-playwright-crawler.ts
+@@ -31,7 +31,8 @@
+ } from '@crawlee/core';
+ import type { Awaitable, BatchAddRequestsResult, Dictionary } from '@crawlee/types';
+ import { type CheerioRoot, extractUrlsFromCheerio } from '@crawlee/utils';
+-import { type Cheerio, type Element, load } from 'cheerio';
++import { type Cheerio, load } from 'cheerio';
++import type { Element } from 'domhandler';
+ import isEqual from 'lodash.isequal';
+ import type { Page } from 'playwright';
+ import type { SetRequired } from 'type-fest';
