@@ -1,7 +1,7 @@
-name: Qualify official scikit manylinux publisher tests
+name: Qualify scikit ARFF source fix on glibc
 on:
   push:
-    branches: [qualify/scikit-official-glibc-20261030]
+    branches: [qualify/scikit-glibc-sourcefix-20261030]
 permissions:
   contents: read
 jobs:
