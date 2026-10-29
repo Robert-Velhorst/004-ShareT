@@ -1,0 +1,37 @@
+name: Build labelled scikit compatibility wheel on glibc
+on:
+  push:
+    branches: [qualify/scikit-labelled-glibc-build-20261030]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.15.2'
+      - name: Prepare verified source
+        run: python .github/qualification/scikit-source-prepare.py
+      - name: Build labelled wheel
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gfortran libopenblas-dev
+          mkdir "$RUNNER_TEMP/scikit-source-build/wheel"
+          cd "$RUNNER_TEMP/scikit-source-build/source"
+          python -m pip wheel --no-deps --wheel-dir "$RUNNER_TEMP/scikit-source-build/wheel" . > "$RUNNER_TEMP/scikit-source-build/build.log" 2>&1
+      - name: Retain build evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: scikit-labelled-glibc-build
+          path: |
+            ${{ runner.temp }}/scikit-source-build/source-identity.json
+            ${{ runner.temp }}/scikit-source-build/build.log
+            ${{ runner.temp }}/scikit-source-build/wheel/
+          if-no-files-found: warn
+          retention-days: 7
