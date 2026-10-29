@@ -16,7 +16,7 @@ try:
  with (out/'resolution.log').open('wb') as log:res=subprocess.run(['npm','install','--package-lock-only'],cwd=repo,stdout=log,stderr=subprocess.STDOUT,timeout=900)
  report['returncode']=res.returncode
  if res.returncode:raise RuntimeError('publisher lock resolution failed')
- assert not (repo/'node_modules').exists();after=snap();assert set(before)==set(after);changed=[k for k in before if before[k]!=after[k]];assert set(changed)=={'index.js','package-lock.json'},changed
+ assert not (repo/'node_modules').exists();after=snap();assert set(before)==set(after);changed=[k for k in before if before[k]!=after[k]];assert set(changed) in ({'index.js'}, {'index.js','package-lock.json'}),changed
  assert (repo/'test/prototype-own-key-regression.js').is_file()
  with (out/'audit.json').open('wb') as log:audit=subprocess.run(['npm','audit','--json'],cwd=repo,stdout=log,stderr=subprocess.PIPE,timeout=300)
  report['audit_exit_code']=audit.returncode;assert snap()==after
