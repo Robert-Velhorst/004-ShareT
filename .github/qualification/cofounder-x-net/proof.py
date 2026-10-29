@@ -13,7 +13,8 @@ owner=Path.cwd();sdk=owner/'qualification-x-net-sdk'
 inputs=owner/'.github/qualification/cofounder-x-net'
 out=Path(os.environ['RUNNER_TEMP'])/'cofounder-x-net-sdk';out.mkdir(exist_ok=True)
 expected=json.loads((inputs/'SDK-tree.json').read_text())
-versions=json.loads((inputs/'execution-inputs.json').read_text())['versions']
+configuration=json.loads((inputs/'execution-inputs.json').read_text())
+versions=configuration['versions']
 assert not expected['truncated']
 def snapshot():
     rows={}
@@ -38,6 +39,7 @@ def run(args,label,timeout=300):
     return code,stdout
 report={'upstream_commit':'3de643db506517b3e652a13cc0b56034cea6b8e6','before':before,'commands':commands,
         'original_cases_helpers_commands_modified':False,'full_Caddy_image_application_deployment_data_acceptance':False}
+prepared=None
 try:
     actual_go=subprocess.check_output(['go','version'],text=True).strip();assert 'go1.27.3 ' in actual_go
     environment=json.loads(subprocess.check_output(['go','env','-json','GOVERSION','GOTOOLCHAIN','GOFLAGS','GOSUMDB','GONOSUMDB','GOPRIVATE','GOINSECURE','GOOS','GOARCH'],cwd=sdk))
@@ -47,8 +49,10 @@ try:
     with urllib.request.urlopen('https://go.dev/dl/?mode=json',timeout=45) as response:releases=json.load(response)
     stable=[r for r in releases if r['stable']];highest=max(stable,key=lambda r:tuple(map(int,r['version'][2:].split('.'))))
     assert highest['version']=='go1.27.3';report['official_current_Go_release']=highest
-    assert run(['go','mod','download'],'normal-module-download')[0]==0
-    code,raw=run(['go','list','-m','-json','all'],'normal-selected-module-graph');assert code==0
+    requirements=configuration['SDK_current_requirements']
+    assert all(re.fullmatch(r'v\d+\.\d+\.\d+',v) for v in requirements.values())
+    assert run(['go','mod','edit']+['-require='+m+'@'+v for m,v in sorted(requirements.items())],'explicit-current-SDK-requirements')[0]==0
+    code,raw=run(['go','list','-mod=mod','-m','-json','all'],'normal-selected-module-graph');assert code==0
     decoder=json.JSONDecoder();text=raw.decode();modules=[]
     while text.strip():
         record,end=decoder.raw_decode(text.lstrip());modules.append(record);text=text.lstrip()[end:]
@@ -63,7 +67,14 @@ try:
         references[name]=reference
         assert version==reference['Version'], 'Selected module is not highest public stable: '+name
     report['all_selected_module_public_references']=references
+    assert run(['go','mod','download'],'normal-module-download')[0]==0
     assert run(['go','mod','verify'],'normal-module-integrity')[0]==0
+    prepared=snapshot()
+    changed=[p for p in before if before[p]!=prepared[p]]
+    assert set(changed).issubset({'go.mod','go.sum'}), 'Unexpected original SDK code or case change'
+    report['prepared']=prepared
+    report['SDK_dependency_profile_source_port_paths']=changed
+    report['modified_dependency_profile_not_an_unmodified_publisher_build']=True
     code,packages=run(['go','list','./...'],'original-platform-package-inventory');assert code==0
     report['original_platform_packages']=packages.decode().splitlines()
     regression_source='\n'.join(p.read_text() for p in (sdk/'html').glob('*_test.go'))
@@ -80,9 +91,11 @@ try:
 except Exception as error:
     report['stopped_reason']=str(error);report['SDK_linux_command_qualification_passed']=False
 finally:
-    after=snapshot();report['after']=after;report['all_original_payloads_unchanged']=before==after
+    after=snapshot();report['after']=after
+    report['all_original_nonmanifest_payloads_unchanged']=all(after[p]==value for p,value in before.items() if p not in ('go.mod','go.sum'))
+    report['prepared_payloads_unchanged_during_tests']=prepared==after if prepared else None
     report['commands']=commands
     (out/'SDK-source-graph-and-tests.json').write_text(json.dumps(report,indent=2)+'\n')
     (out/'original-go.mod').write_bytes((sdk/'go.mod').read_bytes());(out/'original-go.sum').write_bytes((sdk/'go.sum').read_bytes())
     print(json.dumps({k:v for k,v in report.items() if k not in ('before','after','official_current_Go_release','selected_module_graph','original_platform_packages')},indent=2))
-sys.exit(0 if report.get('SDK_linux_command_qualification_passed') and report['all_original_payloads_unchanged'] else 1)
+sys.exit(0 if report.get('SDK_linux_command_qualification_passed') and report['all_original_nonmanifest_payloads_unchanged'] and report['prepared_payloads_unchanged_during_tests'] else 1)
