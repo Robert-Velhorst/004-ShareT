@@ -1,0 +1,42 @@
+name: Hulpgids configured destination boundary
+on:
+  push:
+    branches: [qualify/hulpgids-destination-boundary-20261029]
+permissions:
+  contents: read
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      npm_config_engine_strict: 'true'
+      npm_config_strict_peer_deps: 'true'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: Robert-Velhorst/010-Nationale-Hulpgids-reach-out
+          ref: d2f7a31be1d0b41b12679a43d5cce5ad4bf55dfe
+          path: qualification-hulpgids-source
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '26.13.0'
+      - name: Use current stable npm
+        run: npm install --global npm@12.2.1
+      - name: Bind complete source compiler and actual adapter dispatch
+        run: python .github/qualification/hulpgids-destination-proof.py
+      - name: Preserve source cases and complete compiler evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: hulpgids-destination-boundary
+          path: |
+            ${{ runner.temp }}/hulpgids-destination-boundary/*.json
+            ${{ runner.temp }}/hulpgids-destination-boundary/*.log
+            ${{ runner.temp }}/hulpgids-destination-boundary/actual-entry.ts
+            ${{ runner.temp }}/hulpgids-destination-boundary/actual-adapters.cjs
+          if-no-files-found: error
+          retention-days: 14
