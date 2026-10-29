@@ -42,11 +42,13 @@ jobs:
         run: |
           git apply --check ../.github/qualification/va-chatbot-platform.patch
           git apply ../.github/qualification/va-chatbot-platform.patch
+      - name: Stage supplemental test for the repository type check
+        working-directory: va-dashboard
+        run: cp ../.github/qualification/va-chatbot-boundary.test.ts server/services/chatbot-url-qualification.test.ts
       - name: Run existing type check
         working-directory: va-dashboard
         run: pnpm check
       - name: Run supplemental chatbot URL cases
         working-directory: va-dashboard
         run: |
-          cp ../.github/qualification/va-chatbot-boundary.test.ts server/services/chatbot-url-qualification.test.ts
           pnpm exec vitest run server/services/chatbot-url-qualification.test.ts server/services/chatbot-extractor-html.test.ts server/retry.test.ts --maxWorkers=1
