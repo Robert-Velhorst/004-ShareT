@@ -1,0 +1,27 @@
+name: PNPM lock metadata policy qualification
+on:
+  push:
+    branches: [qualify/hulpgids-yaml-policy-20261029]
+permissions:
+  contents: read
+jobs:
+  metadata:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: Robert-Velhorst/010-Nationale-Hulpgids-reach-out
+          ref: bb3c9351ec63d0f7002d731ad9b30a30bd984f0a
+          path: hulpgids
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: 3.13.16
+      - name: Install hash-bound stable YAML parser
+        run: python -m pip install --require-hashes --only-binary=:all: -r .github/qualification/yaml-policy-requirements.txt
+      - name: Run metadata qualification
+        run: python .github/qualification/yaml-policy-tests.py
