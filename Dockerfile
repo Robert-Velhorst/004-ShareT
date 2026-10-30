@@ -1,6 +1,7 @@
 # Keep build tools in build stages; copy the same pinned Node executable into
 # a clean runtime filesystem so npm/Yarn are absent from every runtime layer.
 FROM node:26.12.1-alpine@sha256:40cd011b55415bc894e45b02fdd5a5dfde056921b7d23a64c74f80497af48797 AS node-source
+RUN npm install --global npm@12.2.1 && npm --version
 
 FROM node-source AS frontend-build
 WORKDIR /app
@@ -19,6 +20,13 @@ FROM node-source AS backend-dependencies
 WORKDIR /app
 COPY backend/package*.json ./backend/
 RUN cd backend && npm ci --omit=dev
+
+# Disposable hosted qualification target; the production image copies only the
+# locked dependency tree from backend-dependencies, never this SDK filesystem.
+FROM frontend-build AS build-qualification
+COPY --from=backend-dependencies /app/backend/ ./backend/
+COPY . ./
+WORKDIR /app
 
 # Production uses the same stable Alpine release as the pinned Node source.
 FROM alpine:3.24.3@sha256:be2656061b536c1883c4034790e21d0a09c5aaaf51968b89368a3c0371ea2c9a AS production

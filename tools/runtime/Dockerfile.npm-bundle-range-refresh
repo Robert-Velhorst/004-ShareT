@@ -1,0 +1,12 @@
+# Disposable qualification only. This is not the production Dockerfile.
+FROM sharet-npm-bundle-baseline:ci
+
+# The actual published parents permit undici ^6.25.0 and ip-address ^10.1.1.
+# Let npm resolve those declared ranges normally; preserve lifecycle scripts,
+# engine/dependency checks, integrity checks and ordinary registry resolution.
+RUN npm update --prefix /usr/local/lib/node_modules/npm --omit=dev undici ip-address
+
+# Exercise actual dependency installation/build through the refreshed CLI before
+# the unchanged case commands and complete image scan run in the hosted worker.
+WORKDIR /app
+RUN npm ci && npm ci --prefix backend --omit=dev && npm run build

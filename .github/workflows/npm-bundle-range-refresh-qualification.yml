@@ -1,0 +1,99 @@
+name: npm bundle range refresh qualification
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  npm-bundle-range-refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.15.1'
+      - name: Record exact source and original case identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$RUNNER_ENVIRONMENT" = github-hosted
+          mkdir -p "$RUNNER_TEMP/sharet-build-toolchain/"{input,reports,cache}
+          python - <<'PY'
+          from pathlib import Path
+          import subprocess, hashlib, json, os
+          paths = subprocess.check_output(['git', 'ls-files', '-z']).decode().split('\0')
+          record = {
+              'tested_head': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+              'tested_tree': subprocess.check_output(['git', 'rev-parse', 'HEAD^{tree}'], text=True).strip(),
+              'tracked_file_sha256': {p: hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in paths if p and Path(p).is_file()},
+              'deployment_or_live_data_changes': False,
+          }
+          (Path(os.environ['RUNNER_TEMP']) / 'sharet-build-toolchain/reports/source-identity.json').write_text(json.dumps(record, indent=2) + '\n')
+          PY
+      - name: Build and exercise a normal declared-range npm bundle refresh
+        id: build
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker build --progress=plain --target build-qualification --tag sharet-npm-bundle-baseline:ci . 2>&1 | tee "$RUNNER_TEMP/sharet-build-toolchain/reports/baseline-build.log"
+          docker build --progress=plain --file tools/runtime/Dockerfile.npm-bundle-range-refresh --tag sharet-build-toolchain:ci . 2>&1 | tee "$RUNNER_TEMP/sharet-build-toolchain/reports/build.log"
+      - name: Preserve exact image identity and archive
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          evidence="$RUNNER_TEMP/sharet-build-toolchain"
+          docker image inspect sharet-build-toolchain:ci > "$evidence/reports/image-inspect.json"
+          docker image save sharet-build-toolchain:ci -o "$evidence/input/image.tar"
+          python tools/runtime/runner_image_archive_identity.py "$evidence/input/image.tar" "$evidence/reports/image-inspect.json" sharet-build-toolchain:ci "$evidence/reports/image-identity.json" "$evidence/reports/image-config-id.txt"
+      - name: Inspect actual npm version, full installed metadata and original case hashes
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        run: python tools/runtime/qualify_build_toolchain.py inventory
+      - name: Run every original backend and frontend case command plus full lint
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        run: python tools/runtime/qualify_build_toolchain.py cases
+      - name: Scan the complete saved image without advisory exclusions
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          evidence="$RUNNER_TEMP/sharet-build-toolchain"
+          scan_status=0
+          docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges \
+            aquasec/trivy:0.76.1@sha256:790fd66d1697395d8693d1acaa1ea702406a20f109b6fc7bac8db623eca6c06c \
+            --version > "$evidence/reports/image-security-scanner-version.txt" 2>&1
+          docker run --rm --read-only --user "$(id -u):$(id -g)" --cap-drop ALL \
+            --security-opt no-new-privileges --memory 4g --cpus 2 --pids-limit 128 \
+            --tmpfs /tmp:rw,noexec,nosuid,nodev,size=3g \
+            --mount "type=bind,src=$evidence/input,dst=/input,readonly" \
+            --mount "type=bind,src=$evidence/reports,dst=/reports" \
+            --mount "type=bind,src=$evidence/cache,dst=/cache" \
+            aquasec/trivy:0.76.1@sha256:790fd66d1697395d8693d1acaa1ea702406a20f109b6fc7bac8db623eca6c06c \
+            image --input /input/image.tar --cache-dir /cache --scanners vuln \
+            --list-all-pkgs --ignorefile /dev/null \
+            --exit-code 1 --format json --timeout 10m --output /reports/image-security.json \
+            > "$evidence/reports/image-security-scanner.log" 2>&1 || scan_status=$?
+          python tools/runtime/qualify_build_toolchain.py scan
+          test "$scan_status" -eq 0
+      - name: Retain the complete compressed image for independent inspection
+        if: ${{ !cancelled() && steps.build.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          evidence="$RUNNER_TEMP/sharet-build-toolchain"
+          gzip -1 -c "$evidence/input/image.tar" > "$evidence/reports/image.tar.gz"
+          sha256sum "$evidence/reports/image.tar.gz" > "$evidence/reports/image.tar.gz.sha256"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: npm-bundle-range-refresh-evidence
+          path: ${{ runner.temp }}/sharet-build-toolchain/reports/
+          retention-days: 7
+          if-no-files-found: error

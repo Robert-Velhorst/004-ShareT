@@ -33,7 +33,7 @@ function walk(folder) {
     }
   }
 }
-for (const folder of ['/app/backend/node_modules', '/usr/local/lib/node_modules', '/opt']) walk(folder);
+for (const folder of ['/app/node_modules', '/app/backend/node_modules', '/usr/local/lib/node_modules', '/opt']) walk(folder);
 const cases = {};
 for (const entry of fs.readdirSync('/app/backend/test', { withFileTypes: true })) {
   if (entry.isFile()) {
@@ -45,6 +45,8 @@ process.stdout.write(`${JSON.stringify({
   node: process.version, components: process.versions, uid: process.getuid(), gid: process.getgid(),
   node_executable_sha256: hash(fs.readFileSync(process.execPath)),
   architecture: process.arch, platform: process.platform,
+  frontend_manifest_sha256: fs.existsSync('/app/package.json') ? hash(fs.readFileSync('/app/package.json')) : null,
+  frontend_lock_sha256: fs.existsSync('/app/package-lock.json') ? hash(fs.readFileSync('/app/package-lock.json')) : null,
   backend_manifest_sha256: hash(fs.readFileSync('/app/backend/package.json')),
   backend_lock_sha256: hash(fs.readFileSync('/app/backend/package-lock.json')),
   manifests, fileErrors, original_case_sha256: cases, buildToolsPresent,
